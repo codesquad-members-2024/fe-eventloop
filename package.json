@@ -2,9 +2,10 @@
   "name": "fe-eventloop",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/js/main.js",
+  "type": "module",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "node src/js/main.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,5 +17,9 @@
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
     "prettier": "^3.2.5"
+  },
+  "dependencies": {
+    "node-sass": "^9.0.0",
+    "sass": "^1.72.0"
   }
 }
