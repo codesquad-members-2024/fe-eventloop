@@ -3,14 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>eventloop</title>
+    <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
     <div class="wrap">
       <header>
         <div class="enter">
-          <div class="enter-code"></div>
-          <button class="enter-btn"></button>
+          <p>코드 입력</p>
+          <div class="enter-area">
+            <textarea id="enter-code" placeholder="여기에 비동기 콜백이 포함된 코드를 입력하세요."></textarea>
+          </div>
+          <button class="enter-btn">동작시키기</button>
         </div>
       </header>
       <main>
@@ -29,6 +33,6 @@
       </main>
     </div>
   </body>
-  <script type="module" src="./parser.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/acorn/dist/acorn.js"></script>
+  <script type="module" src="./js/main.js"></script>
+  <script src="https://unpkg.com/acorn"></script>
 </html>

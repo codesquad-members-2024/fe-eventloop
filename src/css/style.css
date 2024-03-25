@@ -1,0 +1,9 @@
+@import "./reset.css";
+@import "./enter.css";
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #282828;
+}

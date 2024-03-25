@@ -1,0 +1,25 @@
+.enter {
+  margin-top: 20px;
+  p {
+    color: white;
+  }
+}
+
+.enter-area {
+  position: relative;
+}
+
+textarea {
+  width: 500px;
+  height: 100px;
+  background-color: white;
+  margin: 10px 0px;
+  border-radius: 10px;
+}
+
+.enter-btn {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px;
+}
