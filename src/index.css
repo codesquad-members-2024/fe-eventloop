@@ -47,11 +47,15 @@ body {
     text-align: center;
 }
 
+.call-stack-view {
+    margin-right: -120px;
+}
+
 .call-stack-container,
 .wep-Api-container {
     border-radius: 10px;
     border: 2px solid #55B730;
-    width: 90%;
+    width: 70%;
     height: 90%;
     margin: 7px auto 0;
 }
@@ -68,7 +72,7 @@ body {
     height: 90%;
     justify-content: center;
     align-items: center;
-    margin-right: -80px;
+    margin-right: -145px;
 }
 
 .queue-view {
