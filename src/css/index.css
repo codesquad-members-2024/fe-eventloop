@@ -1,2 +1,6 @@
-@import './reset.css';
-@import './main.css';
+@import "./reset.css";
+@import "./main.css";
+
+body {
+  background-color: #3c3c3c;
+}
