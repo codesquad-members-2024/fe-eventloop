@@ -1,0 +1,25 @@
+main {
+  margin-top: 50px;
+}
+
+.main__input_code__container {
+  background-color: antiquewhite;
+  width: 500px;
+  height: 300px;
+  margin-left: 50px;
+}
+
+#code-form {
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+}
+
+#code-input {
+  width: 300px;
+  flex-basis: 90%;
+}
+
+#code-run-btn {
+  width: 100px;
+}

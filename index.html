@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/css/index.css" />
+    <script type="module" src="./src/js/index.js" defer></script>
+    <title>이벤트 루프 시각화</title>
+  </head>
+  <body>
+    <div id="wrap">
+      <main>
+        <section class="main__section__input_code">
+          <div class="main__input_code__container">
+            <div>코드 입력</div>
+            <form action="" id="code-form">
+              <input id="code-input" type="text" placeholder="여기에 비동기 콜백이 포함된 코드를 입력하세요." />
+              <button id="code-run-btn">동작시키기</button>
+            </form>
+          </div>
+        </section>
+        <section class="main__section__animation"></section>
+      </main>
+    </div>
+  </body>
+</html>
