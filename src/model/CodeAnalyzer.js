@@ -5,6 +5,7 @@ const MACRO_TASK_CALLEES = [
   "setImmediate",
   "requestAnimationFrame",
 ];
+const LATEST_VERSION = "latest";
 const NO_ELEMENTS = 0;
 
 const isEmpty = (elements) => elements.length === NO_ELEMENTS;
@@ -15,35 +16,32 @@ const isFunction = (argument) =>
   argument.type === "FunctionExpression" ||
   argument.type === "ArrowFunctionExpression";
 
-const isObjectType = (node) => typeof node === "object" && node !== null;
+const isObjectType = (node) => node instanceof Object;
 
-const isMicrotask = (node) =>
-  node.callee &&
-  node.callee.property &&
-  MICRO_TASK_CALLEES.includes(node.callee.property.name);
+const isMicrotask = (node) => MICRO_TASK_CALLEES.includes(node.callee?.property?.name);
 
 const isMacrotask = (node) =>
-  node.callee &&
-  node.callee.type === "Identifier" &&
-  MACRO_TASK_CALLEES.includes(node.callee.name);
+  node.callee?.type === "Identifier" &&
+  MACRO_TASK_CALLEES.includes(node.callee?.name);
 
 const getCalleeName = (node) => {
   return node.callee?.type === "Identifier"
     ? node.callee.name
     : node.callee?.property?.type === "Identifier"
-    ? node.callee.property.name
-    : null;
+      ? node.callee.property.name
+      : null;
 };
 
 const addCallbacks = (node, callbacks) => {
   const functions = node.arguments.filter((arg) => isFunction(arg));
-  const calleeName = getCalleeName(node);
 
-  if (!isEmpty(functions)) {
-    const callbackObjects = functions.map((node) => ({ node, calleeName }));
-    if (isMicrotask(node)) callbacks.microtasks.push(...callbackObjects);
-    if (isMacrotask(node)) callbacks.macrotasks.push(...callbackObjects);
-  }
+  if (isEmpty(functions)) return;
+  
+  const calleeName = getCalleeName(node);
+  const callbackNodes = functions.map((node) => ({ node, calleeName }));
+
+  if (isMicrotask(node)) callbacks.microtasks.push(...callbackNodes);
+  if (isMacrotask(node)) callbacks.macrotasks.push(...callbackNodes);
 };
 
 const findCallbacks = (node, callbacks = { microtasks: [], macrotasks: [] }) => {
@@ -55,4 +53,21 @@ const findCallbacks = (node, callbacks = { microtasks: [], macrotasks: [] }) => 
   });
 
   return callbacks;
+};
+
+export default function CodeAnalyzer(code) {
+  this.options = { ecmaVersion: LATEST_VERSION };
+  this.ast = null;
+  this.callbacks = null;
+  
+  this.initializeCallbacks(code);
+}
+
+CodeAnalyzer.prototype.initializeCallbacks = function(code) {
+  this.ast = acorn.parse(code, this.options);
+  this.callbacks = findCallbacks(this.ast);
+};
+
+CodeAnalyzer.prototype.getCallbacks = function() {
+  return this.callbacks;
 };
