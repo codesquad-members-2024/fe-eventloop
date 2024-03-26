@@ -22,28 +22,46 @@
           <textarea
             name="inputCode"
             id="inputCode"
+            class="input-code"
             cols="30"
             rows="10"
           ></textarea>
+          <button role="button" class="button-run">RUN</button>
         </div>
       </div>
       <div class="section-result">
         <div class="inner">
-          <aside class="call-stack square"></aside>
-          <div class="queue-wrapper">
-            <div class="event-loot"></div>
+          <div class="flex-box">
+            <div class="call-stack square">
+              <p class="role">call stack</p>
+              <span class="neon"></span>
+            </div>
+            <div class="web-apis square">
+              <p class="role">WEB APIs</p>
+              <span class="neon"></span>
+            </div>
+          </div>
+
+          <div class="flex-box">
+            <aside class="event-loop square">
+              <p class="role">event loop</p>
+              <span class="neon">
+                <i class="fa-solid fa-rotate"></i>
+              </span>
+            </aside>
+
             <div class="queue-list">
-              <div class="macrotask-queue square">
-                <p>MACROTASK QUEUE</p>
-                <span class="neon">
-                  <div class="task">TASK 1</div>
-                </span>
+              <div class="macrotask square">
+                <p class="role">macrotask queue</p>
+                <div class="neon">
+                  <span class="task">TASK 1</span>
+                </div>
               </div>
-              <div class="microtask-queue square">
-                <p>MICROTASK QUEUE</p>
-                <span class="neon">
-                  <div class="task">TASK 1</div>
-                </span>
+              <div class="microtask square">
+                <p class="role">microtask queue</p>
+                <div class="neon">
+                  <span class="task">TASK 1</span>
+                </div>
               </div>
             </div>
           </div>

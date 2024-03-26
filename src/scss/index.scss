@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 main {
   width: 100%;
   height: 100%;
@@ -6,49 +9,133 @@ main {
 .inner {
   padding: 20px;
 }
-
-.section-code {
-}
-
-.section-result {
+.flex-box {
+  display: flex;
 }
 .square {
   position: relative;
-  padding: 20px;
-  width: 40%;
-  height: 300px;
-  p {
-    font-size: 20px;
-    text-align: center;
-    color: #fff;
-    font-weight: bold;
-    margin-bottom: 15px;
+  padding: 16px;
+}
+.role {
+  font-size: 20px;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+.neon {
+  display: block;
+  position: relative;
+  padding: 30px;
+  border-radius: 10px;
+  border: 2px solid #fff;
+}
+.section-code {
+  padding: 10px;
+  .inner {
+    width: 100%;
+  }
+}
+.input-code {
+  padding: 10px;
+  letter-spacing: 1.4px;
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  width: 100%;
+  box-shadow: 0 0 10px #fff;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+  resize: none;
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 20px #fff;
+    outline: none;
+  }
+}
+.button-run {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #fff;
+  color: #222;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 20px;
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+.call-stack {
+  .neon {
+    border-color: #4ed6ff;
+    box-shadow: 0 0 10px #4ed6ff;
   }
 }
 
-.neon {
-  border: 2px solid var(--neon);
+.event-loop {
+  .neon {
+    width: 160px;
+    height: 300px;
+    border-color: #c8ff00;
+    text-align: center;
+    box-shadow: 0 0 10px #c8ff00;
+    i {
+      text-align: center;
+      line-height: 6;
+      font-size: 40px;
+      text-shadow:
+        0 0 10px #c8ff00,
+        0 0 20px #c8ff00,
+        0 0 30px #c8ff00,
+        0 0 40px #c8ff00;
+      color: #c8ff00;
+      animation: Rotation 2s infinite linear;
+    }
+  }
+}
+.queue-list {
+  width: 100%;
+  .square {
+  }
+}
+.macrotask {
+  .neon {
+    border-color: #fe9d00;
+    box-shadow: 0 0 10px #fe9d00;
+  }
+}
+.microtask {
+  .neon {
+    border-color: #ffdb4e;
+    box-shadow: 0 0 10px #ffdb4e;
+  }
 }
 .task {
+  display: block;
   width: fit-content;
-  border-radius: 20px;
-  padding: 20px;
-  height: 30px;
+  border-radius: 10px;
+  width: 100px;
+  height: 50px;
   background: hotpink;
   color: #fff;
-  line-height: 30px;
+  line-height: 50px;
   text-align: center;
 }
-.macrotask-queue {
-  .neon {
-    --neon: #ffdb4e;
-    --neon-glow: #b48505;
-  }
-}
 
-.microtask-queue {
-  .neon {
-    --neon: #00fe9b;
-    --neon-glow: #02c435;
+@keyframes Rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
