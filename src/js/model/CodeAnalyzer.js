@@ -1,13 +1,13 @@
 const CALLBACK_EXPRESSIONS = [
   "CallExpression",
   "NewExpression",
-  //"AwaitExpression",
 ];
 const MICRO_TASK_CALLEES = [
   "then",
   "catch",
   "finally",
   "MutationObserver",
+  "Promise",
   "queueMicrotask",
   "nextTick",
 ];
@@ -62,8 +62,8 @@ const addCallbacks = (node, callbacks) => {
   const calleeName = getCalleeName(node);
   const callbackNodes = functions.map((node) => ({ node, calleeName }));
 
-  if (isMicrotask(node)) callbacks.microtasks.push(...callbackNodes);
-  if (isMacrotask(node)) callbacks.macrotasks.push(...callbackNodes);
+  if (isMicrotask(node)) callbacks.microtasks.unshift(...callbackNodes);
+  if (isMacrotask(node)) callbacks.macrotasks.unshift(...callbackNodes);
 };
 
 const findCallbacks = (node, callbacks = { microtasks: [], macrotasks: [] }) => {
