@@ -1,0 +1,61 @@
+:root {
+  --container-border: 1.5px solid grey;
+  --container-padding: 0.5rem;
+  --box-bg-color: #b7e3ff;
+  --container-width: 60rem;
+  --input-bg-color: #3CBC8D;
+  --box-width: 26rem;
+  --large-box-height: 15rem;
+  --small-box-height: 6rem;
+}
+
+body {
+  font-size: 32px;
+  display: grid;
+  place-items: center;
+}
+
+.input-view__container {
+  display: flex;
+  flex-direction: column;
+  padding: var(--container-padding);
+  width: var(--container-width);
+  height: 15rem;
+}
+
+.input-view__text-input[type=text] {
+  width: calc(100% - var(--container-padding));
+  height: 100%;
+  border: var(--container-border);
+  background-color: var(--input-bg-color);
+  color: white;
+}
+
+.input-view__submit {
+  width: 6.25rem;
+  height: 1.5rem;
+}
+
+.call-stack__component-contents,
+.web-apis__component-contents,
+.event-loop__component-contents {
+  width: var(--box-width);
+  height: var(--large-box-height);
+  border: var(--container-border);
+  background-color: var(--box-bg-color);
+}
+
+.microtask-queue__component-contents,
+.macrotask-queue__component-contents {
+  width: var(--box-width);
+  height: var(--small-box-height);
+  border: var(--container-border);
+  background-color: var(--box-bg-color);
+}
+
+.middle__container,
+.bottom__container {
+  display: flex;
+  width: var(--container-width);
+  justify-content: space-between;
+}
