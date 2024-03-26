@@ -1,17 +1,38 @@
 # fe-eventloop
 
-## 기본 설계
- - acorn을 활용하여 구현한다.
- - 화면에 그려주는 박스를 생성하는 것은 class로 구현한다.
-   - 코드 text를 constructor에 넣으면 코드를 담고있는 박스를 생성한다.
- - promise는 macotask부터 구현한 후 구현한다.
+## AST(acorn)
+ - [ ] 입력받은 함수를 분리.
+ - [X] microtask queue, macrotask queue를 구분해 콜백을 추출.
+ - [ ] 일반 함수, microtask queue, macrotask queue를 구분
 
-## macrotask queue순서
- - 코드를 입력받는다
- - 코드를 콜스택에 그려준다
- - 콜스택 클래스에서 콜백을 분리한다.
- - 분리한 콜백을 wepApi에 넘겨준다
- - wepApi에 그려준다 
+## main.js
+ - [X] 동작시키기 클릭 시 input 값을 받아옴
+ - [X] 입력받은 코드를 AST로 파싱해 코드를 하나씩 call stack에 전달
+ - [ ] 함수안에 뎁스가 있는지 확인해 뎁스가 있다면 콜스택에 추가로 전달
+ - [ ] 콜스택이 비어있는지 확인
 
-main > callStack > wepApi > micro/macro task Queue > callStack
- -astparser
+## callStack.js
+ - [X] 전달받은 함수를 박스로 만들어 html에 랜더
+ - [X] 콜스택 in 애니메이션 실행
+ - [X] 애니메이션 종료 시 콜백 분리 후 webApi.js에 전달
+   - [ ] microtask queue, macrotask queue를 구분할 수 있는 비교값이 필요함
+ - [X] 콜스택을 제외한 나머지 코드는 콜스택 out 애니메이션 실행
+
+## webApi.js
+ - [X] callStack에서 전달받은 값을 기준으로 콜백 박스를 만든 후 랜더
+ - [X] webApi in 애니메이션 실행
+ - [ ] callStack에서 전달받은 값으로 microtask queue, macrotask queue를 구분해 microtask queue, macrotask queue중 어떤 곳에 값을 전달할지 결정
+ - [ ] microtask queue, macrotask queue에 값 전달
+
+## microtask.js, macrotask.js
+ - [ ] callStack이 비어있는지 확인
+   - [ ] macrotask는 microtask가 비어있는지도 확인
+ - [ ] 비어있다면 이벤트 루프를 걸쳐 콜스택에 전달 애니메이션 실행
+ - [ ] 콜스택 out 애니메이션 실행
+
+## boxModel.js
+ - [ ] html에 그려줄 박스를 생성하는 객체
+
+## locationCalulater.js
+ - [ ] 애니메이션을 그려줄 각 박스의 상대값 계산
+ - [ ] 박스가 쌓일때의 위치 계산

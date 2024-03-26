@@ -75,9 +75,11 @@ export class CallStack {
     spliteCallback(excuteCode, callStackLocation) {
         const ast = acorn.parse(excuteCode, { ecmaVersion: "latest" });
         const astParser = new AstParser(excuteCode);
+        // 여기서 includes로 micro, macro 확인한다.
+        // isType()
         const callBackAndDelay = astParser.extractCallbackAndDelay(ast);
         this.sendToWepapi(callBackAndDelay, callStackLocation)
-        
+
     }
 
     sendToWepapi(callBackAndDelay, callStackLocation) {

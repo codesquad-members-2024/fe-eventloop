@@ -6,7 +6,7 @@ function EventLoop() {
         
     };
 
-    const getInputValue = () => {
+    const getInputValue = (event) => {
         const inputValue = document.querySelector(".code-input").value;
         main(inputValue);
     };
