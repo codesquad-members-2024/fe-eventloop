@@ -1,16 +1,36 @@
-const MICRO_TASK_CALLEES = ["then", "catch", "finally"];
+const CALLBACK_EXPRESSIONS = [
+  "CallExpression",
+  "NewExpression",
+  //"AwaitExpression",
+];
+const MICRO_TASK_CALLEES = [
+  "then",
+  "catch",
+  "finally",
+  "MutationObserver",
+  "queueMicrotask",
+  "nextTick"
+];
 const MACRO_TASK_CALLEES = [
   "setTimeout",
   "setInterval",
   "setImmediate",
+  "clearInterval",
+  "clearTimeout",
   "requestAnimationFrame",
+  "cancelAnimationFrame",
+  "requestIdleCallback",
+  "cancelIdleCallback",
 ];
 const LATEST_VERSION = "latest";
 const NO_ELEMENTS = 0;
 
 const isEmpty = (elements) => elements.length === NO_ELEMENTS;
 
-const isCallExpression = (node) => node.type === "CallExpression";
+const isNodeType = (node, types) => types.includes(node.type);
+
+const isCallbackExpression = (node) =>
+  isNodeType(node, CALLBACK_EXPRESSIONS);
 
 const isFunction = (argument) =>
   argument.type === "FunctionExpression" ||
@@ -18,7 +38,9 @@ const isFunction = (argument) =>
 
 const isObjectType = (node) => node instanceof Object;
 
-const isMicrotask = (node) => MICRO_TASK_CALLEES.includes(node.callee?.property?.name);
+const isMicrotask = (node) => 
+  MICRO_TASK_CALLEES.includes(node.callee?.name) ||
+  MICRO_TASK_CALLEES.includes(node.callee?.property?.name);
 
 const isMacrotask = (node) =>
   node.callee?.type === "Identifier" &&
@@ -45,7 +67,7 @@ const addCallbacks = (node, callbacks) => {
 };
 
 const findCallbacks = (node, callbacks = { microtasks: [], macrotasks: [] }) => {
-  if (isCallExpression(node)) addCallbacks(node, callbacks);
+  if (isCallbackExpression(node)) addCallbacks(node, callbacks);
 
   Object.keys(node).forEach((key) => {
     const child = node[key];
