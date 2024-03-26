@@ -9,8 +9,10 @@ export const renderContainer = (className, content = '') => {
 export const renderInputView = (className) => {
   const content = `
     <label class="${className}__title" for="code-block">${INPUT_TITLE}</label>
-    <input class="${className}__text-input" type="text" name="code-block" placeholder="${INPUT_PLACEHOLDER}">
-    <input class="${className}__submit" type="submit" value="${INPUT_SUBMIT}">
+    <textarea class="${className}__text-input" type="text" name="code-block" placeholder="${INPUT_PLACEHOLDER}"></textarea>
+    <form>
+        <input class="${className}__submit" type="submit" value="${INPUT_SUBMIT}">
+    </form>
   `;
 
   return renderContainer(className, content);
