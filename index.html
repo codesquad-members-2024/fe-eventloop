@@ -8,11 +8,47 @@
       href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="src/scss/css/index.css" />
     <script
       src="https://kit.fontawesome.com/240a2c8606.js"
       crossorigin="anonymous"
     ></script>
     <script type="module" src="src/js/main.js"></script>
   </head>
-  <body></body>
+  <body>
+    <main>
+      <div class="section-code">
+        <div class="inner">
+          <textarea
+            name="inputCode"
+            id="inputCode"
+            cols="30"
+            rows="10"
+          ></textarea>
+        </div>
+      </div>
+      <div class="section-result">
+        <div class="inner">
+          <aside class="call-stack square"></aside>
+          <div class="queue-wrapper">
+            <div class="event-loot"></div>
+            <div class="queue-list">
+              <div class="macrotask-queue square">
+                <p>MACROTASK QUEUE</p>
+                <span class="neon">
+                  <div class="task">TASK 1</div>
+                </span>
+              </div>
+              <div class="microtask-queue square">
+                <p>MICROTASK QUEUE</p>
+                <span class="neon">
+                  <div class="task">TASK 1</div>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>
