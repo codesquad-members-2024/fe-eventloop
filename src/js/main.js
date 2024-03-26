@@ -1,7 +1,7 @@
-import clickEvent from "./parser.js";
+import onEvent from "./codeAst.js";
 
 function main() {
-  clickEvent();
+  onEvent();
 }
 
 main();

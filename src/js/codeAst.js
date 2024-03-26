@@ -1,3 +1,5 @@
+import findCallExpressions from "./codeAnalyze.js";
+
 function getAst() {
   const textareaValue = document.getElementById("enter-code").value;
   return acorn.parse(textareaValue, { ecmaVersion: 2020 });
@@ -5,12 +7,13 @@ function getAst() {
 
 function enterButtonClick() {
   const ast = getAst();
-  console.log(ast);
+  const callExpression = findCallExpressions(ast);
+  console.log(callExpression);
 }
 
-function clickEvent() {
+function onEvent() {
   const enterButton = document.querySelector(".enter-btn");
   enterButton.addEventListener("click", enterButtonClick);
 }
 
-export default clickEvent;
+export default onEvent;
