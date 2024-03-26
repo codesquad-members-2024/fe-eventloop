@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.2.0/uicons-bold-straight/css/uicons-bold-straight.css"
+    />
+    <title>event loop</title>
+  </head>
+  <body>
+    <div class="page-wrap">
+      <section class="codeInput">
+        <label for="codeInput">코드 입력</label><br />
+        <textarea
+          id="codeInput"
+          cols="90"
+          rows="10"
+          placeholder="여기에 비동기 콜백이 포함된 코드를 입력하세요"
+        ></textarea
+        ><br />
+        <button class="submit-btn">동작시키기</button>
+      </section>
+      <section class="call-stack-wrap">
+        <div>Call Stack</div>
+        <div class="call-stack"></div>
+      </section>
+    </div>
+
+    <script type="module" src="./src/js/index.js"></script>
+    <script src="https://unpkg.com/acorn"></script>
+  </body>
+</html>
