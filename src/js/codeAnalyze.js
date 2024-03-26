@@ -1,9 +1,11 @@
+
+
 function findCallExpressions(ast) {
   const callExpressions = [];
   if (Array.isArray(ast.body)) {
-    ast.body.forEach((element) => {
-      if (element.expression.type === "CallExpression") {
-        callExpressions.push(element.expression);
+    ast.body.forEach((node) => {
+      if (node.expression.type === "CallExpression") {
+        callExpressions.push(node.expression);
       }
     });
   }

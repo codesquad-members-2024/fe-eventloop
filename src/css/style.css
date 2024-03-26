@@ -7,3 +7,74 @@ body {
   align-items: center;
   background-color: #282828;
 }
+
+section {
+  display: flex;
+  margin: 20px 0px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.call-stack p,
+.web-apis p {
+  color: white;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.call-stack-area {
+  display: block;
+  width: 300px;
+  height: 200px;
+  border: 10px double greenyellow;
+  margin-right: 10px;
+  border-radius: 10px;
+}
+
+.web-apis-area {
+  display: block;
+  width: 250px;
+  height: 200px;
+  border: 10px double red;
+  margin-left: 10px;
+  border-radius: 10px;
+}
+
+.event-loop {
+  display: block;
+  width: 150px;
+  height: 200px;
+  border: 10px double aqua;
+  margin-right: 10px;
+  border-radius: 10px;
+  p {
+    color: white;
+    text-align: center;
+    font-size: 2rem;
+  }
+}
+
+.task-queue p {
+  color: white;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.micro-queue {
+  display: block;
+  width: 350px;
+  height: 100px;
+  border: 10px double orange;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.macro-queue {
+  display: block;
+  width: 350px;
+  height: 100px;
+  border: 10px double yellow;
+  margin-left: 10px;
+  border-radius: 10px;
+}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>eventloop</title>
-    <link rel="stylesheet" href="./src/css/style.css">
+    <link rel="stylesheet" href="./src/css/style.css" />
   </head>
   <body>
     <div class="wrap">
@@ -12,21 +12,33 @@
         <div class="enter">
           <p>코드 입력</p>
           <div class="enter-area">
-            <textarea id="enter-code" placeholder="여기에 비동기 콜백이 포함된 코드를 입력하세요."></textarea>
+            <textarea
+              id="enter-code"
+              placeholder="여기에 비동기 콜백이 포함된 코드를 입력하세요."
+            ></textarea>
           </div>
           <button class="enter-btn">동작시키기</button>
         </div>
       </header>
       <main>
         <section>
-          <div class="call-stack"></div>
+          <div class="call-stack">
+            <p>CALL STACK</p>
+            <div class="call-stack-area"></div>
+          </div>
+          <div class="web-apis">
+            <p>WEB API</p>
+            <div class="web-apis-area"></div>
+          </div>
         </section>
         <section>
-          <div class="wep-apis"></div>
-        </section>
-        <section>
+          <div class="event-loop">
+            <p>EVENT LOOP</p>
+          </div>
           <div class="task-queue">
+            <p>MICROTASK QUEUE</p>
             <div class="micro-queue"></div>
+            <p>MACROTASK QUEUE</p>
             <div class="macro-queue"></div>
           </div>
         </section>
