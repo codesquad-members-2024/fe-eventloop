@@ -1,5 +1,7 @@
-import getAst from "./parser.js";
+import clickEvent from "./parser.js";
 
 function main() {
-  getAst(code);
+  clickEvent();
 }
+
+main();

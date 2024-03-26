@@ -1,13 +1,16 @@
-const code = `
-setTimeout(function() {
-  alert('This message is shown after 3 seconds');
-}, 3000);
-`;
-
-function getAst(code) {
-  return acorn.parse(code, { ecmaVersion: 2020 });
+function getAst() {
+  const textareaValue = document.getElementById("enter-code").value;
+  return acorn.parse(textareaValue, { ecmaVersion: 2020 });
 }
 
-console.log(getAst(code));
+function enterButtonClick() {
+  const ast = getAst();
+  console.log(ast);
+}
 
-export default getAst;
+function clickEvent() {
+  const enterButton = document.querySelector(".enter-btn");
+  enterButton.addEventListener("click", enterButtonClick);
+}
+
+export default clickEvent;
