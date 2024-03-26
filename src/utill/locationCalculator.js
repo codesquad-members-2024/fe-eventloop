@@ -7,16 +7,16 @@ function LocationCalculater() {
     const getCallStackLocation = () => {
         const callStackContainer = document.querySelector(".call-stack-container");
         const rect = callStackContainer.getBoundingClientRect();
-        callStack.x = (rect.left + (rect.width / 2)) - 105;
-        callStack.y = (rect.top + rect.height / 2) - callStack.y;
+        callStack.x = rect.left;
+        callStack.y = rect.top + rect.height / 2;
         return callStack
     };
 
     const getWepApiLocation = () => {
         const wepApiContainer = document.querySelector(".wep-Api-container");
         const rect = wepApiContainer.getBoundingClientRect();
-        wepApi.x = (rect.left + (rect.width / 2)) - 105;
-        wepApi.y = (rect.top + rect.height / 2) - wepApi.y;
+        wepApi.x = rect.left;
+        wepApi.y = (rect.top + rect.height / 2);
         return wepApi
     }
 
@@ -36,8 +36,6 @@ function LocationCalculater() {
         }
     };
     
-    
-
     return {getCallStackLocation, resetLocation, getWepApiLocation}
 }
 

@@ -74,10 +74,10 @@ export class CallStack {
 
     spliteCallback(excuteCode, callStackLocation) {
         const ast = acorn.parse(excuteCode, { ecmaVersion: "latest" });
-        console.log(ast)
         const astParser = new AstParser(excuteCode);
         const callBackAndDelay = astParser.extractCallbackAndDelay(ast);
         this.sendToWepapi(callBackAndDelay, callStackLocation)
+        
     }
 
     sendToWepapi(callBackAndDelay, callStackLocation) {

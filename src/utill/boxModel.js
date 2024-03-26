@@ -7,7 +7,6 @@ Box.prototype.creatBox = function () {
 };
 
 Box.prototype.creatCallBackBox = function (callBack, delayTime) {
-    console.log(delayTime)
     const callBackEl = document.createElement("div")
     callBackEl.classList.add("call-back-container")
     const callBackViewEl = document.createElement("div")

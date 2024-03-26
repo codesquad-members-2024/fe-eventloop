@@ -105,10 +105,11 @@ body {
 
 .call-stack,
 .call-back-container {
+    padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 270px;
+    width: 247px;
     height: 80px;
     border-radius: 10px;
     position: absolute;
@@ -116,3 +117,5 @@ body {
     top: 0px;
     background: #EF5EA7;
 }
+
+

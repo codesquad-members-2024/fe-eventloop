@@ -5,7 +5,8 @@ export function AstParser(code) {
 }
 
 AstParser.prototype.extractCallbackAndDelay = function(node) {
-    if (node.type === "CallExpression" && node.callee.name === "setTimeout") {
+    const macroMethod = ["setTimeout", "setInterval", "setImmediate", "clearInterval", "clearTimeout"]
+    if (node.type === "CallExpression" && macroMethod.includes(node.callee.name)) {
         this.callBack = node.arguments[0];
         this.delayTime = node.arguments[1].value;
     }
@@ -23,3 +24,6 @@ AstParser.prototype.transformNode = function(node) {
 }
 
 export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+
+

@@ -5,13 +5,12 @@ import { AstParser } from "../utill/astParser.js";
 export class WebApi {
     constructor(callBackAndDelay) {
         this.callBack = callBackAndDelay.callBack;
-        this.delay = callBackAndDelay.delay;
+        this.delay = callBackAndDelay.delayTime;
     }
 
     appendCode(callStackLocation) {
         const box = new Box();
         const [callBackBoxModel, className] = box.creatCallBackBox(this.callBack, this.delay);
-        console.log(callBackBoxModel)
         const enginContainer = document.querySelector(".engin-container");
         enginContainer.appendChild(callBackBoxModel);
         this.wepApiInAnimation(className, callStackLocation);
@@ -40,44 +39,8 @@ export class WebApi {
             }
         );
         animation.onfinish = () => {
-            // locationCalculater.resetLocation("callStack");
-            // this.callStackOutAnimation(className);
-            // this.spliteCallback(this.callBack);
+            console.log("애니메이션 끝")
         };
     }
-
-    // async callStackOutAnimation(className) {
-    //     await delay(1000);
-    //     const callStackLocation = locationCalculater.getCallStackLocation();
-    //     const element = document.querySelector(`.${className}`);
-    //     const animation = element.animate(
-    //         [
-    //             {
-    //                 transform: `translate(${callStackLocation.x}px, ${callStackLocation.y}px)`,
-    //                 opacity: 1,
-    //             },
-    //             {
-    //                 transform: `translate(${callStackLocation.x}px, 0px)`,
-    //                 opacity: 0,
-    //             },
-    //         ],
-    //         {
-    //             duration: 2000,
-    //             easing: "ease-in-out",
-    //             direction: "normal",
-    //             fill: "forwards",
-    //         }
-    //     );
-    //     animation.onfinish = () => {
-    //         locationCalculater.resetLocation("callStack");
-    //         element.remove()
-    //     };
-    // }
-
-    // spliteCallback(callBack) {
-    //     const ast = acorn.parse(callBack, { ecmaVersion: "latest" });
-    //     const astParser = new AstParser(callBack);
-    //     const callBackAndDelay = astParser.extractCallbackAndDelay(ast);
-    // }
 }
 
