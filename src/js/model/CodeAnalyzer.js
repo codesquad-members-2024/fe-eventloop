@@ -9,7 +9,7 @@ const MICRO_TASK_CALLEES = [
   "finally",
   "MutationObserver",
   "queueMicrotask",
-  "nextTick"
+  "nextTick",
 ];
 const MACRO_TASK_CALLEES = [
   "setTimeout",
