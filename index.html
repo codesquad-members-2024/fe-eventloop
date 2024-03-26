@@ -23,10 +23,21 @@
         ><br />
         <button class="submit-btn">동작시키기</button>
       </section>
-      <section class="call-stack-wrap">
-        <div>Call Stack</div>
-        <div class="call-stack"></div>
-      </section>
+      <div class="event-loop-wrap">
+        <section class="call-stack-wrap">
+          <p>CALL STACK</p>
+          <div class="call-stack"></div>
+          <i class="fi fi-bs-refresh event-loop"></i>
+        </section>
+        <section class="web-api-wrap">
+          <p>WEB APIs</p>
+          <div class="web-api-box"></div>
+          <p>MICROTASK QUEUE</p>
+          <div class="microtask-box"></div>
+          <p>MACROTASK QUEUE</p>
+          <div class="macrotask-box"></div>
+        </section>
+      </div>
     </div>
 
     <script type="module" src="./src/js/index.js"></script>
