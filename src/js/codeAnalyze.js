@@ -1,5 +1,3 @@
-
-
 function findCallExpressions(ast) {
   const callExpressions = [];
   if (Array.isArray(ast.body)) {
