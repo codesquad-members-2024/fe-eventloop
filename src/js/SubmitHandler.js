@@ -1,4 +1,4 @@
-import CallStack from './Callstack';
+import CallStack from './Callstack.js';
 
 export default class SubmitHandler {
   constructor(formId, textId) {
@@ -27,32 +27,35 @@ export default class SubmitHandler {
       if (callee.type === 'MemberExpression' && callee.property.name === 'then') {
         // console.log('💥then');
         // this.callBackCodeInfo.thenCallbacks.push(parseNode.arguments[0]);
-        const thenCallCode = originalCode.substring(parseNode.arguments[0].start, parseNode.arguments[0].end);
+        const thenCallCode = originalCode.substring(parseNode.arguments[0].body.start, parseNode.arguments[0].body.end);
         asyncOp = {
           type: 'then',
-          callCode: thenCallCode,
+          callBackCode: thenCallCode,
+          node: parseNode.arguments[0],
         };
       }
 
       if (callee.type === 'MemberExpression' && callee.property.name === 'catch') {
         // console.log('💥catch');
         // this.callBackCodeInfo.catchCallbacks.push(parseNode.arguments[0]);
-        const catchCallCode = originalCode.substring(parseNode.arguments[0].start, parseNode.arguments[0].end);
+        const catchCallCode = originalCode.substring(parseNode.arguments[0].body.start, parseNode.arguments[0].body.end);
         asyncOp = {
           type: 'catch',
-          callCode: catchCallCode,
+          callBackCode: catchCallCode,
+          node: parseNode.arguments[0],
         };
       }
 
       if (callee.type === 'Identifier' && callee.name === 'setTimeout') {
         // console.log('💥setTimeout');
-        const callbackCode = originalCode.substring(parseNode.arguments[0].start, parseNode.arguments[0].end);
+        const callBackCode = originalCode.substring(parseNode.arguments[0].body.body[0].start, parseNode.arguments[0].body.body[0].end);
         const delay = parseNode.arguments[1].value; // setTimeout의 지연 시간
         // this.callBackCodeInfo.setTimeoutCallbacks.push(parseNode.arguments[0]);
         asyncOp = {
           type: 'setTimeout',
-          callbackCode,
+          callBackCode,
           delay,
+          node: parseNode.arguments[0],
         };
       }
 
@@ -62,7 +65,6 @@ export default class SubmitHandler {
     }
 
     // 재귀적으로 자식 노드 순회
-    // for (let key in parseNode) {
     Object.keys(parseNode).forEach((key) => {
       //*1)
       if (parseNode.hasOwnProperty(key)) {
@@ -96,6 +98,8 @@ export default class SubmitHandler {
     e.preventDefault();
     const parseCode = this.parseCode();
     this.extractCallbackCode(parseCode, this.userCode);
+    console.log(this.callBacks);
+    new CallStack(this.callBacks);
   };
 }
 
@@ -116,4 +120,12 @@ export default class SubmitHandler {
      setTimeout의 콜백 함수
         : CallExpression 노드에서 callee가 setTimeout인 경우를 찾고, arguments의 두 번째 요소(콜백 함수)를 추출
  * 
+    Task Queue 
+    : 일반적으로 '매크로 태스크 큐'라고도 불린다.
+      setTimeout, setInterval, setImmediate, I/O 작업과 같은 비동기 작업의 콜백이 위치하는 큐다.
+      이벤트 루프가 Task Queue의 작업을 하나씩 콜 스택으로 이동시켜 처리한다.
+    
+    Microtask Queue
+    : Promise.then, Promise.catch, Promise.finally, MutationObserver 콜백이 위치하는 큐다.
+      마이크로 태스크 큐의 작업은 매크로 태스크보다 우선적으로 처리된다.
  */
