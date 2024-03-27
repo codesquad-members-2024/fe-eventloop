@@ -57,7 +57,7 @@ export default class SubmitHandler {
       }
 
       if (asyncOp) {
-        this.callBacks.push(asyncOp);
+        this.callBacks.unshift(asyncOp);
       }
     }
 
