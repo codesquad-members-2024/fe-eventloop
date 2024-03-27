@@ -6,7 +6,6 @@ export const MICRO_TASK_PROTOTYPES = {
   queueMicrotask: "Window",
   nextTick: "Process",
 };
-
 export const MACRO_TASK_PROTOTYPES = {
   setTimeout: "Window",
   setInterval: "Window",
@@ -19,8 +18,9 @@ export const MACRO_TASK_PROTOTYPES = {
   cancelIdleCallback: "Window",
 };
 
-export class Callback {
+const INCREMENT = 1;
 
+export class Callback {
   constructor(node, calleeName, index) {
     this.node = node;
     this.calleeName = calleeName;
@@ -34,12 +34,12 @@ export class Callback {
 
 export class Microtask extends Callback {
   toString() {
-    return `${MICRO_TASK_PROTOTYPES[this.calleeName]} Callback (${this.calleeName}) ${this.index}`;
+    return `${MICRO_TASK_PROTOTYPES[this.calleeName]} Callback (${this.calleeName}) ${this.index + INCREMENT}`;
   }
 }
 
 export class Macrotask extends Callback {
   toString() {
-    return `${MACRO_TASK_PROTOTYPES[this.calleeName]} Callback (${this.calleeName}) ${this.index}`;
+    return `${MACRO_TASK_PROTOTYPES[this.calleeName]} Callback (${this.calleeName}) ${this.index + INCREMENT}`;
   }
 }

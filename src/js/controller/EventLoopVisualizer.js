@@ -13,7 +13,7 @@ const CLASS_NAME = {
   WEB_APIS: "web-apis",
   MICRO_TASK: "microtask-queue",
   MACRO_TASK: "macrotask-queue",
-}
+};
 
 const isMicrotask = (callback) =>
   Object.keys(MICRO_TASK_PROTOTYPES).includes(callback.calleeName);
@@ -21,7 +21,7 @@ const isMicrotask = (callback) =>
 const isMacrotask = (callback) =>
   Object.keys(MACRO_TASK_PROTOTYPES).includes(callback.calleeName);
 
-export class EventLoopVisualizer {
+export default class EventLoopVisualizer {
   inputArea = document.querySelector(".input-view__text-input");
   submitButton = document.querySelector(".input-view__submit");
   componentBox = {};
@@ -36,13 +36,6 @@ export class EventLoopVisualizer {
     this.initializeSubscribes();
   }
 
-  initialize(code) {
-    this.codeAnalyzer.initializeCallbacks(code);
-    const callbacks = this.codeAnalyzer.getCallbacks();
-
-    this.initializeComponents(callbacks);
-  }
-
   initializeEventListener() {
     this.submitButton.addEventListener("click", this.handleSubmit.bind(this));
   }
@@ -53,7 +46,14 @@ export class EventLoopVisualizer {
     componentBoxList.forEach((box) => box.subscribe(updateComponents));
   }
 
-  initializeComponents(callbacks) {
+  setCallbacks(code) {
+    this.codeAnalyzer.initializeCallbacks(code);
+    const callbacks = this.codeAnalyzer.getCallbacks();
+
+    this.setComponents(callbacks);
+  }
+
+  setComponents(callbacks) {
     const components = callbacks.map((callback, index) => {
       if (isMicrotask(callback))
         return new Microtask(callback.node, callback.calleeName, index);
@@ -68,6 +68,6 @@ export class EventLoopVisualizer {
     const codeInput = this.inputArea.value;
 
     e.preventDefault();
-    this.initialize(codeInput);
+    this.setCallbacks(codeInput);
   }
 }
