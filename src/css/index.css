@@ -1,0 +1,108 @@
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --container-border: 1.5px solid grey;
+  --container-padding: 0.5rem;
+  --box-bg-color: #b7e3ff;
+  --container-width: 60rem;
+  --input-bg-color: #3cbc8d;
+  --box-width: 26rem;
+  --large-box-height: 15rem;
+  --small-box-height: 6rem;
+  --full: 100%;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  display: grid;
+  place-items: center;
+}
+
+.input-view__container {
+  display: flex;
+  flex-direction: column;
+  padding: var(--container-padding);
+  width: var(--container-width);
+  height: 15rem;
+}
+
+.input-view__text-input[type="text"] {
+  width: calc(var(--full) - var(--container-padding));
+  height: var(--full);
+  border: var(--container-border);
+  background-color: var(--input-bg-color);
+  color: white;
+  font-size: 0.8rem;
+}
+
+.input-view__submit {
+  width: 6.25rem;
+  height: 1.5rem;
+}
+
+.call-stack__component-box,
+.web-apis__component-box,
+.event-loop__component-box,
+.microtask-queue__component-box,
+.macrotask-queue__component-box {
+  width: var(--box-width);
+}
+
+.call-stack__component-contents,
+.web-apis__component-contents,
+.event-loop__component-contents {
+  height: var(--large-box-height);
+  border: var(--container-border);
+  background-color: var(--box-bg-color);
+}
+
+.event-loop__icon {
+  width: var(--full);
+  height: 50%;
+  vertical-align: middle;
+  fill: currentColor;
+  overflow: hidden;
+  position: relative;
+  top: 25%;
+  animation: rotate 1s infinite linear;
+}
+
+.task-queue__container {
+  width: var(--box-width);
+  display: grid;
+  justify-content: space-between;
+  align-content: space-between;
+}
+
+.microtask-queue__component-contents,
+.macrotask-queue__component-contents {
+  height: var(--small-box-height);
+  border: var(--container-border);
+  background-color: var(--box-bg-color);
+}
+
+.execution__container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: calc(var(--container-width) - 2 * var(--box-width));
+  width: var(--container-width);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
