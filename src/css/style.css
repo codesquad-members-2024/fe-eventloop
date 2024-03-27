@@ -15,15 +15,10 @@ section {
   align-items: center;
 }
 
-.call-stack p,
-.web-apis p {
-  color: white;
-  text-align: center;
-  font-size: 2rem;
-}
-
 .call-stack-area {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   width: 300px;
   height: 200px;
   border: 10px double greenyellow;
@@ -32,7 +27,9 @@ section {
 }
 
 .web-apis-area {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   width: 250px;
   height: 200px;
   border: 10px double red;
@@ -54,6 +51,15 @@ section {
   }
 }
 
+.task {
+  display: block;
+  background-color: pink;
+  width: 80%;
+  height: 30%;
+}
+
+.call-stack p,
+.web-apis p,
 .task-queue p {
   color: white;
   text-align: center;

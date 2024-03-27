@@ -10,12 +10,13 @@
 }
 
 textarea {
-  width: 500px;
+  width: 600px;
   height: 100px;
   background-color: white;
   margin: 10px 0px;
   border-radius: 10px;
   font-size: 1rem;
+  resize: none;
 }
 
 .enter-btn {
