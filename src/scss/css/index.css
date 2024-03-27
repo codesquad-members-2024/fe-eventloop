@@ -2,10 +2,16 @@
   box-sizing: border-box;
 }
 
-main {
-  width: 100%;
-  height: 100%;
+body {
   background: #222;
+}
+
+main {
+  width: 90%;
+  margin: 0 auto;
+  height: 100%;
+  max-width: 1100px;
+  min-width: 720px;
 }
 
 .inner {
@@ -31,11 +37,18 @@ main {
 }
 
 .neon {
-  display: block;
+  display: flex;
+  flex: 1;
   position: relative;
   padding: 30px;
   border-radius: 10px;
   border: 2px solid #fff;
+}
+.neon .task {
+  margin-right: 10px;
+}
+.neon .task:last-child {
+  margin-right: 0;
 }
 
 .section-code {
@@ -83,9 +96,22 @@ main {
   background-color: #f0f0f0;
 }
 
+.call-stack {
+  width: 50%;
+}
 .call-stack .neon {
+  height: 400px;
   border-color: #4ed6ff;
   box-shadow: 0 0 10px #4ed6ff;
+}
+
+.web-apis {
+  width: 50%;
+}
+.web-apis .neon {
+  height: 400px;
+  border-color: rgb(153, 116, 231);
+  box-shadow: 0 0 10px rgb(153, 116, 231);
 }
 
 .event-loop .neon {
