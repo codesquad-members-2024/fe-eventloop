@@ -13,8 +13,6 @@ module.exports = {
   printWidth: 80,
   // 객체 괄호에 공백 삽입
   bracketSpacing: true,
-  // 항상 화살표 함수의 매개 변수를 괄호로 감쌈
-  arrowParens: 'always',
   // OS에 따른 코드라인 끝 처리 방식 사용
   endOfLine: 'auto',
 };
