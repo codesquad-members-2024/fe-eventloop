@@ -28,16 +28,18 @@ export const renderComponent = ({ className, content = "" }) => {
   return `<div class="${className}__component">${content}</div>`;
 };
 
-export const renderComponents = ({ className, components }) => {
-  return components.reduce(
-    (acc, cur) => acc + renderComponent({ className, content: cur.toString() }),
-    ""
-  );
-};
-
 export const renderComponentBox = ({ className, title, content = "" }) => {
   return `<div class="${className}__component-box">
     <span class="${className}__title">${title}</span>
     <div class="${className}__component-contents">${content}</div>
   </div>`;
+};
+
+export const updateComponents = ({ className, contents }) => {
+  const contentsTag = document.querySelector(`.${className}__component-contents`);
+
+  contentsTag.innerHTML = contents.reduce(
+    (acc, cur) => acc + renderComponent({ className, content: cur }),
+    ""
+  );
 };
