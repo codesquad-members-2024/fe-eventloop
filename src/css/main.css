@@ -171,7 +171,9 @@ grey main {
   gap: 10px;
 }
 .animation__queue_box {
-  align-content: end;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 }
 @keyframes spin {
   from {
