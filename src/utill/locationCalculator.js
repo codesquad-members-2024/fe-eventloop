@@ -1,5 +1,6 @@
 function LocationCalculater() {
-    const callStack = { x: 0, y: 0 };
+    
+    const callStack = { x: 0, y: 0, };
     const wepApi = { x: 0, y: 0 };
     const microTast = { x: 0, y: 0 };
     const macroTast = { x: 0, y: 0 };

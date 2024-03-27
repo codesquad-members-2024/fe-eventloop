@@ -22,7 +22,7 @@ body {
     height: 30px;
 }
 
-.engin-container {
+.engine-container {
     width: 1200px;
     height: 550px;
     margin:  10px auto;
@@ -109,7 +109,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 247px;
+    width: 250px;
     height: 80px;
     border-radius: 10px;
     position: absolute;

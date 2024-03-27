@@ -3,16 +3,17 @@ function EventLoop() {
     const main = (inputCode) => {
         const callStack = new CallStack(inputCode)
         callStack.appendCode()
-        
     };
 
-    const getInputValue = (event) => {
-        const inputValue = document.querySelector(".code-input").value;
-        main(inputValue);
+    const getInputValue = () => {
+        const inputValue = document.querySelector(".code-input");
+        main(inputValue.value);
+        inputValue.value = null;
     };
 
     const setEventHandler = () => {
         const runBtn = document.querySelector(".run-btn");
+        runBtn.removeEventListener("click", getInputValue);
         runBtn.addEventListener("click", getInputValue);
     };
     return { setEventHandler };
