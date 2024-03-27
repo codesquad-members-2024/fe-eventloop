@@ -24,11 +24,21 @@
         </section>
         <section class="main__section__animation">
           <div class="main__animation__container">
-            <div class="animation__call_stack_name box_name">Call Stack</div>
-            <div class="animation__call_stack_box">
-              <div class="animation__call_stack_stuff">a</div>
-              <div class="animation__call_stack_stuff">b</div>
-              <div class="animation__call_stack_stuff">c</div>
+            <div class="flex_row">
+              <div>
+                <h3 class="animation__call_stack_name box_name">Call Stack</h3>
+                <div class="animation__call_stack_box">
+                  <div class="animation__stuff">a</div>
+                  <div class="animation__stuff">b</div>
+                  <div class="animation__stuff">c</div>
+                </div>
+              </div>
+              <div>
+                <h3 class="animation__web_api_name box_name">WEB APIS</h3>
+                <div class="animation__web_api_box">
+                  <div class="animation__stuff">a</div>
+                </div>
+              </div>
             </div>
             <div class="main__animation__element">
               <div>
@@ -39,12 +49,12 @@
                 </div>
               </div>
               <div class="animation__queue_box">
-                <div class="box_name">MICRO TASK QUEUE</div>
+                <h3 class="box_name">MICRO TASK QUEUE</h3>
                 <div class="flex_row">
                   <div class="animation__arrow">↔</div>
                   <div class="animation__micro_task_box"></div>
                 </div>
-                <div class="box_name">MACRO TASK QUEUE</div>
+                <h3 class="box_name">MACRO TASK QUEUE</h3>
                 <div class="flex_row">
                   <div class="animation__arrow">↔</div>
                   <div class="animation__macro_task_box"></div>

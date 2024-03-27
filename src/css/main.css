@@ -4,6 +4,7 @@
   --blue-btn-color: #312cb0;
   --gray-box-color: #d9d9d9;
   --neon-green: #58c332;
+  --neon-sky: #6ac4ea;
   --neon-yellow: #dad630;
   --neon-orange: #eb641b;
   --neon-blue: #16cfba;
@@ -87,22 +88,34 @@ grey main {
   gap: 10px;
   width: 200px;
   height: 200px;
-  /* background-color: var(--gray-box-color); */
   border: double 8px;
   border-color: var(--neon-green);
   border-radius: 10px;
+}
 
-  .animation__call_stack_stuff {
-    margin-bottom: 10px;
-    width: 90%;
-    height: 30px;
-    align-content: center;
-    text-align: center;
-    background-color: var(--neon-pink);
-    border: solid 1px;
-    border-color: var(--default-white-color);
-    border-radius: 10px;
-  }
+.animation__stuff {
+  margin-bottom: 10px;
+  width: 100px;
+  height: 30px;
+  align-content: center;
+  text-align: center;
+  background-color: var(--neon-pink);
+  border: solid 1px;
+  border-color: var(--default-white-color);
+  border-radius: 10px;
+}
+
+.animation__web_api_box {
+  margin-top: 10px;
+  display: flex;
+  width: 400px;
+  height: 75%;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 5px;
+  border: double 8px;
+  border-color: var(--neon-sky);
+  border-radius: 10px;
 }
 
 .animation__arrow {
