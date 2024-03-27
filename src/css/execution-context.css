@@ -1,0 +1,155 @@
+.execution-context-wrap {
+	width: 60%;
+	height: 100%;
+	padding: 20px;
+}
+
+.arrow-box {
+	position: relative;
+	& > div {
+		position: absolute;
+		top: 230px;
+		left: -20px;
+		border: 4px dashed wheat;
+		border-left: none;
+		width: 40px;
+		height: 250px;
+		&:first-child {
+			top: 110px;
+			border-top: none;
+			border-right: none;
+		}
+	}
+	& > i {
+		position: absolute;
+		top: 230px;
+		color: wheat;
+	}
+}
+
+.stack-wrap {
+	width: 90%;
+	height: 40%;
+	margin: 40px 0px 20px 15px;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.queue-eventloop-wrap {
+	margin-top: 10px;
+	display: flex;
+	justify-content: space-evenly;
+	width: 90%;
+	height: 40%;
+}
+
+.queue-wrap {
+	height: 90%;
+	width: 80%;
+	margin-left: 50px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.call-stack {
+	text-align: center;
+	width: 40%;
+	height: 90%;
+	& > div {
+		border: 2px solid var(--call-stack-color);
+		box-shadow: 0px 0px 20px var(--call-stack-color);
+		overflow: hidden;
+	}
+}
+
+.web-api {
+	text-align: center;
+	width: 40%;
+	height: 90%;
+	& > div {
+		border: 2px solid var(--wap-api-color);
+		box-shadow: 0px 0px 20px var(--wap-api-color);
+	}
+}
+
+.microtask-queue {
+	position: relative;
+	text-align: center;
+	width: 80%;
+	height: 80px;
+	& > i {
+		position: absolute;
+		top: 80%;
+		left: -20%;
+	}
+	& > div {
+		border: 2px solid var(--microtask-queue-color);
+		box-shadow: 0px 0px 20px var(--microtask-queue-color);
+	}
+}
+
+.macrotask-queue {
+	position: relative;
+	text-align: center;
+	width: 80%;
+	height: 80px;
+	margin-top: 20px;
+	& > i {
+		position: absolute;
+		top: 80%;
+		left: -20%;
+	}
+	& > div {
+		border: 2px solid var(--macrotask-queue-color);
+		box-shadow: 0px 0px 20px var(--macrotask-queue-color);
+	}
+}
+
+.event-loop {
+	margin: 30px 0px 0px 30px;
+	position: relative;
+	text-align: center;
+	font-size: 22px;
+	width: 150px;
+	height: 90%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	& > div {
+		position: relative;
+		padding-top: 20px;
+		border: 2px solid var(--event-loop-color);
+		border-radius: var(--main-border-radius);
+		height: 80%;
+		width: 80px;
+	}
+	& > i {
+		position: absolute;
+		top: -5%;
+	}
+}
+
+.event-loop__loop-arrow {
+	position: absolute;
+	top: 55%;
+	left: 15px;
+	font-size: 25px;
+}
+
+.box {
+	margin-top: 10px;
+	border-radius: var(--main-border-radius);
+	width: 100%;
+	height: 100%;
+}
+
+.code-box {
+	display: inline-block;
+	font-size: 16px;
+	padding: 8px;
+	background-color: var(--black);
+	border: var(--main-border);
+	border-radius: var(--main-border-radius);
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Event Loop</title>
+		<script defer src="https://kit.fontawesome.com/677c473c16.js" crossorigin="anonymous"></script>
+		<link href="./src/css/style.css" rel="stylesheet" />
+		<script defer type="module" src="./src/js/main.js"></script>
+	</head>
+	<body>
+		<main class="event-loop-wrap">
+			<section class="code-wrap">
+				<textarea class="code__excute" readonly></textarea>
+				<div class="code__input">
+					<textarea placeholder="Click the colored Button!!" readonly></textarea>
+					<div class="code__input__btn">
+						<div class="code__input__code-btn">
+							<button class="green"></button>
+							<button class="red"></button>
+						</div>
+						<button class="code__input__excute">Excute</button>
+					</div>
+				</div>
+				<!-- console?-->
+			</section>
+			<section class="execution-context-wrap">
+				<div class="stack-wrap">
+					<div class="call-stack">
+						<span>CALL STACK</span>
+						<div class="box"></div>
+					</div>
+					<div class="web-api">
+						<span>WEP API</span>
+						<div class="box"><span class="code-box goto-wep">()=>console.log()</span></div>
+					</div>
+					<div class="arrow-box">
+						<div></div>
+						<div></div>
+					</div>
+				</div>
+				<div class="queue-eventloop-wrap">
+					<div class="event-loop">
+						<i class="fa-solid fa-arrow-up fa-xl"></i>
+						<div>
+							EVENT LOOP
+							<span class="event-loop__loop-arrow">
+								<i class="fa-solid fa-rotate fa-2xl"></i>
+							</span>
+						</div>
+					</div>
+					<div class="queue-wrap">
+						<div class="microtask-queue">
+							<i class="fa-solid fa-arrows-left-right fa-2xl"></i>
+							<span>MICROTASK QUEUE</span>
+							<div class="box"></div>
+						</div>
+						<div class="macrotask-queue">
+							<i class="fa-solid fa-arrows-left-right fa-2xl"></i>
+							<span>MACROTASK QUEUE</span>
+							<div class="box"></div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+	</body>
+</html>

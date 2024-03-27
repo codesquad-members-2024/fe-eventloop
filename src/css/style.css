@@ -1,0 +1,25 @@
+@import "reset.css";
+@import "variables.css";
+@import "animation.css";
+
+/* view */
+@import "code.css";
+@import "execution-context.css";
+
+body {
+	background-color: var(--main-background-color);
+	width: 100vw;
+	height: 100vh;
+	color: var(--main-font-color);
+	font-family: Roboto;
+	overflow-y: hidden;
+	display: flex;
+}
+
+.event-loop-wrap {
+	display: flex;
+	min-width: 1300px;
+	max-width: 1300px;
+	min-height: 650px;
+	max-height: 650px;
+}

@@ -1,0 +1,13 @@
+:root {
+	--main-font-color: #fff;
+	--main-background-color: #252526;
+	--call-stack-color: #7fff00;
+	--wap-api-color: #ff0000;
+	--event-loop-color: #00fffb;
+	--microtask-queue-color: #ff9100;
+	--macrotask-queue-color: #fcf340;
+	--main-border: 1.5px solid rgb(88, 88, 88);
+	--main-border-radius: 10px;
+	--items-padding: 20px;
+	--black: #000;
+}
