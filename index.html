@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" href="./src/css/index.css" />
+    <script src="https://unpkg.com/acorn@8.0.0"></script>
+    <script src="https://unpkg.com/acorn-walk@8.0.0"></script>
+    <script type="module" src="./src/js/index.js" defer></script>
+    <title>🎀이벤트 루프 시각화🎀</title>
+  </head>
+  <body>
+    <div id="wrap">
+      <main>
+        <section class="main__section__input_code">
+          <article class="main__input_code__container">
+            <header class="input_code__text">코드 입력</header>
+            <form action="" id="code-form">
+              <textarea id="code-input" type="text" placeholder="여기에 비동기 콜백이 포함된 코드를 입력하세요."></textarea>
+              <button type="submit" id="code-run-btn">동작시키기</button>
+            </form>
+          </article>
+        </section>
+        <section class="main__section__animation">
+          <article class="main__animation__container">
+            <div class="flex_row">
+              <figure>
+                <figcaption class="animation__call_stack_name box_name">Call Stack</figcaption>
+                <div class="animation__call_stack_box">
+                  <!-- <div class="animation__stuff">a</div>
+                  <div class="animation__stuff">b</div>
+                  <div class="animation__stuff">c</div> -->
+                </div>
+              </figure>
+              <figure>
+                <figcaption class="animation__web_api_name box_name">WEB APIS</figcaption>
+                <div class="animation__web_api_box">
+                  <!-- <div class="animation__stuff">a</div> -->
+                </div>
+              </figure>
+            </div>
+
+            <div class="main__animation__element">
+              <figure>
+                <div class="animation__arrow">⬆</div>
+                <div class="animation__event_loop_box">
+                  <figcaption class="animation__event_loop_name box_name">EVENT LOOP</figcaption>
+                  <div class="animation__event_loop_icon">🔄</div>
+                </div>
+              </figure>
+
+              <div class="animation__queue_box">
+                <section>
+                  <h3 class="box_name">MICRO TASK QUEUE</h3>
+                  <div class="flex_row">
+                    <div class="animation__arrow">↔</div>
+                    <div class="animation__micro_task_box"></div>
+                  </div>
+                </section>
+                <section>
+                  <h3 class="box_name">MACRO TASK QUEUE</h3>
+                  <div class="flex_row">
+                    <div class="animation__arrow">↔</div>
+                    <div class="animation__macro_task_box"></div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
