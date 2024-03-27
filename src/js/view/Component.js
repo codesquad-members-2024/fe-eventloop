@@ -28,8 +28,8 @@ export const renderComponent = ({ className, content = "" }) => {
   return `<div class="${className}__component">${content}</div>`;
 };
 
-export const renderComponents = ({ className, callbacks }) => {
-  return callbacks.reduce(
+export const renderComponents = ({ className, components }) => {
+  return components.reduce(
     (acc, cur) => acc + renderComponent({ className, content: cur.toString() }),
     ""
   );

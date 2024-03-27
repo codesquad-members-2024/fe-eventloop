@@ -1,4 +1,4 @@
-const MICRO_TASK_PROTOTYPES = {
+export const MICRO_TASK_PROTOTYPES = {
   then: "Promise",
   catch: "Promise",
   finally: "Promise",
@@ -7,7 +7,7 @@ const MICRO_TASK_PROTOTYPES = {
   nextTick: "Process",
 };
 
-const MACRO_TASK_PROTOTYPES = {
+export const MACRO_TASK_PROTOTYPES = {
   setTimeout: "Window",
   setInterval: "Window",
   setImmediate: "Window",
@@ -20,12 +20,11 @@ const MACRO_TASK_PROTOTYPES = {
 };
 
 export class Callback {
-  node;
-  calleeName;
 
-  constructor(node, calleeName) {
+  constructor(node, calleeName, index) {
     this.node = node;
     this.calleeName = calleeName;
+    this.index = index;
   }
 
   getCalleeName() {
@@ -35,12 +34,12 @@ export class Callback {
 
 export class Microtask extends Callback {
   toString() {
-    return `${MICRO_TASK_PROTOTYPES[this.calleeName]} Callback`;
+    return `${MICRO_TASK_PROTOTYPES[this.calleeName]} Callback (${this.calleeName}) ${this.index}`;
   }
 }
 
 export class Macrotask extends Callback {
   toString() {
-    return `${MACRO_TASK_PROTOTYPES[this.calleeName]} Callback`;
+    return `${MACRO_TASK_PROTOTYPES[this.calleeName]} Callback (${this.calleeName}) ${this.index}`;
   }
 }
