@@ -1,7 +1,4 @@
-const CALLBACK_EXPRESSIONS = [
-  "CallExpression",
-  "NewExpression",
-];
+const CALLBACK_EXPRESSIONS = ["CallExpression", "NewExpression"];
 const MICRO_TASK_CALLEES = [
   "then",
   "catch",
@@ -29,8 +26,7 @@ const isEmpty = (elements) => elements.length === NO_ELEMENTS;
 
 const isNodeType = (node, types) => types.includes(node.type);
 
-const isCallbackExpression = (node) =>
-  isNodeType(node, CALLBACK_EXPRESSIONS);
+const isCallbackExpression = (node) => isNodeType(node, CALLBACK_EXPRESSIONS);
 
 const isFunction = (argument) =>
   argument.type === "FunctionExpression" ||
@@ -38,7 +34,7 @@ const isFunction = (argument) =>
 
 const isObjectType = (node) => node instanceof Object;
 
-const isMicrotask = (node) => 
+const isMicrotask = (node) =>
   MICRO_TASK_CALLEES.includes(node.callee?.name) ||
   MICRO_TASK_CALLEES.includes(node.callee?.property?.name);
 
@@ -50,46 +46,42 @@ const getCalleeName = (node) => {
   return node.callee?.type === "Identifier"
     ? node.callee.name
     : node.callee?.property?.type === "Identifier"
-      ? node.callee.property.name
-      : null;
+    ? node.callee.property.name
+    : null;
 };
 
 const addCallbacks = (node, callbacks) => {
   const functions = node.arguments.filter((arg) => isFunction(arg));
 
   if (isEmpty(functions)) return;
-  
+
   const calleeName = getCalleeName(node);
   const callbackNodes = functions.map((node) => ({ node, calleeName }));
 
-  if (isMicrotask(node)) callbacks.microtasks.unshift(...callbackNodes);
-  if (isMacrotask(node)) callbacks.macrotasks.unshift(...callbackNodes);
+  if (isMicrotask(node)) callbacks.push(...callbackNodes);
+  if (isMacrotask(node)) callbacks.push(...callbackNodes);
 };
 
-const findCallbacks = (node, callbacks = { microtasks: [], macrotasks: [] }) => {
-  if (isCallbackExpression(node)) addCallbacks(node, callbacks);
-
+const findCallbacks = (node, callbacks = []) => {
   Object.keys(node).forEach((key) => {
     const child = node[key];
     if (isObjectType(child)) findCallbacks(child, callbacks);
   });
+  if (isCallbackExpression(node)) addCallbacks(node, callbacks);
 
   return callbacks;
 };
 
 export default function CodeAnalyzer(code) {
   this.options = { ecmaVersion: LATEST_VERSION };
-  this.ast = null;
-  this.callbacks = null;
-  
   this.initializeCallbacks(code);
 }
 
-CodeAnalyzer.prototype.initializeCallbacks = function(code) {
+CodeAnalyzer.prototype.initializeCallbacks = function (code) {
   this.ast = acorn.parse(code, this.options);
   this.callbacks = findCallbacks(this.ast);
 };
 
-CodeAnalyzer.prototype.getCallbacks = function() {
+CodeAnalyzer.prototype.getCallbacks = function () {
   return this.callbacks;
 };
