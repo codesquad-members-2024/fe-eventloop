@@ -95,7 +95,7 @@ grey main {
 
 .animation__stuff {
   margin-bottom: 10px;
-  width: 100px;
+  min-width: 100px;
   height: 30px;
   align-content: center;
   text-align: center;

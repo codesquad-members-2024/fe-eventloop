@@ -1,4 +1,4 @@
-import CallStack from './Callstack.js';
+import EventLoopHandler from './EventLoopHandler.js';
 
 export default class SubmitHandler {
   constructor(formId, textId) {
@@ -81,13 +81,11 @@ export default class SubmitHandler {
     const userCode = userCodeTarget.value;
     this.userCode = userCode;
 
-    // console.log('제출된 코드:', userCode);
     const parseCode = acorn.parse(userCode, {
       sourceType: 'module',
     });
 
     return parseCode;
-    // console.log(parseCode);
   }
 
   addEventHandler() {
@@ -98,8 +96,8 @@ export default class SubmitHandler {
     e.preventDefault();
     const parseCode = this.parseCode();
     this.extractCallbackCode(parseCode, this.userCode);
-    console.log(this.callBacks);
-    new CallStack(this.callBacks);
+
+    new EventLoopHandler(this.callBacks);
   };
 }
 
