@@ -34,12 +34,12 @@ export class Callback {
 
 export class Microtask extends Callback {
   toString() {
-    return `${MICRO_TASK_PROTOTYPES[this.calleeName]} Callback (${this.calleeName}) ${this.index + INCREMENT}`;
+    return `<p>${MICRO_TASK_PROTOTYPES[this.calleeName]} Callback <br>(${this.calleeName}) ${this.index + INCREMENT}</p>`;
   }
 }
 
 export class Macrotask extends Callback {
   toString() {
-    return `${MACRO_TASK_PROTOTYPES[this.calleeName]} Callback (${this.calleeName}) ${this.index + INCREMENT}`;
+    return `<p>${MACRO_TASK_PROTOTYPES[this.calleeName]} Callback <br>(${this.calleeName}) ${this.index + INCREMENT}</p>`;
   }
 }

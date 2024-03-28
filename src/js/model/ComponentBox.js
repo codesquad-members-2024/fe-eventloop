@@ -25,16 +25,21 @@ export class ComponentBox extends Observable {
     this.components = [];
   }
 
-  setComponents(components) {
+  getClassName() {
+    return this.className;
+  }
+
+  setComponents(components, maxLength) {
     this.components.length = NO_ELEMENTS;
     this.components = [...components];
+    this.maxLength = maxLength;
 
     const contents = components.map((component) => component.toString())
 
-    this.notify(this.className, contents);
+    this.notify(this.className, contents, this.maxLength);
   }
 
-  notify(className, contents) {
-    this._observers.forEach((observer) => observer({className, contents}));
+  notify(className, contents, maxLength) {
+    this._observers.forEach((observer) => observer({className, contents, maxLength}));
   }
 }

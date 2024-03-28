@@ -6,13 +6,20 @@ import {
 } from "../model/Callback.js";
 import CodeAnalyzer from "../model/CodeAnalyzer.js";
 import { ComponentBox } from "../model/ComponentBox.js";
-import { updateComponents } from "../view/Component.js";
+import { reverseGridComponents, updateComponents } from "../view/Component.js";
 
 const CLASS_NAME = {
   CALL_STACK: "call-stack",
   WEB_APIS: "web-apis",
   MICRO_TASK: "microtask-queue",
   MACRO_TASK: "macrotask-queue",
+};
+
+const MAX_LENGTH = {
+  CALL_STACK: 4,
+  WEB_APIS: 7,
+  MICRO_TASK: 3,
+  MACRO_TASK: 3,
 };
 
 const isMicrotask = (callback) =>
@@ -36,12 +43,19 @@ export default class EventLoopVisualizer {
     this.initializeSubscribes();
   }
 
+  handleSubmit(e) {
+    const codeInput = this.inputArea.value;
+
+    e.preventDefault();
+    this.setCallbacks(codeInput);
+  }
+
   initializeEventListener() {
     this.submitButton.addEventListener("click", this.handleSubmit.bind(this));
   }
 
   initializeSubscribes() {
-    const componentBoxList = Object.values(this.componentBox);
+    const componentBoxList = Object.values(this.componentBox);  
 
     componentBoxList.forEach((box) => box.subscribe(updateComponents));
   }
@@ -54,20 +68,16 @@ export default class EventLoopVisualizer {
   }
 
   setComponents(callbacks) {
-    const components = callbacks.map((callback, index) => {
+    this.callbacks = callbacks.map((callback, index) => {
       if (isMicrotask(callback))
         return new Microtask(callback.node, callback.calleeName, index);
       if (isMacrotask(callback))
         return new Macrotask(callback.node, callback.calleeName, index);
     });
 
-    this.componentBox.webApis.setComponents(components);
+    this.componentBox.webApis.setComponents(this.callbacks, MAX_LENGTH.WEB_APIS);
+    reverseGridComponents(CLASS_NAME.WEB_APIS);
   }
 
-  handleSubmit(e) {
-    const codeInput = this.inputArea.value;
-
-    e.preventDefault();
-    this.setCallbacks(codeInput);
-  }
+  updateComponents() {}
 }
