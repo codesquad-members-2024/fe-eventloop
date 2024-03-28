@@ -1,9 +1,9 @@
 export default class EventLoopHandler {
-  constructor(callBacks) {
-    this.callStackClassName = '.animation__call_stack_box';
-    this.webApiClassName = '.animation__web_api_box';
-    this.microQClassName = '.animation__micro_task_box';
-    this.macroQClassName = '.animation__macro_task_box';
+  constructor(callBacks, classNames) {
+    this.callStackClassName = classNames.callStackClassName;
+    this.webApiClassName = classNames.webApiClassName;
+    this.microQClassName = classNames.microQClassName;
+    this.macroQClassName = classNames.macroQClassName;
     this.callBacks = callBacks;
     this.EventLoopControl();
   }

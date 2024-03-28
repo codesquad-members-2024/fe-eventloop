@@ -1,9 +1,10 @@
 import EventLoopHandler from './EventLoopHandler.js';
 
 export default class SubmitHandler {
-  constructor(formId, textId) {
+  constructor(formId, textId, classNames) {
     this.formId = formId;
     this.textId = textId;
+    this.classNames = classNames;
     this.addEventHandler();
     this.userCode = '';
     // this.callBackCodeInfo = {
@@ -116,7 +117,7 @@ export default class SubmitHandler {
     const parseCode = this.parseCode();
     parseCode.body.forEach((obj) => this.extractCallbackCode(obj, this.userCode));
 
-    new EventLoopHandler(this.callBacks);
+    new EventLoopHandler(this.callBacks, this.classNames);
   };
 }
 
