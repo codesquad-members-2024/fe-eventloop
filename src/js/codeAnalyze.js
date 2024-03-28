@@ -1,11 +1,17 @@
 const callExpressions = [];
-
-const microTasks = ["process", "Promise", "async", "then"];
-const macroTasks = ["setTimeout", "setInterval"];
+const micromacro = [
+  "process",
+  "Promise",
+  "async",
+  "then",
+  "setTimeout",
+  "setInterval",
+];
 
 function getCalleeName(node) {
-  const callee = node.callee;
-  if (callee?.type === "Identifier") { // 앞이 undefined나 null이면 undefined
+  const { callee } = node;
+  if (callee?.type === "Identifier") {
+    // 앞이 undefined나 null이면 undefined
     return callee.name;
   } else if (callee?.property?.type === "Identifier") {
     return callee.property.name;
@@ -20,7 +26,7 @@ function getCalleeName(node) {
 function findCallExpressions(node) {
   if (node.type === "CallExpression") {
     const calleeName = getCalleeName(node);
-    if (microTasks.includes(calleeName) || macroTasks.includes(calleeName)) {
+    if (micromacro.includes(calleeName)) {
       callExpressions.push(node);
     }
   }

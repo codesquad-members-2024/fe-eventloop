@@ -9,7 +9,7 @@ function enterButtonClick() {
   const ast = getAst();
   const callExpressions = findCallExpressions(ast);
   const calleeNames = callExpressions.map((callExpression) => getCalleeName(callExpression));
-  console.log(callExpressions, calleeNames); // 삭제예정
+  console.log(calleeNames); // 삭제예정
 }
 
 function onEvent() {
