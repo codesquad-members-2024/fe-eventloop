@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이벤트 루프</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="src/scss/css/index.css" />
+    <script
+      src="https://kit.fontawesome.com/240a2c8606.js"
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="src/js/main.js"></script>
+  </head>
+  <body>
+    <main>
+      <section class="section-code">
+        <div class="inner">
+          <textarea
+            name="inputCode"
+            id="inputCode"
+            class="input-code"
+          ></textarea>
+          <button role="button" id="buttonRun" class="button-run">RUN</button>
+        </div>
+        <div class="inner"></div>
+      </section>
+      <div class="section-result">
+        <div class="inner">
+          <div class="flex-box-top">
+            <div class="call-stack square">
+              <p class="role">call stack</p>
+              <span class="neon" id="callStack"></span>
+            </div>
+            <div class="web-apis square">
+              <p class="role">WEB APIs</p>
+              <span class="neon"></span>
+            </div>
+          </div>
+
+          <div class="flex-box-bottom">
+            <aside class="event-loop square">
+              <p class="role">event loop</p>
+              <span class="neon">
+                <i class="fa-solid fa-rotate"></i>
+              </span>
+            </aside>
+
+            <div class="queue-list">
+              <div class="microtask square">
+                <p class="role">microtask queue</p>
+                <div class="neon" id="microtask">
+                  <span class="task">TASK 1</span>
+                </div>
+              </div>
+              <div class="macrotask square">
+                <p class="role">macrotask queue</p>
+                <div class="neon" id="macrotask">
+                  <span class="task">TASK 1</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
