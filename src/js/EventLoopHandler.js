@@ -12,7 +12,7 @@ export default class EventLoopHandler {
   runAnimation() {}
 
   // 태그 지우기
-  async removeHTML(callBack, className) {
+  async removeElementByTextAsync(callBack, className) {
     return new Promise((resolve) => {
       setTimeout(() => {
         const callStackTarget = document.querySelector(className);
@@ -28,7 +28,7 @@ export default class EventLoopHandler {
   }
 
   // 태그 생성
-  createHTML(callBack) {
+  createAnimationDivMarkup(callBack) {
     const newHTML = `<div class="animation__stuff">${callBack.callBackCode}</div>`;
     return newHTML;
   }
@@ -36,50 +36,48 @@ export default class EventLoopHandler {
   // 태그 생성
   appendTag(callBack, className) {
     const Target2append = document.querySelector(className);
-    const createHTML = this.createHTML(callBack);
-    Target2append.insertAdjacentHTML('beforeend', createHTML);
+    const animationDivHtml = this.createAnimationDivMarkup(callBack);
+    Target2append.insertAdjacentHTML('beforeend', animationDivHtml);
   }
 
   /** Promise.then, Promise.catch, Promise.finally, MutationObserver 콜백 */
   async setMicroTaskQueue(callBack) {
     //마이크로 태스크 큐의 작업은 매크로 태스크보다 우선적으로 처리된다.
-    const webApiRemove = await this.removeHTML(callBack, this.webApiClassName);
-    if (webApiRemove) this.appendTag(callBack, this.microQClassName);
+    const isElementRemoved = await this.removeElementByTextAsync(callBack, this.webApiClassName);
+    if (isElementRemoved) this.appendTag(callBack, this.microQClassName);
   }
 
   /** setTimeout, setInterval, setImmediate, I/O 작업과 같은 비동기 작업의 콜백 */
   setMacroTaskQueue(callBack) {
     setTimeout(async () => {
-      const webApiRemove = await this.removeHTML(callBack, this.webApiClassName);
-      if (webApiRemove) this.appendTag(callBack, this.macroQClassName);
+      const isElementRemoved = await this.removeElementByTextAsync(callBack, this.webApiClassName);
+      if (isElementRemoved) this.appendTag(callBack, this.macroQClassName);
     }, callBack.delay);
   }
 
   classifyTaskQueues(callBack) {
-    if (callBack.type === 'then') setMicroTaskQueue(callBack);
-    if (callBack.type === 'catch') setMicroTaskQueue(callBack);
-    if (callBack.type === 'setTimeout') setMacroTaskQueue(callBack);
+    if (callBack.type === 'then') this.setMicroTaskQueue(callBack);
+    if (callBack.type === 'catch') this.setMicroTaskQueue(callBack);
+    if (callBack.type === 'setTimeout') this.setMacroTaskQueue(callBack);
   }
 
   async runEvent(callBack) {
-    //call stack에 추가, 삭제
+    //CALL STACK
     this.appendTag(callBack, this.callStackClassName);
-    const callBackRemove = await this.removeHTML(callBack, this.callStackClassName);
+    const isElementRemoved = await this.removeElementByTextAsync(callBack, this.callStackClassName);
 
-    //web api에 추가 (삭제 시 settimeout은 별도 처리 필요)
-    if (callBackRemove) this.appendTag(callBack, this.webApiClassName);
-    // const webApiRemove = await this.removeHTML(callBack, this.webApiClassName);
+    //WEB APIS
+    if (isElementRemoved) this.appendTag(callBack, this.webApiClassName);
 
+    //MICRO & MACRO TASK QUEUE
     this.classifyTaskQueues(callBack);
   }
 
   // 콜스택 컨트롤
   async EventLoopControl() {
-    // console.log(this.callBacks);
     for (const callback of this.callBacks) {
       await this.runEvent(callback);
     }
-
     // this.callBacks.forEach((callBack) => {
     // });
   }
