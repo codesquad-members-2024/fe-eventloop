@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.2.0/uicons-bold-straight/css/uicons-bold-straight.css"
+    />
+    <title>event loop</title>
+  </head>
+  <body>
+    <div class="page-wrap">
+      <section class="codeInput">
+        <label for="codeInput">코드 입력</label><br />
+        <textarea
+          id="codeInput"
+          cols="90"
+          rows="10"
+          placeholder="여기에 비동기 콜백이 포함된 코드를 입력하세요"
+        ></textarea
+        ><br />
+        <button class="submit-btn">동작시키기</button>
+      </section>
+      <div class="event-loop-wrap">
+        <section class="call-stack-wrap">
+          <p>CALL STACK</p>
+          <div class="call-stack"></div>
+          <i class="fi fi-bs-refresh event-loop"></i>
+        </section>
+        <section class="web-api-wrap">
+          <p>WEB APIs</p>
+          <div class="web-api-box"></div>
+          <p>MICROTASK QUEUE</p>
+          <div class="microtask-box"></div>
+          <p>MACROTASK QUEUE</p>
+          <div class="macrotask-box"></div>
+        </section>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/acorn"></script>
+    <script src="https://unpkg.com/acorn-walk/dist/walk.js"></script>
+    <script type="module" src="./src/js/index.js"></script>
+  </body>
+</html>
