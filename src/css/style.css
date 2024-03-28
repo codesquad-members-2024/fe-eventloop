@@ -1,6 +1,6 @@
 @import "./reset.css";
 @import "./enter.css";
-@import "./main.css";
+@import "./eventloop.css";
 
 body {
   display: flex;
@@ -29,3 +29,9 @@ section {
   align-items: center;
 }
 
+.task {
+  display: block;
+  background-color: pink;
+  width: 80%;
+  height: 30%;
+}
