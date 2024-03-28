@@ -15,52 +15,69 @@ export default class SubmitHandler {
     this.callBacks = [];
   }
 
-  extractCallbackCode(parseNode, originalCode) {
-    // console.log(parseNode);
+  extractThenCallbackInfo(originalCode, parseNode) {
+    // console.log('💥then');
+    const thenCallCode = originalCode.substring(parseNode.arguments[0].body.start, parseNode.arguments[0].body.end);
+    const callBackInfo = {
+      type: 'then',
+      callBackCode: thenCallCode,
+      node: parseNode.arguments[0],
+    };
 
+    return callBackInfo;
+  }
+
+  extractCatchCallbackInfo(originalCode, parseNode) {
+    // console.log('💥catch');
+    const catchCallCode = originalCode.substring(parseNode.arguments[0].body.start, parseNode.arguments[0].body.end);
+    const callBackInfo = {
+      type: 'catch',
+      callBackCode: catchCallCode,
+      node: parseNode.arguments[0],
+    };
+
+    return callBackInfo;
+  }
+
+  extractSetTimeoutCallbackInfo(originalCode, parseNode) {
+    // console.log('💥setTimeout');
+    const callBackCode = originalCode.substring(parseNode.arguments[0].body.body[0].start, parseNode.arguments[0].body.body[0].end);
+    const delay = parseNode.arguments[1].value; // setTimeout의 지연 시간
+    const callBackInfo = {
+      type: 'setTimeout',
+      callBackCode,
+      delay,
+      node: parseNode.arguments[0],
+    };
+
+    return callBackInfo;
+  }
+
+  extractCallbackCode(parseNode, originalCode) {
     if (parseNode.type === 'CallExpression') {
       const callee = parseNode.callee;
       let callBackInfo = null;
 
       // .then, .catch, setTimeout의 콜백 파악
       if (callee.type === 'MemberExpression' && callee.property.name === 'then') {
-        this.then;
-        // console.log('💥then');
-        // this.callBackCodeInfo.thenCallbacks.push(parseNode.arguments[0]);
-        const thenCallCode = originalCode.substring(parseNode.arguments[0].body.start, parseNode.arguments[0].body.end);
-        callBackInfo = {
-          type: 'then',
-          callBackCode: thenCallCode,
-          node: parseNode.arguments[0],
-        };
+        callBackInfo = this.extractThenCallbackInfo(originalCode, parseNode);
+        if (callBackInfo) {
+          this.callBacks.unshift(callBackInfo);
+        }
       }
 
       if (callee.type === 'MemberExpression' && callee.property.name === 'catch') {
-        // console.log('💥catch');
-        // this.callBackCodeInfo.catchCallbacks.push(parseNode.arguments[0]);
-        const catchCallCode = originalCode.substring(parseNode.arguments[0].body.start, parseNode.arguments[0].body.end);
-        callBackInfo = {
-          type: 'catch',
-          callBackCode: catchCallCode,
-          node: parseNode.arguments[0],
-        };
+        callBackInfo = this.extractCatchCallbackInfo(originalCode, parseNode);
+        if (callBackInfo) {
+          this.callBacks.unshift(callBackInfo);
+        }
       }
 
       if (callee.type === 'Identifier' && callee.name === 'setTimeout') {
-        // console.log('💥setTimeout');
-        const callBackCode = originalCode.substring(parseNode.arguments[0].body.body[0].start, parseNode.arguments[0].body.body[0].end);
-        const delay = parseNode.arguments[1].value; // setTimeout의 지연 시간
-        // this.callBackCodeInfo.setTimeoutCallbacks.push(parseNode.arguments[0]);
-        callBackInfo = {
-          type: 'setTimeout',
-          callBackCode,
-          delay,
-          node: parseNode.arguments[0],
-        };
-      }
-
-      if (callBackInfo) {
-        this.callBacks.unshift(callBackInfo);
+        callBackInfo = this.extractSetTimeoutCallbackInfo(originalCode, parseNode);
+        if (callBackInfo) {
+          this.callBacks.push(callBackInfo);
+        }
       }
     }
 
@@ -95,7 +112,8 @@ export default class SubmitHandler {
   handleFormSubmit = (e) => {
     e.preventDefault();
     const parseCode = this.parseCode();
-    this.extractCallbackCode(parseCode, this.userCode);
+
+    parseCode.body.forEach((obj) => this.extractCallbackCode(obj, this.userCode));
     new EventLoopHandler(this.callBacks);
   };
 }
