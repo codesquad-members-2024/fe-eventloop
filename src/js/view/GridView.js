@@ -37,16 +37,10 @@ const renderEmptyComponents = (contentsLength, className, maxLength) => {
     .join("");
 };
 
-const renderGridComponents = (contents, className, maxLength) => {
+export const updateGridComponents = ({ className, contents, maxLength }) => {
   const contentsToRender = contents.slice(FIRST_INDEX, maxLength);
   const baseComponents = renderBaseComponents(contentsToRender, className, maxLength);
   const emptyComponents = renderEmptyComponents(contentsToRender.length, className, maxLength);
 
   return `<div class="${className}__components" style="animation-play-state: paused;">${baseComponents}${emptyComponents}</div>`;
-};
-
-export const updateGridComponents = ({ className, contents, maxLength }) => {
-  const components = renderGridComponents(contents, className, maxLength);
-
-  return components;
 };

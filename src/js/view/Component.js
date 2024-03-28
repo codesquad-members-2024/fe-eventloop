@@ -58,7 +58,22 @@ export const reverseGridComponents = (className) => {
   const components = [...componentContents.children];
   const componentCount = components.length;
 
-  components.forEach(
-    (component, index) => (component.style.order = componentCount - index)
-  );
+  components.forEach((component, index) => (component.style.order = componentCount - index));
+};
+
+export const renderIndex = () => {
+  const body = document.querySelector("body");
+  const callStack = renderComponentBox({ className: "call-stack", title: "Call Stack" });
+  const webApis = renderComponentBox({ className: "web-apis", title: "WEB APIs" });
+  const loopIcon = renderLoopIcon({ className: "event-loop", fillProperty: "#fff" });
+  const eventLoop = renderComponentBox({ className: "event-loop", title: "Event Loop", content: loopIcon });
+  const micro = renderComponentBox({ className: "microtask-queue", title: "Microtask Queue" });
+  const macro = renderComponentBox({ className: "macrotask-queue", title: "Macrotask Queue" });
+  const taskContainer = renderContainer({ className: "task-queue", content: micro + macro });
+  const execution = renderContainer({
+    className: "execution",
+    content: callStack + webApis + eventLoop + taskContainer,
+  });
+
+  body.innerHTML = renderInputView("input-view") + execution;
 };
