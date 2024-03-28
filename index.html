@@ -17,7 +17,7 @@
   </head>
   <body>
     <main>
-      <div class="section-code">
+      <section class="section-code">
         <div class="inner">
           <textarea
             name="inputCode"
@@ -26,13 +26,14 @@
           ></textarea>
           <button role="button" id="buttonRun" class="button-run">RUN</button>
         </div>
-      </div>
+        <div class="inner"></div>
+      </section>
       <div class="section-result">
         <div class="inner">
-          <div class="flex-box">
+          <div class="flex-box-top">
             <div class="call-stack square">
               <p class="role">call stack</p>
-              <span class="neon"></span>
+              <span class="neon" id="callStack"></span>
             </div>
             <div class="web-apis square">
               <p class="role">WEB APIs</p>
@@ -40,7 +41,7 @@
             </div>
           </div>
 
-          <div class="flex-box">
+          <div class="flex-box-bottom">
             <aside class="event-loop square">
               <p class="role">event loop</p>
               <span class="neon">
