@@ -1,4 +1,5 @@
 import { getCalleeName, findCallExpressions } from "./codeAnalyze.js";
+import moveTasks from "./view.js";
 
 function getAst() {
   const textareaValue = document.getElementById("enter-code").value;
@@ -8,8 +9,10 @@ function getAst() {
 function enterButtonClick() {
   const ast = getAst();
   const callExpressions = findCallExpressions(ast);
-  const calleeNames = callExpressions.map((callExpression) => getCalleeName(callExpression));
-  console.log(calleeNames); // 삭제예정
+  const calleeNames = callExpressions.map((callExpression) =>
+    getCalleeName(callExpression)
+  );
+  moveTasks(calleeNames);
 }
 
 function onEvent() {

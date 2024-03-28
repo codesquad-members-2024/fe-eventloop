@@ -32,24 +32,22 @@ function moveTasks(tasks) {
     }, delay);
 
     setTimeout(() => {
-      webApis.appendTask(task);
+      webApis.appendTask(task + " cb");
     }, delay + 2000);
 
     setTimeout(() => {
       setTimeout(() => {
         if (microTasks.includes(task)) {
-          microQueue.appendTask(task);
+          microQueue.appendTask(task + "cb");
         } else if (macroTasks.includes(task)) {
-          macroQueue.appendTask(task);
+          macroQueue.appendTask(task + "cb");
         }
       }, 2000);
     }, delay + 2000);
-
     delay += 4000;
   });
 }
 
-const tasks = ["then"]; //, "then", "setTimeout"
-moveTasks(tasks);
+// const tasks = ["then", "then", "setTimeout"]; //, "then", "setTimeout"
 
-export default Task;
+export default moveTasks;
