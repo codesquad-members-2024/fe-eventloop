@@ -45,21 +45,23 @@ export default class EventLoopHandler {
     return newHTML;
   }
 
-  // 태그 생성
-  appendTag(callBack, className, idx) {
-    const Target2append = document.querySelector(className);
-    let backgroundColor = null;
-
+  specifyBackgroundColor(idx) {
     // if (this.bgColor.hasOwnProperty(typeName)) {
     // 위의 경우는 hasOwnProperty 메서드가 오버라이드되었거나, this.bgColor 객체가 null 또는 undefined인 경우에는 오류가 발생할 수 있습니다.
     const isExistence = Object.prototype.hasOwnProperty.call(this.callBacks[idx], 'bgColor');
 
-    if (isExistence) {
-      backgroundColor = this.callBacks[idx].bgColor;
-    } else {
-      backgroundColor = this.generateRandomColor();
-      this.callBacks[idx].bgColor = backgroundColor;
-    }
+    if (isExistence) return this.callBacks[idx].bgColor;
+
+    const backgroundColor = this.generateRandomColor();
+    this.callBacks[idx].bgColor = backgroundColor;
+    return backgroundColor;
+  }
+
+  // 태그 생성
+  appendTag(callBack, className, idx) {
+    const Target2append = document.querySelector(className);
+
+    let backgroundColor = this.specifyBackgroundColor(idx);
     const animationDivHtml = this.createAnimationDivMarkup(callBack, backgroundColor);
     Target2append.insertAdjacentHTML('beforeend', animationDivHtml);
   }
