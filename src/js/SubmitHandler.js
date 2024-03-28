@@ -15,39 +15,39 @@ export default class SubmitHandler {
     this.callBacks = [];
   }
 
-  extractThenCallbackInfo(originalCode, parseNode) {
-    // console.log('💥then');
-    const thenCallCode = originalCode.substring(parseNode.arguments[0].body.start, parseNode.arguments[0].body.end);
+  createThenCallbackInfo(originalCode, callBackNode) {
+    const callBackNodeBody = callBackNode.body;
+    const thenCallCode = originalCode.substring(callBackNodeBody.start, callBackNodeBody.end);
     const callBackInfo = {
       type: 'then',
       callBackCode: thenCallCode,
-      node: parseNode.arguments[0],
+      node: callBackNode,
     };
 
     return callBackInfo;
   }
 
-  extractCatchCallbackInfo(originalCode, parseNode) {
-    // console.log('💥catch');
-    const catchCallCode = originalCode.substring(parseNode.arguments[0].body.start, parseNode.arguments[0].body.end);
+  createCatchCallbackInfo(originalCode, callBackNode) {
+    const callBackNodeBody = callBackNode.body;
+    const catchCallCode = originalCode.substring(callBackNodeBody.start, callBackNodeBody.end);
     const callBackInfo = {
       type: 'catch',
       callBackCode: catchCallCode,
-      node: parseNode.arguments[0],
+      node: callBackNode,
     };
 
     return callBackInfo;
   }
 
-  extractSetTimeoutCallbackInfo(originalCode, parseNode) {
-    // console.log('💥setTimeout');
-    const callBackCode = originalCode.substring(parseNode.arguments[0].body.body[0].start, parseNode.arguments[0].body.body[0].end);
+  createSetTimeoutCallbackInfo(originalCode, parseNode, callBackNode) {
+    const callBackNodeBody = callBackNode.body.body[0];
+    const callBackCode = originalCode.substring(callBackNodeBody.start, callBackNodeBody.end);
     const delay = parseNode.arguments[1].value; // setTimeout의 지연 시간
     const callBackInfo = {
       type: 'setTimeout',
       callBackCode,
       delay,
-      node: parseNode.arguments[0],
+      node: callBackNode,
     };
 
     return callBackInfo;
@@ -58,23 +58,25 @@ export default class SubmitHandler {
       const callee = parseNode.callee;
       let callBackInfo = null;
 
+      const callBackNode = parseNode.arguments[0];
+
       // .then, .catch, setTimeout의 콜백 파악
       if (callee.type === 'MemberExpression' && callee.property.name === 'then') {
-        callBackInfo = this.extractThenCallbackInfo(originalCode, parseNode);
+        callBackInfo = this.createThenCallbackInfo(originalCode, callBackNode);
         if (callBackInfo) {
           this.callBacks.unshift(callBackInfo);
         }
       }
 
       if (callee.type === 'MemberExpression' && callee.property.name === 'catch') {
-        callBackInfo = this.extractCatchCallbackInfo(originalCode, parseNode);
+        callBackInfo = this.createCatchCallbackInfo(originalCode, callBackNode);
         if (callBackInfo) {
           this.callBacks.unshift(callBackInfo);
         }
       }
 
       if (callee.type === 'Identifier' && callee.name === 'setTimeout') {
-        callBackInfo = this.extractSetTimeoutCallbackInfo(originalCode, parseNode);
+        callBackInfo = this.createSetTimeoutCallbackInfo(originalCode, parseNode, callBackNode);
         if (callBackInfo) {
           this.callBacks.push(callBackInfo);
         }
@@ -112,8 +114,8 @@ export default class SubmitHandler {
   handleFormSubmit = (e) => {
     e.preventDefault();
     const parseCode = this.parseCode();
-
     parseCode.body.forEach((obj) => this.extractCallbackCode(obj, this.userCode));
+
     new EventLoopHandler(this.callBacks);
   };
 }
