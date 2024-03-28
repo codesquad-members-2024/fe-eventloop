@@ -20,7 +20,6 @@ export default class EventLoopHandler {
         stuffs.forEach((stuff) => {
           if (stuff.textContent === callBack.callBackCode) {
             stuff.remove();
-            // console.log('-------------삭제--------------');
           }
         });
         resolve(true);
@@ -39,7 +38,6 @@ export default class EventLoopHandler {
     const Target2append = document.querySelector(className);
     const createHTML = this.createHTML(callBack);
     Target2append.insertAdjacentHTML('beforeend', createHTML);
-    // console.log('-------------생성--------------');
   }
 
   /** Promise.then, Promise.catch, Promise.finally, MutationObserver 콜백 */
