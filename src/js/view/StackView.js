@@ -1,7 +1,5 @@
 import { renderComponent } from './Component.js';
 
-const FIRST_INDEX = 0;
-
 const renderBaseComponents = (contents, className, maxLength) => {
   const baseComponents = contents.reduce((acc, content) => acc + renderComponent({ className, content }), "");
 
@@ -9,7 +7,7 @@ const renderBaseComponents = (contents, className, maxLength) => {
 }
 
 export const updateStackComponents = ({ className, contents, maxLength }) => {
-  const contentsToRender = contents.slice(FIRST_INDEX, maxLength);
+  const contentsToRender = contents.slice(contents.length - 1);
   const baseComponents = renderBaseComponents(contentsToRender, className, maxLength);
 
   return `<div class="${className}__components" style="animation-play-state: paused;">${baseComponents}</div>`;

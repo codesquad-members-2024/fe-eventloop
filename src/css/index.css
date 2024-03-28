@@ -187,11 +187,11 @@ body {
 
 @keyframes bounce-in-out {
   0% {
-    transform: translateY(200%);
+    transform: translateY(300%);
   }
 
   10% {
-    transform: translateY(100%);
+    transform: translateY(110%);
   }
 
   30% {
@@ -199,7 +199,7 @@ body {
   }
 
   70% {
-    transform: translateY(110%);
+    transform: translateY(120%);
   }
 
   100% {

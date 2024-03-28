@@ -34,10 +34,12 @@ const setAnimationPlayState = (state) => {
 const startAnimation = () => setAnimationPlayState("running");
 
 const transferFirstComponent = (source, target) => {
+  const components = source.getComponents();
   if (source.getComponents().length === 0) return false;
 
-  const component = source.getComponents().shift();
+  const component = components.shift();
   target.setComponents([...target.getComponents(), component]);
+  source.setComponents([...source.getComponents()]);
   return true;
 };
 
@@ -96,8 +98,10 @@ export default class EventLoopVisualizer {
 
   updateComponents() {
     const { callStack, webApis, microTasks, macroTasks } = this.componentBox;
+    const firstComponent = webApis.getComponents()[0];
 
-    if (transferFirstComponent(webApis, microTasks) || transferFirstComponent(webApis, macroTasks)) return;
+    if (firstComponent && firstComponent instanceof Microtask && transferFirstComponent(webApis, microTasks)) return;
+    if (firstComponent && firstComponent instanceof Macrotask && transferFirstComponent(webApis, macroTasks)) return;
     if (transferFirstComponent(microTasks, callStack) || transferFirstComponent(macroTasks, callStack)) return;
   }
 
