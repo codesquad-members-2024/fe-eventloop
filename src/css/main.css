@@ -35,7 +35,7 @@
     font-size: 2rem;
   }
   img {
-    width: 100px;
+    width: 130px;
     animation: rotate_image 6s linear infinite;
     transform-origin: 50% 50%;
   }
