@@ -1,11 +1,25 @@
 @import "./reset.css";
 @import "./enter.css";
+@import "./main.css";
 
 body {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #282828;
+}
+
+.wrap {
+  display: flex;
+  width: 1200px;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  width: 600px;
 }
 
 section {
@@ -15,72 +29,3 @@ section {
   align-items: center;
 }
 
-.call-stack-area {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  width: 300px;
-  height: 200px;
-  border: 10px double greenyellow;
-  margin-right: 10px;
-  border-radius: 10px;
-}
-
-.web-apis-area {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  width: 250px;
-  height: 200px;
-  border: 10px double red;
-  margin-left: 10px;
-  border-radius: 10px;
-}
-
-.event-loop {
-  display: block;
-  width: 150px;
-  height: 200px;
-  border: 10px double aqua;
-  margin-right: 10px;
-  border-radius: 10px;
-  p {
-    color: white;
-    text-align: center;
-    font-size: 2rem;
-  }
-}
-
-.task {
-  display: block;
-  background-color: pink;
-  width: 80%;
-  height: 30%;
-}
-
-.call-stack p,
-.web-apis p,
-.task-queue p {
-  color: white;
-  text-align: center;
-  font-size: 2rem;
-}
-
-.micro-queue {
-  display: block;
-  width: 350px;
-  height: 100px;
-  border: 10px double orange;
-  margin-left: 10px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-}
-
-.macro-queue {
-  display: block;
-  width: 350px;
-  height: 100px;
-  border: 10px double yellow;
-  margin-left: 10px;
-  border-radius: 10px;
-}
