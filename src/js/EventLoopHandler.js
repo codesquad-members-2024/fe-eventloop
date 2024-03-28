@@ -11,6 +11,15 @@ export default class EventLoopHandler {
   // 애니메이션
   runAnimation() {}
 
+  /**
+   * 콜스택이 비어있는지 확인
+   * @returns true - 콜스택이 비어있음
+   * @returns false
+   */
+  checkIfCallStackIsEmpty() {
+    return document.querySelector(this.callStackClassName).children.length === 0 ? true : false;
+  }
+
   removeMatchingElement(callBack, className) {
     const callStackTarget = document.querySelector(className);
     const stuffs = Array.from(callStackTarget.children);
@@ -97,6 +106,9 @@ export default class EventLoopHandler {
 
     //MICRO & MACRO TASK QUEUE
     this.classifyTaskQueues(callBack, idx);
+    //CALL STACK
+    const IsEmpty = this.checkIfCallStackIsEmpty();
+    // if(IsEmpty) setMicroTaskQueue 다 빼내고, setMacroTaskQueue를 뺀다.\
   }
 
   // 콜스택 컨트롤
