@@ -1,25 +1,17 @@
 function LocationCalculater() {
-    
+
     const callStack = { x: 0, y: 0, };
     const wepApi = { x: 0, y: 0 };
     const microTast = { x: 0, y: 0 };
     const macroTast = { x: 0, y: 0 };
 
-    const getCallStackLocation = () => {
-        const callStackContainer = document.querySelector(".call-stack-container");
-        const rect = callStackContainer.getBoundingClientRect();
-        callStack.x = rect.left;
+    const getLocation = (drawPosition) => {
+        const drawPositionContainer = document.querySelector(`.${drawPosition}`);
+        const rect = drawPositionContainer.getBoundingClientRect();
+        callStack.x = rect.left + 40;
         callStack.y = rect.top + rect.height / 2;
         return callStack
     };
-
-    const getWepApiLocation = () => {
-        const wepApiContainer = document.querySelector(".wep-Api-container");
-        const rect = wepApiContainer.getBoundingClientRect();
-        wepApi.x = rect.left;
-        wepApi.y = (rect.top + rect.height / 2);
-        return wepApi
-    }
 
     const resetLocation = (type) => {
         if (type === "callStack") {
@@ -37,7 +29,7 @@ function LocationCalculater() {
         }
     };
     
-    return {getCallStackLocation, resetLocation, getWepApiLocation}
+    return {getLocation, resetLocation}
 }
 
 const locationCalculater = LocationCalculater()

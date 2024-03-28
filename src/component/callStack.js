@@ -1,90 +1,31 @@
-import { Box } from "../utill/boxModel.js";
-import { delay } from "../utill/astParser.js";
-import locationCalculater from "../utill/locationCalculator.js";
-import { AstParser } from "../utill/astParser.js";
-import { WebApi } from "./webApi.js";
-export class CallStack {
-    constructor(excuteCode) {
-        this.excuteCode = excuteCode;
+import { Box } from "../utill/boxModal.js"
+import { AnimationGenerator } from "../utill/animationGenerator.js"
+function CallStackManager() {
+    
+    const callStack = []
+
+    const pushToCallStack = (curExecutionContext) => {
+        callStack.push(curExecutionContext)
+        createCallStackHTML(curExecutionContext)
     }
 
-    appendCode() {
-        const box = new Box(this.excuteCode);
-        const [boxModel, className] = box.creatBox();
-        const enginContainer = document.querySelector(".engine-container");
-        enginContainer.innerHTML += boxModel;
-        this.callStackInAnimation(className);
+    const createCallStackHTML = (funcString) => {
+        const uniqueId = Date.now()
+        const box = new Box(funcString, uniqueId)
+        const animationGenerator = new AnimationGenerator(uniqueId, "call-stack-container")
+        renderFunc(box.creatBox())
+        animationGenerator.applyAnimation()
     }
 
-    callStackInAnimation(className) {
-        const callStackLocation = locationCalculater.getCallStackLocation();
-        const element = document.querySelector(`.${className}`);
-        const animation = element.animate(
-            [
-                {
-                    transform: `translate(${callStackLocation.x}px, 0px)`,
-                    opacity: 0,
-                },
-                {
-                    transform: `translate(${callStackLocation.x}px, ${callStackLocation.y}px)`,
-                    opacity: 1,
-                },
-            ],
-            {
-                duration: 2000,
-                easing: "ease-in-out",
-                direction: "normal",
-                fill: "forwards",
-            }
-        );
-        animation.onfinish = () => {
-            this.spliteCallback(this.excuteCode, callStackLocation);
-            locationCalculater.resetLocation("callStack");
-            this.callStackOutAnimation(className);
-        };
+    const renderFunc = (executionContext) => {
+        const bodyEl = document.querySelector(".engine-container")
+        bodyEl.append(executionContext)
     }
 
-    async callStackOutAnimation(className) {
-        await delay(500);
-        const callStackLocation = locationCalculater.getCallStackLocation();
-        const element = document.querySelector(`.${className}`);
-        const animation = element.animate(
-            [
-                {
-                    transform: `translate(${callStackLocation.x}px, ${callStackLocation.y}px)`,
-                    opacity: 1,
-                },
-                {
-                    transform: `translate(${callStackLocation.x}px, 0px)`,
-                    opacity: 0,
-                },
-            ],
-            {
-                duration: 2000,
-                easing: "ease-in-out",
-                direction: "normal",
-                fill: "forwards",
-            }
-        );
-        animation.onfinish = () => {
-            locationCalculater.resetLocation("callStack");
-            element.remove()
-        };
-    }
+    const isCallStackEmpty = () => !callStack.length;
 
-    spliteCallback(excuteCode, callStackLocation) {
-        const ast = acorn.parse(excuteCode, { ecmaVersion: "latest" });
-        const astParser = new AstParser(excuteCode);
-        // 여기서 includes로 micro, macro 확인한다.
-        // isType()
-        const callBackAndDelay = astParser.extractCallbackAndDelay(ast);
-        this.sendToWepapi(callBackAndDelay, callStackLocation)
-
-    }
-
-    sendToWepapi(callBackAndDelay, callStackLocation) {
-        const webApi = new WebApi(callBackAndDelay)
-        webApi.appendCode(callStackLocation)
-    }
+    return {pushToCallStack, isCallStackEmpty}
 }
 
+const callStackManager = CallStackManager()
+export default callStackManager

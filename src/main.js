@@ -1,9 +1,14 @@
-import { CallStack } from "./component/callStack.js";
-function EventLoop() {
+import { astParser } from "./utill/astParser.js";
+import { eventLoop } from "./component/evevtLoop.js";
+function ExecutionContextManager() {
+    const executionContextList = [];
+    
     const main = (inputCode) => {
-        const callStack = new CallStack(inputCode)
-        callStack.appendCode()
+        executionContextList.push(...astParser.splitCodeByFunctions(inputCode))
+        eventLoop()
     };
+
+    const getMainFunction = () => executionContextList.shift()
 
     const getInputValue = () => {
         const inputValue = document.querySelector(".code-input");
@@ -16,8 +21,9 @@ function EventLoop() {
         runBtn.removeEventListener("click", getInputValue);
         runBtn.addEventListener("click", getInputValue);
     };
-    return { setEventHandler };
+    return { setEventHandler, getMainFunction };
 }
 
-const eventLoop = EventLoop();
-eventLoop.setEventHandler()
+const executionContextManager = ExecutionContextManager();
+executionContextManager.setEventHandler()
+export default executionContextManager.getMainFunction

@@ -1,7 +1,7 @@
 # fe-eventloop
 
 ## AST(acorn)
- - [ ] 입력받은 함수를 분리.
+ - [X] 입력받은 함수를 분리.
  - [X] microtask queue, macrotask queue를 구분해 콜백을 추출.
  - [ ] 일반 함수, microtask queue, macrotask queue를 구분
 

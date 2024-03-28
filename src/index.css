@@ -103,14 +103,14 @@ body {
     border: 2px solid #8E8028;
 }
 
-.call-stack,
-.call-back-container {
+.call-stack {
+    font-size: 10px;
     padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 250px;
-    height: 80px;
+    width: 170px;
+    height: 65px;
     border-radius: 10px;
     position: absolute;
     left: 0px;
