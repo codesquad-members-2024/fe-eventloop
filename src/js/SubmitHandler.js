@@ -7,12 +7,6 @@ export default class SubmitHandler {
     this.classNames = classNames;
     this.addEventHandler();
     this.userCode = '';
-    // this.callBackCodeInfo = {
-    //   fetchCalls: [],
-    //   thenCallbacks: [],
-    //   catchCallbacks: [],
-    //   setTimeoutCallbacks: [],
-    // };
     this.callBacks = [];
   }
 
@@ -64,23 +58,17 @@ export default class SubmitHandler {
       // .then, .catch, setTimeout의 콜백 파악
       if (callee.type === 'MemberExpression' && callee.property.name === 'then') {
         callBackInfo = this.createThenCallbackInfo(originalCode, callBackNode);
-        if (callBackInfo) {
-          this.callBacks.unshift(callBackInfo);
-        }
+        if (callBackInfo) this.callBacks.unshift(callBackInfo);
       }
 
       if (callee.type === 'MemberExpression' && callee.property.name === 'catch') {
         callBackInfo = this.createCatchCallbackInfo(originalCode, callBackNode);
-        if (callBackInfo) {
-          this.callBacks.unshift(callBackInfo);
-        }
+        if (callBackInfo) this.callBacks.unshift(callBackInfo);
       }
 
       if (callee.type === 'Identifier' && callee.name === 'setTimeout') {
         callBackInfo = this.createSetTimeoutCallbackInfo(originalCode, parseNode, callBackNode);
-        if (callBackInfo) {
-          this.callBacks.push(callBackInfo);
-        }
+        if (callBackInfo) this.callBacks.push(callBackInfo);
       }
     }
 
@@ -96,7 +84,7 @@ export default class SubmitHandler {
     });
   }
 
-  parseCode() {
+  createParseCode() {
     const userCodeTarget = document.getElementById(this.textId);
     const userCode = userCodeTarget.value;
     this.userCode = userCode;
@@ -114,7 +102,7 @@ export default class SubmitHandler {
 
   handleFormSubmit = (e) => {
     e.preventDefault();
-    const parseCode = this.parseCode();
+    const parseCode = this.createParseCode();
     parseCode.body.forEach((obj) => this.extractCallbackCode(obj, this.userCode));
 
     new EventLoopHandler(this.callBacks, this.classNames);
