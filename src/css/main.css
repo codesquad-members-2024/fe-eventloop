@@ -89,6 +89,7 @@ grey main {
   margin-bottom: 10px;
   min-width: 100px;
   height: 30px;
+  /* min-height: 30px; */
   align-content: center;
   text-align: center;
   background-color: var(--neon-pink);
