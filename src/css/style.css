@@ -1,6 +1,6 @@
 @import "./reset.css";
 @import "./enter.css";
-@import "./main.css";
+@import "./eventloop.css";
 
 body {
   display: flex;
@@ -28,4 +28,3 @@ section {
   justify-content: space-between;
   align-items: center;
 }
-

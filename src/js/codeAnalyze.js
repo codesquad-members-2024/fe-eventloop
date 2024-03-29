@@ -1,11 +1,22 @@
 const callExpressions = [];
+const micromacro = [
+  "process",
+  "Promise",
+  "async",
+  "then",
+  "setTimeout",
+  "setInterval",
+];
 
-const microTasks = ["process", "Promise", "async", "then"];
-const macroTasks = ["setTimeout", "setInterval"];
+function getAst() {
+  const textareaValue = document.getElementById("enter-code").value;
+  return acorn.parse(textareaValue, { ecmaVersion: 2020 });
+}
 
 function getCalleeName(node) {
-  const callee = node.callee;
-  if (callee?.type === "Identifier") { // 앞이 undefined나 null이면 undefined
+  const { callee } = node;
+  if (callee?.type === "Identifier") {
+    // 앞이 undefined나 null이면 undefined
     return callee.name;
   } else if (callee?.property?.type === "Identifier") {
     return callee.property.name;
@@ -20,7 +31,7 @@ function getCalleeName(node) {
 function findCallExpressions(node) {
   if (node.type === "CallExpression") {
     const calleeName = getCalleeName(node);
-    if (microTasks.includes(calleeName) || macroTasks.includes(calleeName)) {
+    if (micromacro.includes(calleeName)) {
       callExpressions.push(node);
     }
   }
@@ -32,4 +43,4 @@ function findCallExpressions(node) {
   return callExpressions;
 }
 
-export { getCalleeName, findCallExpressions };
+export { getAst, getCalleeName, findCallExpressions };

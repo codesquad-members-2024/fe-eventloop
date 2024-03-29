@@ -1,5 +1,4 @@
-import onEvent from "./codeAst.js";
-import Task from "./view.js";
+import onEvent from "./event.js";
 
 function main() {
   onEvent();
