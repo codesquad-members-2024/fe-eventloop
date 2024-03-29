@@ -8,8 +8,8 @@
 
 body {
 	background-color: var(--main-background-color);
-	width: 100vw;
-	height: 100vh;
+	display: flex;
+	justify-content: center;
 	color: var(--main-font-color);
 	font-family: Roboto;
 	overflow-y: hidden;

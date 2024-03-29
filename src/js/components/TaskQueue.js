@@ -1,19 +1,28 @@
 import { ANIMATION } from "../utils/Constants.js";
-import Elements from "../utils/Elements.js";
+import Elements from "./Elements.js";
+import Memory from "./Memory.js";
 
-class TaskQueue {
-	#block;
-
+class TaskQueue extends Memory {
 	constructor(code) {
-		this.#block = `<span class="code-box goto-task-queue">${code}</span>`;
+		super(code, "goto-task-queue");
 	}
 
-	push() {
-		Elements.$taskQueue.innerHTML = this.#block;
-		return new Promise((resolve) => setTimeout(() => resolve(), ANIMATION.delay));
+	async push() {
+		await super.push(Elements.$taskQueue);
 	}
 
-	pop(isMicroQueue) {}
+	pop() {
+		const box = document.querySelector(".macrotask-queue .code-box");
+		box.classList.remove("goto-task-queue");
+		box.classList.add("from-task-queue-goto-call-stack");
+		return new Promise((resolve) =>
+			setTimeout(() => {
+				box.classList.remove("from-task-queue-goto-call-stack");
+				resolve(box);
+				box.remove();
+			}, ANIMATION.delay)
+		);
+	}
 
 	toString() {
 		return "taskQueue";

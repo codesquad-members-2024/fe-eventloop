@@ -1,6 +1,6 @@
-import Elements from "../utils/Elements.js";
+import Elements from "../components/Elements.js";
 import { GREEN_CODE, RED_CODE, BTN_CLASS_NAME } from "../utils/Constants.js";
-import { analyze } from "../components/Analyzer.js";
+import { analyze } from "./analyzer.js";
 
 const CLASSNAME_MAP = {
 	[BTN_CLASS_NAME.green]: () => (Elements.$textArea.value = GREEN_CODE),
@@ -13,9 +13,7 @@ const CLASSNAME_MAP = {
 };
 
 function addEvnetCodeExcute() {
-	Elements.$buttons.addEventListener("click", ({ target }) => {
-		CLASSNAME_MAP[target.className]();
-	});
+	Elements.$buttons.addEventListener("click", ({ target }) => CLASSNAME_MAP[target.className]?.());
 }
 
 export default addEvnetCodeExcute;

@@ -1,26 +1,25 @@
 import { ANIMATION } from "../utils/Constants.js";
-import Elements from "../utils/Elements.js";
+import Elements from "./Elements.js";
+import Memory from "./Memory.js";
 
-class MicroQueue {
-	#block;
-
+class MicroQueue extends Memory {
 	constructor(code) {
-		this.#block = `<span class="code-box goto-micro">${code}</span>`;
+		super(code, "goto-micro");
 	}
 
-	push() {
-		Elements.$micro.innerHTML = this.#block;
-		return new Promise((resolve) => setTimeout(() => resolve(), ANIMATION.delay));
+	async push() {
+		await super.push(Elements.$micro);
 	}
 
 	pop() {
 		const box = document.querySelector(".microtask-queue .code-box");
 		box.classList.remove("goto-micro");
-		box.classList.add("goto-call-stack");
+		box.classList.add("from-micro-goto-call-stack");
 		return new Promise((resolve) =>
 			setTimeout(() => {
+				box.classList.remove("from-micro-goto-call-stack");
+				resolve(box);
 				box.remove();
-				resolve();
 			}, ANIMATION.delay)
 		);
 	}

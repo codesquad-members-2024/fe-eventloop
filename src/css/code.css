@@ -8,16 +8,19 @@ textarea {
 		width: 8px;
 	}
 	&::-webkit-scrollbar-thumb {
-		background: var(--main-background-color); /* 스크롤바 막대 색상 */
-		border: 2px solid var(--event-loop-color); /* 스크롤바 막대 테두리 설정  */
+		background: var(--main-background-color); 
+		border: 2px solid var(--event-loop-color); 
 		border-radius: 12px 12px 12px 12px;
 	}
 }
+.code-section-wrap {
+	height: 100vh;
+	border-right: 2px dashed white;
+	width: 40%;
+}
 
 .code-wrap {
-	height: 100%;
-	width: 40%;
-	border-right: 2px dashed white;
+	height: 650px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
@@ -92,7 +95,7 @@ textarea {
 	& > button {
 		width: 20px;
 		height: 20px;
-		border-radius: 25px;
+		border-radius: 10px;
 		margin-left: 5px;
 		&:first-child {
 			background-color: var(--call-stack-color);

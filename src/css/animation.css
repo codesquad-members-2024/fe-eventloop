@@ -10,26 +10,24 @@
 	0% {
 		transform: translateY(-100%);
 	}
-	30% {
-		transform: translateY(550%);
+	40% {
+		transform: translateY(580%);
 	}
 	50% {
-		transform: translateY(500%);
+		transform: translateY(520%);
 	}
-	65% {
-		transform: translateY(550%);
-	}
+	65%,
 	100% {
-		transform: translateY(550%);
+		transform: translateY(580%);
 	}
 }
 
 @keyframes pop {
 	0% {
-		transform: translateY(550%);
+		transform: translateY(580%);
 	}
 	20% {
-		transform: translateY(570%);
+		transform: translateY(620%);
 	}
 	100% {
 		transform: translateY(-100%);
@@ -37,32 +35,32 @@
 }
 
 .goto-web {
-	transform: translate(-128%, 550%);
+	transform: translate(-128%, 580%);
 	animation: 1.3s ease-in-out 1 forwards gotoweb;
 }
 
 @keyframes gotoweb {
 	from {
-		transform: translate(-128%, 550%);
+		transform: translate(-128%, 580%);
 	}
 	to {
-		transform: translate(0, 550%);
+		transform: translate(0, 500%);
 	}
 }
 
 .goto-micro {
-	transform: translate(20%, -320%);
+	transform: translate(20%, -300%);
 	animation: 1.5s ease-in-out 1 forwards gotoMicro;
 }
 
 .goto-task-queue {
-	transform: translate(20%, -660%);
+	transform: translate(20%, -640%);
 	animation: 1.5s ease-in-out 1 forwards gotoMacro;
 }
 
 @keyframes gotoMicro {
 	0% {
-		transform: translate(20%, -320%);
+		transform: translate(20%, -300%);
 	}
 	33% {
 		transform: translate(120%, -320%);
@@ -71,13 +69,13 @@
 		transform: translate(120%, 50%);
 	}
 	100% {
-		transform: translate(-30%, 50%);
+		transform: translate(0, 0);
 	}
 }
 
 @keyframes gotoMacro {
 	0% {
-		transform: translate(20%, -660%);
+		transform: translate(20%, -640%);
 	}
 	33% {
 		transform: translate(120%, -660%);
@@ -86,7 +84,7 @@
 		transform: translate(120%, 60%);
 	}
 	100% {
-		transform: translate(-20%, 60%);
+		transform: translate(0, 0);
 	}
 }
 
@@ -101,4 +99,51 @@
 	to {
 		transform: rotate(360deg);
 	}
+}
+
+.from-micro-goto-call-stack {
+	transform: translate(0, 0);
+	animation: 1.5s ease-in-out 1 forwards fromMicroGotoCallStack;
+}
+
+.from-task-queue-goto-call-stack {
+	transform: translate(0, 0);
+	animation: 1.5s ease-in-out 1 forwards fromTaskQueueGotoCallStack;
+}
+
+@keyframes fromMicroGotoCallStack {
+	0% {
+		transform: translate(0, 0);
+		opacity: 100%;
+	}
+	50% {
+		transform: translate(-120%, 50%);
+	}
+	70% {
+		opacity: 100%;
+	}
+	100% {
+		transform: translate(-115%, -340%);
+		opacity: 0;
+	}
+}
+
+@keyframes fromTaskQueueGotoCallStack {
+	0% {
+		transform: translate(0, 0);
+		opacity: 100%;
+	}
+	50% {
+		transform: translate(-120%, 50%);
+	}
+	70% {
+		opacity: 100%;
+	}
+	100% {
+		transform: translate(-120%, -630%);
+		opacity: 0;
+	}
+}
+.event-loop-push {
+	transform: translateY(550%);
 }
