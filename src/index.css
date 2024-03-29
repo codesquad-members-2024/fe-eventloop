@@ -113,8 +113,8 @@ body {
     height: 65px;
     border-radius: 10px;
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: -100px;
+    top: -100px;
     background: #EF5EA7;
 }
 

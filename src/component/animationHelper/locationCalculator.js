@@ -9,8 +9,8 @@ function LocationCalculater() {
     const getLocation = (drawPosition) => {
         const drawPositionContainer = document.querySelector(`.${drawPosition}`);
         const rect = drawPositionContainer.getBoundingClientRect();
-        positionMap[drawPosition].x = rect.left;
-        positionMap[drawPosition].y = rect.top + rect.height / 2 - positionMap[drawPosition].y;
+        positionMap[drawPosition].x = rect.left + 100;
+        positionMap[drawPosition].y = rect.top + rect.height / 2 + 100;
         return positionMap[drawPosition]
     };
 
