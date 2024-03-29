@@ -9,6 +9,4 @@ const classNames = {
   macroQClassName: '.animation__macro_task_box',
 };
 
-window.onload = () => {
-  new SubmitHandler(formId, textId, classNames);
-};
+new SubmitHandler(formId, textId, classNames);
