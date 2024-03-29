@@ -1,9 +1,11 @@
 import { getCodeInput } from "./codeInput.js";
 import { parseLiteral } from "./codeParser.js";
+import { controllEventLoop } from "./ eventloop.js";
 
-function main() {
+async function main() {
   getCodeInput();
-  parseLiteral();
+  const callbacks = await parseLiteral();
+  controllEventLoop(callbacks);
 }
 
 main();

@@ -6,20 +6,44 @@ body {
   margin: 0;
 }
 
-p {
+h2 {
   font-size: 24px;
-  margin-bottom: 10px;
+  margin-bottom: auto;
 }
 
-div {
+.round-yellow-border {
   border-radius: 20px;
+  border: 3px double #9acd32;
 }
 
 .call-stack {
   width: 200px;
   height: 300px;
   margin-bottom: 50px;
-  border: 3px double #9acd32;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
+  position: relative;
+}
+
+.call-stack div {
+  width: auto;
+  height: auto;
+  position: absolute;
+  animation: slide-in 1s ease-in-out;
+}
+
+@keyframes slide-in {
+  from {
+    top: 50px;
+    opacity: 0;
+  }
+  to {
+    top: 280px;
+    opacity: 1;
+  }
 }
 
 .call-stack-wrap {
@@ -47,19 +71,11 @@ div {
 .web-api-box {
   height: 200px;
   width: 400px;
-  border: 3px double #9acd32;
+  position: relative;
 }
 
 .microtask-box,
 .macrotask-box {
   width: 400px;
   height: 100px;
-}
-
-.macrotask-box {
-  border: 3px double #9acd32;
-}
-
-.microtask-box {
-  border: 3px double #9acd32;
 }
