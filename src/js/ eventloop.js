@@ -5,22 +5,23 @@ const eventloop = {
   microQueue: [],
 };
 
-export async function controllEventLoop(callbacks) {
+export function controllEventLoop(callbacks) {
   const numOfCallbacks = callbacks.length;
-  await controllCallstackToWebApi(callbacks, numOfCallbacks);
+  moveCallstackToWebApi(callbacks, numOfCallbacks);
 }
 
-function controllCallstackToWebApi(callbacks, numOfCallbacks) {
+function moveCallstackToWebApi(callbacks, numOfCallbacks) {
   const intervalId = setInterval(() => {
-    const currentCall = callbacks.shift();
-    eventloop.callStack.push(currentCall);
-    viewCallStack(currentCall);
-    setTimeout(() => {
-      eventloop.webApi.push(currentCall);
-      viewWebAPIs(currentCall);
-    }, 1500);
-    console.log(eventloop.callStack, eventloop.webApi);
-    if (eventloop.callStack.length >= numOfCallbacks) {
+    if (callbacks.length > 0) {
+      const currentCall = callbacks.shift();
+      eventloop.callStack.push(currentCall);
+      viewCallStack(currentCall);
+      setTimeout(() => {
+        eventloop.webApi.push(currentCall);
+        viewWebAPIs(currentCall);
+      }, 1500);
+      console.log(eventloop.callStack, eventloop.webApi);
+    } else if (eventloop.callStack.length >= numOfCallbacks) {
       clearInterval(intervalId);
     }
   }, 3000);
