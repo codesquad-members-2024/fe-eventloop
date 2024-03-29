@@ -1,5 +1,6 @@
-import { Box } from "../utill/boxModal.js"
-import { AnimationGenerator } from "../utill/animationGenerator.js"
+import { Box } from "./animationHelper/boxModal.js"
+import { AnimationGenerator } from "./animationHelper/animationGenerator.js"
+import { astParser } from "../utill/astParser.js"
 function CallStackManager() {
     
     const callStack = []
@@ -7,19 +8,35 @@ function CallStackManager() {
     const pushToCallStack = (curExecutionContext) => {
         callStack.push(curExecutionContext)
         createCallStackHTML(curExecutionContext)
+        spliceCallBack(curExecutionContext)
     }
 
-    const createCallStackHTML = (funcString) => {
+    const isCallBack = (curExecutionContext) => {
+        if (curExecutionContext.includes("fetch")) {
+            callStack.pop()
+            return false;
+        }
+        return true;
+    }
+
+    const spliceCallBack = (curExecutionContext) => {
+        if(!isCallBack(curExecutionContext)) return;
+        const ast = acorn.parse(curExecutionContext, { ecmaVersion: "latest" });
+        const callBack = astParser.extractCallback(ast, curExecutionContext)
+        console.log(callBack)
+    }
+
+    const createCallStackHTML = (contex) => {
         const uniqueId = Date.now()
-        const box = new Box(funcString, uniqueId)
+        const box = new Box(contex.code, uniqueId)
         const animationGenerator = new AnimationGenerator(uniqueId, "call-stack-container")
         renderFunc(box.creatBox())
-        animationGenerator.applyAnimation()
+        animationGenerator.applyCallBackInAnimation()
     }
 
-    const renderFunc = (executionContext) => {
+    const renderFunc = (node) => {
         const bodyEl = document.querySelector(".engine-container")
-        bodyEl.append(executionContext)
+        bodyEl.append(node)
     }
 
     const isCallStackEmpty = () => !callStack.length;

@@ -1,10 +1,13 @@
 import getMainFunction from "../main.js";
 import callStackManager from "./callStack.js";
-export function eventLoop() {
+export async function eventLoop() {
     const main = () => {
-        if(callStackManager.isCallStackEmpty()) callStackManager.pushToCallStack(getMainFunction())
+        if(callStackManager.isCallStackEmpty()) {
+            callStackManager.pushToCallStack(getMainFunction())
+        } else {
+            return;
+        }
     }
-    // setInterval(() => {
-        main()
-    // }, 500)
+
+    main()
 }

@@ -4,7 +4,13 @@ function ExecutionContextManager() {
     const executionContextList = [];
     
     const main = (inputCode) => {
-        executionContextList.push(...astParser.splitCodeByFunctions(inputCode))
+        const functionList = [...astParser.splitCodeByFunctions(inputCode)];
+        functionList.forEach(curFunc => {
+            const node = acorn.parse(curFunc, { ecmaVersion: "latest" });
+            if(curFunc.includes("fetch")) executionContextList.push(astParser.splitFetchCallBack(node, curFunc))
+            if(curFunc.includes("then")) executionContextList.push(astParser.splitMicroCallBack(node, curFunc))
+            if(curFunc.includes("setTimeout")) executionContextList.push(astParser.splitMacroCallBack(node, curFunc))
+        })
         eventLoop()
     };
 
