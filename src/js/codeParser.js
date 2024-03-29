@@ -6,83 +6,54 @@ export async function parseLiteral() {
   const ast = acorn.parse(literal, { ecmaVersion: "latest" });
 
   const parser = new AsyncFunctionParser(literal, ast);
-  parser.findMacroFunctions();
-  parser.findMicroFunctions();
-  console.log(parser.macroQueue);
-  console.log(parser.microQueue);
+  parser.findAsyncFunctions();
+  parser.extractCallbacks();
+  const callbacks = parser.callbacks;
+  return callbacks;
 }
 
 class AsyncFunctionParser {
   constructor(literal, ast) {
     this.literal = literal;
     this.ast = ast;
-    this.macroQueue = [];
-    this.microQueue = [];
+    this.asyncNode = [];
+    this.callbacks = [];
   }
-  addToMacroQueue(functionName, callback, delay) {
-    this.macroQueue.push({ functionName, callback, delay });
-  }
-  addToMicroQueue(methodName, callback) {
-    this.microQueue.push({ methodName, callback });
-  }
-  findMacroFunctions() {
-    const asycTypes = ["setTimeout", "setInterval", "setImmediate"];
+  findAsyncFunctions() {
+    const asyncType = ["setTimeout", "setInterval", "setImmediate"];
+    const methodType = ["then", "catch", "finally"];
     const traverse = (node) => {
       if (node.type === "CallExpression") {
-        if (asycTypes.includes(node.callee.name)) {
-          const functionName = node.callee.name;
-          if (node.arguments.length > 0) {
-            const callbackArg = node.arguments[node.arguments.length - 2];
-            const callback = this.literal.slice(
-              callbackArg.start,
-              callbackArg.end
-            );
-            const delay = node.arguments[node.arguments.length - 1].value;
-            this.addToMacroQueue(functionName, callback, delay);
-          }
+        const callee = node.callee;
+        if (this.validateAsyncFunc(callee, methodType, asyncType)) {
+          this.asyncNode.push(node);
         }
       }
+
       for (const key in node) {
         if (typeof node[key] === "object" && node[key] !== null) {
-          if (Array.isArray(node[key])) {
-            node[key].forEach((child) => traverse(child));
-          } else {
-            traverse(node[key]);
-          }
+          traverse(node[key]);
         }
       }
     };
+
     traverse(this.ast);
   }
-  findMicroFunctions() {
-    const asyncMethods = [".then", ".catch", ".finally"];
-
-    const traverse = (node) => {
-      if (node.type === "CallExpression" && node.callee.property) {
-        const methodName = node.callee.property.name;
-        if (asyncMethods.includes(`.${methodName}`)) {
-          const callbackNode = node.arguments[0];
-          if (callbackNode) {
-            const callback = this.literal.slice(
-              callbackNode.start,
-              callbackNode.end
-            );
-            this.addToMicroQueue(methodName, callback);
-          }
-        }
-      }
-
-      for (const key in node) {
-        if (typeof node[key] === "object" && node[key] !== null) {
-          if (Array.isArray(node[key])) {
-            node[key].forEach((child) => traverse(child));
-          } else {
-            traverse(node[key]);
-          }
-        }
-      }
-    };
-
-    traverse(this.ast);
+  validateAsyncFunc(callee, methodType, asyncType) {
+    return (
+      (callee.type === "MemberExpression" &&
+        methodType.includes(callee.property.name)) ||
+      (callee.type === "Identifier" && asyncType.includes(callee.name))
+    );
+  }
+  extractCallbacks() {
+    this.asyncNode.forEach((node) => {
+      const funcType = node.callee.name
+        ? node.callee.name
+        : node.callee.property.name;
+      const callbackArg = node.arguments[0];
+      const callback = this.literal.slice(callbackArg.start, callbackArg.end);
+      this.callbacks.push({ funcType: funcType, callback: callback });
+    });
   }
 }
