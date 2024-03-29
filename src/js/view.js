@@ -1,5 +1,6 @@
 const microTasks = ["process", "Promise", "async", "then"];
 const macroTasks = ["setTimeout", "setInterval"];
+const TASK_DELAY = 3000;
 
 class Task {
   constructor(className) {
@@ -15,39 +16,51 @@ class Task {
     this.element.innerHTML = `<div class="task">${calleeName}</div>`;
     setTimeout(() => {
       this.removeTask();
-    }, 2000);
+    }, TASK_DELAY);
   }
 }
 
-function moveTasks(tasks) {
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function moveTasks(tasks) {
   const callStack = new Task("call-stack-area");
   const webApis = new Task("web-apis-area");
   const microQueue = new Task("micro-queue");
   const macroQueue = new Task("macro-queue");
 
-  let delay = 0;
-  tasks.forEach((task) => {
-    setTimeout(() => {
-      callStack.appendTask(task);
-    }, delay);
+  let delayTime = 0;
 
-    setTimeout(() => {
-      webApis.appendTask(task + " cb");
-    }, delay + 2000);
+  for (const task of tasks) {
+    await delay(delayTime);
 
-    setTimeout(() => {
-      setTimeout(() => {
-        if (microTasks.includes(task)) {
-          microQueue.appendTask(task + "cb");
-        } else if (macroTasks.includes(task)) {
-          macroQueue.appendTask(task + "cb");
-        }
-      }, 2000);
-    }, delay + 2000);
-    delay += 4000;
-  });
+    callStack.appendTask(task);
+    console.log("callStack " + task);
+
+    await delay(TASK_DELAY);
+
+    webApis.appendTask(task + " callback");
+    console.log("webApis " + task);
+
+    await delay(TASK_DELAY);
+
+    if (microTasks.includes(task)) {
+      microQueue.appendTask(task + " callback");
+      console.log("microQueue " + task);
+    } else if (macroTasks.includes(task)) {
+      macroQueue.appendTask(task + " callback");
+      console.log("macroTasks " + task);
+    }
+
+    await delay(TASK_DELAY);
+
+    callStack.appendTask(task + " callback");
+    console.log("last callstack " + task);
+
+    delayTime += TASK_DELAY;
+  }
 }
-
-// const tasks = ["then", "then", "setTimeout"]; //, "then", "setTimeout"
 
 export default moveTasks;
