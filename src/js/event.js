@@ -8,9 +8,10 @@ function enterButtonClick() {
     getCalleeName(callExpression)
   );
   const image = document.querySelector(".event-loop-area img");
-  image.style.animation = "rotate_image 6s linear infinite";
+  image.classList.add("active");
+
   moveTasks(calleeNames).then(() => {
-    image.style.animation = "pause";
+    image.classList.remove("active");
   });
 }
 

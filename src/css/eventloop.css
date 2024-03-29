@@ -65,6 +65,10 @@
   }
 }
 
+.active {
+  animation: rotate_image 6s linear infinite;
+}
+
 @keyframes rotate_image {
   100% {
     transform: rotate(1turn);
