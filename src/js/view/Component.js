@@ -35,8 +35,19 @@ export const renderLoopIcon = ({ className, fillProperty }) => {
   </svg>`;
 };
 
-export const renderComponent = ({ className, content = "" }) => {
-  return `<div class="${className}__component">${content}</div>`;
+export const renderComponent = ({ className, content = "", style = "" }) => {
+  return `<div class="${className}__component" style="${style}">${content}</div>`;
+};
+
+export const renderBaseComponents = ({ contents, className, maxLength, condition }) => {
+  return contents.reduce((acc, content, index) => {
+    let component = renderComponent({ className, content });
+    
+    if (condition && condition(index, maxLength)) {
+      component += renderComponent({ className, content });
+    }
+    return acc + component;
+  }, "");
 };
 
 export const renderComponentBox = ({ className, title, content = "" }) => {

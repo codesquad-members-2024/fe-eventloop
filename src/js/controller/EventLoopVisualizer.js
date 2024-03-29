@@ -25,9 +25,8 @@ const isMacrotask = (callback) => Object.keys(MACRO_TASK_PROTOTYPES).includes(ca
 const setAnimationPlayState = (state) => {
   Object.values(CLASS_NAME).forEach((className) => {
     const componentsTag = document.querySelector(`.${className}__components`);
-    if (componentsTag) {
-      componentsTag.style["animation-play-state"] = state;
-    }
+
+    if (componentsTag) componentsTag.style["animation-play-state"] = state;
   });
 };
 
@@ -35,11 +34,11 @@ const startAnimation = () => setAnimationPlayState("running");
 
 const transferFirstComponent = (source, target) => {
   const components = source.getComponents();
-  if (source.getComponents().length === 0) return false;
+  if (components.length === 0) return false;
 
   const component = components.shift();
   target.setComponents([...target.getComponents(), component]);
-  source.setComponents([...source.getComponents()]);
+  source.setComponents([...components]);
   return true;
 };
 
@@ -106,7 +105,10 @@ export default class EventLoopVisualizer {
   }
 
   updateSchedule() {
-    if (this.animationInterval) this.interval = null;
+    if (this.animationInterval) {
+      clearInterval(this.animationInterval);
+      this.interval = null;
+    }
 
     this.animationInterval = setInterval(() => {
       setTimeout(startAnimation, ANIMATION_DELAY);

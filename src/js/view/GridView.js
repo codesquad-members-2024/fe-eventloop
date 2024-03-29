@@ -1,4 +1,4 @@
-import { renderComponent } from "./Component.js";
+import { renderBaseComponents } from "./Component.js";
 
 const FIRST_INDEX = 0;
 
@@ -13,20 +13,8 @@ const isToCopy = (index, maxLength) =>
   isEven(index) &&
   !isLastIndex(index, maxLength);
 
-const renderBaseComponents = (contents, className, maxLength) => {
-  const baseComponents = contents.reduce((acc, content, index) => {
-    let component = renderComponent({ className, content });
-    
-    if (isToCopy(index, maxLength)) component += renderComponent({ className, content });
-
-    return acc + component;
-  }, "");
-
-  return baseComponents;
-};
-
 const renderEmptyComponent = (className) => {
-  return `<div class="${className}__component" style="border: none; background-color:transparent;"></div>`;
+  return `<div class="${className}__component" style="border: 0.01rem solid transparent; background-color:transparent;"></div>`;
 };
 
 const renderEmptyComponents = (contentsLength, className, maxLength) => {
@@ -39,7 +27,7 @@ const renderEmptyComponents = (contentsLength, className, maxLength) => {
 
 export const updateGridComponents = ({ className, contents, maxLength }) => {
   const contentsToRender = contents.slice(FIRST_INDEX, maxLength);
-  const baseComponents = renderBaseComponents(contentsToRender, className, maxLength);
+  const baseComponents = renderBaseComponents({ contents: contentsToRender, className, maxLength, condition: isToCopy });
   const emptyComponents = renderEmptyComponents(contentsToRender.length, className, maxLength);
 
   return `<div class="${className}__components" style="animation-play-state: paused;">${baseComponents}${emptyComponents}</div>`;
