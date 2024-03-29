@@ -4,11 +4,11 @@ import queueManager from "./queue.js";
 import { AnimationGenerator } from "./animationHelper/animationGenerator.js";
 
 export async function eventLoop() {
-    const main = () => {
+    const moveToCallbackFromMain = () => {
         if (callStackManager.isCallStackEmpty()) return callStackManager.pushToCallStack(executionContextManager.getMainFunction());
     };
 
-    const test = async() => {
+    const moveToCallbackFromQueue = async() => {
         if (!queueManager.isQueueEmpty()) {
             const curQueue = queueManager.getQueue()
             const animationGenerator = new AnimationGenerator(curQueue.id, "call-stack-container")
@@ -17,14 +17,14 @@ export async function eventLoop() {
         }
     }
 
-    main();
+    moveToCallbackFromMain();
     
     const executionContexLoop = setInterval(() => {
-        main();
+        moveToCallbackFromMain();
         if (executionContextManager.isFunc()) clearInterval(executionContexLoop);
     }, 3000);
 
     setInterval(() => {
-        test();
+        moveToCallbackFromQueue();
     }, 3000);
 }

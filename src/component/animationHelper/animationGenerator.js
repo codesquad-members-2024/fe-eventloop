@@ -79,7 +79,7 @@ export class AnimationGenerator{
 
     applyQueueInAnimation() {
         const prevLocation = locationCalculater.getLocation("wep-Api-container");
-        const Location = locationCalculater.getLocation(this.drawPosition);
+        const Location = locationCalculater.getQueueLocation(this.drawPosition);
         const element = document.getElementById(`${this.id}`);
         const animation = element.animate(
             [
@@ -100,7 +100,7 @@ export class AnimationGenerator{
     }
 
     async applyQueueoutAnimation(queueContainer) {
-        const prevLocation = locationCalculater.getLocation(queueContainer);
+        const prevLocation = locationCalculater.getQueueLocation(queueContainer);
         const Location = locationCalculater.getLocation(this.drawPosition);
         const element = document.getElementById(`${this.id}`);
         const animation = element.animate(
