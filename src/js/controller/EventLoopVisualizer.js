@@ -17,6 +17,8 @@ const MAX_LENGTH = {
 };
 const ANIMATION_DELAY = 500;
 const ANMIATON_DURATION = 2000;
+const NO_ELEMENTS = 0;
+const FIRST_INDEX = 0;
 
 const isMicrotask = (callback) => Object.keys(MICRO_TASK_PROTOTYPES).includes(callback.calleeName);
 
@@ -34,7 +36,7 @@ const startAnimation = () => setAnimationPlayState("running");
 
 const transferFirstComponent = (source, target) => {
   const components = source.getComponents();
-  if (components.length === 0) return false;
+  if (components.length === NO_ELEMENTS) return false;
 
   const component = components.shift();
   target.setComponents([...target.getComponents(), component]);
@@ -97,7 +99,7 @@ export default class EventLoopVisualizer {
 
   updateComponents() {
     const { callStack, webApis, microTasks, macroTasks } = this.componentBox;
-    const firstComponent = webApis.getComponents()[0];
+    const firstComponent = webApis.getComponents()[FIRST_INDEX];
 
     if (firstComponent && firstComponent instanceof Microtask && transferFirstComponent(webApis, microTasks)) return;
     if (firstComponent && firstComponent instanceof Macrotask && transferFirstComponent(webApis, macroTasks)) return;

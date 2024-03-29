@@ -1,6 +1,7 @@
 import { renderBaseComponents } from './Component.js';
 
 const FIRST_INDEX = 0;
+const EMPTY = 0;
 
 const isLessThanZero = (number) => number < 0;
 
@@ -13,8 +14,8 @@ const renderEmptyComponent = (className) => {
 const renderEmptyComponents = (contentsLength, className, maxLength) => {
   const webApisComponent = document.querySelector(".web-apis__component");
   const emptyComponentsCount = isTransparent(webApisComponent) || isLessThanZero(maxLength - contentsLength) 
-    ? 1 
-    : maxLength - contentsLength + 1;
+    ? EMPTY
+    : maxLength - contentsLength;
 
   return Array(emptyComponentsCount)
     .fill(renderEmptyComponent(className))
