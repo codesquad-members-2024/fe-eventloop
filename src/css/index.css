@@ -7,7 +7,8 @@
 }
 
 :root {
-  --container-border: 1.5px solid grey;
+  --container-border: 0.01rem solid grey;
+  --component-inline: 0.01rem solid grey;
   --container-padding: 0.5rem;
   --box-bg-color: #b7e3ff;
   --container-width: 60rem;
@@ -49,6 +50,13 @@ body {
   height: 1.5rem;
 }
 
+.execution__container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: calc(var(--container-width) - 2 * var(--box-width));
+  width: var(--container-width);
+}
+
 .call-stack__component-box,
 .web-apis__component-box,
 .event-loop__component-box,
@@ -57,12 +65,40 @@ body {
   width: var(--box-width);
 }
 
-.call-stack__component-contents,
-.web-apis__component-contents,
-.event-loop__component-contents {
+.call-stack__component-content {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
   height: var(--large-box-height);
   border: var(--container-border);
   background-color: var(--box-bg-color);
+  overflow: hidden;
+}
+
+.event-loop__component-content {
+  height: var(--large-box-height);
+  border: var(--container-border);
+  background-color: var(--box-bg-color);
+}
+
+.web-apis__component-content {
+  height: var(--large-box-height);
+  border: var(--container-border);
+  background-color: var(--box-bg-color);
+  overflow: hidden;
+}
+
+.microtask-queue__component-content,
+.macrotask-queue__component-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--small-box-height);
+  border: var(--container-border);
+  background-color: var(--box-bg-color);
+  overflow: hidden;
 }
 
 .event-loop__icon {
@@ -83,18 +119,40 @@ body {
   align-content: space-between;
 }
 
-.microtask-queue__component-contents,
-.macrotask-queue__component-contents {
-  height: var(--small-box-height);
-  border: var(--container-border);
-  background-color: var(--box-bg-color);
+.call-stack__components {
+  animation: bounce-in-out 1.5s ease-in-out forwards;
 }
 
-.execution__container {
+.web-apis__components {
+  position: relative;
+  left: -50%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: calc(var(--container-width) - 2 * var(--box-width));
-  width: var(--container-width);
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+  width: 150%;
+  height: 100%;
+  animation: moveRight 1.5s ease-in-out forwards;
+}
+
+.microtask-queue__components,
+.macrotask-queue__components {
+  display: flex;
+  animation: moveLeft 1.5s ease-in-out forwards;
+}
+
+.call-stack__component,
+.web-apis__component,
+.microtask-queue__component,
+.macrotask-queue__component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: var(--component-inline);
+  background-color: #fff;
+  width: 11.5rem;
+  height: 3rem;
+  margin: 0.65rem;
 }
 
 @keyframes rotate {
@@ -104,5 +162,47 @@ body {
 
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes moveRight {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(calc(var(--box-width) / 2));
+  }
+}
+
+@keyframes moveLeft {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(calc(-1 * var(--box-width) / 2));
+  }
+}
+
+@keyframes bounce-in-out {
+  0% {
+    transform: translateY(300%);
+  }
+
+  10% {
+    transform: translateY(110%);
+  }
+
+  30% {
+    transform: translateY(120%);
+  }
+
+  70% {
+    transform: translateY(120%);
+  }
+
+  100% {
+    transform: translateY(-500%);
   }
 }

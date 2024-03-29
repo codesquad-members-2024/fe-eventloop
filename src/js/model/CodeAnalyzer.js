@@ -24,29 +24,29 @@ const NO_ELEMENTS = 0;
 
 const isEmpty = (elements) => elements.length === NO_ELEMENTS;
 
-const isNodeType = (node, types) => types.includes(node.type);
+const isNodeType = ({ type }, types) => types.includes(type);
 
 const isCallbackExpression = (node) => isNodeType(node, CALLBACK_EXPRESSIONS);
 
-const isFunction = (argument) =>
-  argument.type === "FunctionExpression" ||
-  argument.type === "ArrowFunctionExpression";
+const isFunction = ({ type }) =>
+  type === "FunctionExpression" ||
+  type === "ArrowFunctionExpression";
 
 const isObjectType = (node) => node instanceof Object;
 
-const isMicrotask = (node) =>
-  MICRO_TASK_CALLEES.includes(node.callee?.name) ||
-  MICRO_TASK_CALLEES.includes(node.callee?.property?.name);
+const isMicrotask = ({ callee }) =>
+  MICRO_TASK_CALLEES.includes(callee?.name) ||
+  MICRO_TASK_CALLEES.includes(callee?.property?.name);
 
-const isMacrotask = (node) =>
-  node.callee?.type === "Identifier" &&
-  MACRO_TASK_CALLEES.includes(node.callee?.name);
+const isMacrotask = ({ callee }) =>
+  callee?.type === "Identifier" &&
+  MACRO_TASK_CALLEES.includes(callee?.name);
 
-const getCalleeName = (node) => {
-  return node.callee?.type === "Identifier"
-    ? node.callee.name
-    : node.callee?.property?.type === "Identifier"
-    ? node.callee.property.name
+const getCalleeName = ({ callee }) => {
+  return callee?.type === "Identifier"
+    ? callee.name
+    : callee?.property?.type === "Identifier"
+    ? callee.property.name
     : null;
 };
 
