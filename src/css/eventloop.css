@@ -1,3 +1,27 @@
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: pink;
+  width: 80%;
+  height: 40%;
+  border-radius: 20px;
+  font-size: 2rem;
+  animation: fadeInDown 0.5s ease-in;
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+
 .call-stack-area {
   display: flex;
   justify-content: center;
@@ -37,7 +61,6 @@
   }
   img {
     width: 130px;
-    animation: rotate_image 6s linear infinite;
     transform-origin: 50% 50%;
   }
 }
@@ -77,4 +100,28 @@
   border: 10px double yellow;
   margin-left: 10px;
   border-radius: 20px;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: pink;
+  width: 80%;
+  height: 40%;
+  border-radius: 20px;
+  font-size: 2rem;
+  animation: fadeInDown 0.5s ease-in;
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateZ(0);
+  }
 }

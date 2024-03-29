@@ -1,4 +1,4 @@
-import onEvent from "./codeAst.js";
+import onEvent from "./event.js";
 
 function main() {
   onEvent();

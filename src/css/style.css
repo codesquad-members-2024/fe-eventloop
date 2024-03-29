@@ -28,27 +28,3 @@ section {
   justify-content: space-between;
   align-items: center;
 }
-
-.task {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: pink;
-  width: 80%;
-  height: 40%;
-  border-radius: 20px;
-  font-size: 2rem;
-  animation: fadeInDown 0.5s ease-in;
-}
-
-@keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, -100%, 0);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateZ(0);
-  }
-}

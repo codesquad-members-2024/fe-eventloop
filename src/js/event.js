@@ -1,10 +1,5 @@
-import { getCalleeName, findCallExpressions } from "./codeAnalyze.js";
+import { getAst, getCalleeName, findCallExpressions } from "./codeAnalyze.js";
 import moveTasks from "./view.js";
-
-function getAst() {
-  const textareaValue = document.getElementById("enter-code").value;
-  return acorn.parse(textareaValue, { ecmaVersion: 2020 });
-}
 
 function enterButtonClick() {
   const ast = getAst();
@@ -12,7 +7,11 @@ function enterButtonClick() {
   const calleeNames = callExpressions.map((callExpression) =>
     getCalleeName(callExpression)
   );
-  moveTasks(calleeNames);
+  const image = document.querySelector(".event-loop-area img");
+  image.style.animation = "rotate_image 6s linear infinite";
+  moveTasks(calleeNames).then(() => {
+    image.style.animation = "pause";
+  });
 }
 
 function onEvent() {

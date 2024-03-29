@@ -8,6 +8,11 @@ const micromacro = [
   "setInterval",
 ];
 
+function getAst() {
+  const textareaValue = document.getElementById("enter-code").value;
+  return acorn.parse(textareaValue, { ecmaVersion: 2020 });
+}
+
 function getCalleeName(node) {
   const { callee } = node;
   if (callee?.type === "Identifier") {
@@ -38,4 +43,4 @@ function findCallExpressions(node) {
   return callExpressions;
 }
 
-export { getCalleeName, findCallExpressions };
+export { getAst, getCalleeName, findCallExpressions };

@@ -20,7 +20,6 @@ class Task {
   }
 }
 
-
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -31,35 +30,22 @@ async function moveTasks(tasks) {
   const microQueue = new Task("micro-queue");
   const macroQueue = new Task("macro-queue");
 
-  let delayTime = 0;
-
   for (const task of tasks) {
-    await delay(delayTime);
-
+    await delay(TASK_DELAY);
     callStack.appendTask(task);
-    console.log("callStack " + task);
 
     await delay(TASK_DELAY);
-
-    webApis.appendTask(task + " callback");
-    console.log("webApis " + task);
+    webApis.appendTask(task + " cb");
 
     await delay(TASK_DELAY);
-
     if (microTasks.includes(task)) {
-      microQueue.appendTask(task + " callback");
-      console.log("microQueue " + task);
+      microQueue.appendTask(task + " cb");
     } else if (macroTasks.includes(task)) {
-      macroQueue.appendTask(task + " callback");
-      console.log("macroTasks " + task);
+      macroQueue.appendTask(task + " cb");
     }
 
     await delay(TASK_DELAY);
-
-    callStack.appendTask(task + " callback");
-    console.log("last callstack " + task);
-
-    delayTime += TASK_DELAY;
+    callStack.appendTask(task + " cb");
   }
 }
 
