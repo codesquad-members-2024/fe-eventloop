@@ -15,7 +15,9 @@ function ExecutionContextManager() {
     };
 
     const getMainFunction = () => executionContextList.shift()
+
     const isFunc = () => !executionContextList.length
+    
     const getInputValue = () => {
         const inputValue = document.querySelector(".code-input");
         main(inputValue.value);

@@ -1,11 +1,11 @@
 import { Box } from "./animationHelper/boxModal.js"
 import { AnimationGenerator } from "./animationHelper/animationGenerator.js"
+import queueManager from "./queue.js"
 function WepApikManager() {
-    const context = []
 
-    const pushToWepApi = (asynchronousFunc) => {
-        context.push(asynchronousFunc)
-        createWepApiHTML(asynchronousFunc)
+    const pushToWepApi = async(asynchronousFunc) => {
+        const id = await createWepApiHTML(asynchronousFunc)
+        queueManager.pushToQeuue(id, asynchronousFunc)
     }
 
     const createWepApiHTML = async(contex) => {
@@ -15,6 +15,7 @@ function WepApikManager() {
         renderFunc(box.creatBox())
         await animationGenerator.delay(2000)
         animationGenerator.applyWepApiInAnimation()
+        return uniqueId
     }
     
     const renderFunc = (node) => {
