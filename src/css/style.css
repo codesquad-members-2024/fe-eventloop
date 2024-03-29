@@ -11,15 +11,16 @@ h2 {
   margin-bottom: auto;
 }
 
-.round {
+.round-yellow-border {
   border-radius: 20px;
+  border: 3px double #9acd32;
 }
 
 .call-stack {
   width: 200px;
   height: 300px;
   margin-bottom: 50px;
-  border: 3px double #9acd32;
+
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -70,7 +71,6 @@ h2 {
 .web-api-box {
   height: 200px;
   width: 400px;
-  border: 3px double #9acd32;
   position: relative;
 }
 
@@ -78,12 +78,4 @@ h2 {
 .macrotask-box {
   width: 400px;
   height: 100px;
-}
-
-.macrotask-box {
-  border: 3px double #9acd32;
-}
-
-.microtask-box {
-  border: 3px double #9acd32;
 }
