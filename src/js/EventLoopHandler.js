@@ -2,11 +2,11 @@ class EventLoopHandler {
   constructor(callBacks, classNames) {
     this.callBacks = callBacks;
     this.callStackClassName = classNames.callStackClassName;
-    this.webApiClassName = classNames.webApiClassName;
+    this.webAPIClassName = classNames.webAPIClassName;
     this.microQClassName = classNames.microQClassName;
     this.macroQClassName = classNames.macroQClassName;
     this.statusOfcallStack = [];
-    this.statusOfWebApi = [];
+    this.statusOfWebAPI = [];
     this.statusOfMicroQ = [];
     this.statusOfMacroQ = [];
     this.EventLoopControl();
@@ -106,7 +106,7 @@ class EventLoopHandler {
 
   getCallBackStatusByClassName(className) {
     if (className === this.callStackClassName) return this.statusOfcallStack[this.statusOfcallStack.length - 1];
-    if (className === this.webApiClassName) return this.statusOfWebApi[this.statusOfWebApi.length - 1];
+    if (className === this.webAPIClassName) return this.statusOfWebAPI[this.statusOfWebAPI.length - 1];
     if (className === this.microQClassName) return this.statusOfMicroQ[this.statusOfMicroQ.length - 1];
     if (className === this.macroQClassName) return this.statusOfMacroQ[this.statusOfMacroQ.length - 1];
   }
@@ -114,13 +114,13 @@ class EventLoopHandler {
   updateStatusByClassName(callBack, className, type) {
     if (type === 'push') {
       if (className === this.callStackClassName) this.statusOfcallStack.push(callBack);
-      if (className === this.webApiClassName) this.statusOfWebApi.push(callBack);
+      if (className === this.webAPIClassName) this.statusOfWebAPI.push(callBack);
       if (className === this.microQClassName) this.statusOfMicroQ.push(callBack);
       if (className === this.macroQClassName) this.statusOfMacroQ.push(callBack);
     }
     if (type === 'pop') {
       if (className === this.callStackClassName) this.statusOfcallStack.pop(callBack);
-      if (className === this.webApiClassName) this.statusOfWebApi.pop(callBack);
+      if (className === this.webAPIClassName) this.statusOfWebAPI.pop(callBack);
       if (className === this.microQClassName) this.statusOfMicroQ.pop(callBack);
       if (className === this.macroQClassName) this.statusOfMacroQ.pop(callBack);
     }
@@ -140,14 +140,14 @@ class EventLoopHandler {
   /** Promise.then, Promise.catch, Promise.finally, MutationObserver 콜백 */
   async setMicroTaskQueue(callBack, idx) {
     //마이크로 태스크 큐의 작업은 매크로 태스크보다 우선적으로 처리된다.
-    const isElementRemoved = await this.removeElementByTextAsync(callBack, this.webApiClassName);
+    const isElementRemoved = await this.removeElementByTextAsync(callBack, this.webAPIClassName);
     if (isElementRemoved) this.appendTag(callBack, this.microQClassName, idx);
   }
 
   /** setTimeout, setInterval, setImmediate, I/O 작업과 같은 비동기 작업의 콜백 */
   setMacroTaskQueue(callBack, idx) {
     setTimeout(async () => {
-      const isElementRemoved = await this.removeElementByTextAsync(callBack, this.webApiClassName);
+      const isElementRemoved = await this.removeElementByTextAsync(callBack, this.webAPIClassName);
       if (isElementRemoved) this.appendTag(callBack, this.macroQClassName, idx);
     }, callBack.delay);
   }
@@ -191,7 +191,7 @@ class EventLoopHandler {
       const isElementRemoved = await this.removeElementByTextAsync(callBack, this.callStackClassName);
 
       //WEB APIS
-      if (isElementRemoved) this.appendTag(callBack, this.webApiClassName, idx);
+      if (isElementRemoved) this.appendTag(callBack, this.webAPIClassName, idx);
 
       //MICRO & MACRO TASK QUEUE
       this.classifyTaskQueues(callBack, idx);

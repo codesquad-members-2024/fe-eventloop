@@ -1,10 +1,10 @@
 import EventLoopHandler from './EventLoopHandler.js';
 
 class SubmitHandler {
-  constructor(formId, textId, classNames) {
+  constructor(formId, textId, animationContainerClassNames) {
     this.formId = formId;
     this.textId = textId;
-    this.classNames = classNames;
+    this.animationContainerClassNames = animationContainerClassNames;
     this.addEventHandler();
     this.userCode = '';
     this.callBacks = [];
@@ -104,7 +104,7 @@ class SubmitHandler {
     const parseCode = this.createParseCode();
     parseCode.body.forEach((obj) => this.extractCallbackCode(obj, this.userCode));
 
-    new EventLoopHandler(this.callBacks, this.classNames);
+    new EventLoopHandler(this.callBacks, this.animationContainerClassNames);
   };
 }
 
