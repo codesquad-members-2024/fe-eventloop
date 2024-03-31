@@ -9,6 +9,8 @@ class EventLoopHandler {
     this.statusOfWebAPI = [];
     this.statusOfMicroQ = [];
     this.statusOfMacroQ = [];
+    this.classNameMap = {};
+    this.setToclassNameMap();
     this.EventLoopControl();
   }
 
@@ -104,6 +106,15 @@ class EventLoopHandler {
     return backgroundColor;
   }
 
+  setToclassNameMap() {
+    let classNameMap = new Map();
+    classNameMap.set(this.callStackClassName, this.statusOfcallStack);
+    classNameMap.set(this.webAPIClassName, this.statusOfWebAPI);
+    classNameMap.set(this.microQClassName, this.statusOfMicroQ);
+    classNameMap.set(this.macroQClassName, this.statusOfMacroQ);
+    this.classNameMap = classNameMap;
+  }
+
   getCallBackStatusByClassName(className) {
     if (className === this.callStackClassName) return this.statusOfcallStack[this.statusOfcallStack.length - 1];
     if (className === this.webAPIClassName) return this.statusOfWebAPI[this.statusOfWebAPI.length - 1];
@@ -112,18 +123,8 @@ class EventLoopHandler {
   }
 
   updateStatusByClassName(callBack, className, type) {
-    if (type === 'push') {
-      if (className === this.callStackClassName) this.statusOfcallStack.push(callBack);
-      if (className === this.webAPIClassName) this.statusOfWebAPI.push(callBack);
-      if (className === this.microQClassName) this.statusOfMicroQ.push(callBack);
-      if (className === this.macroQClassName) this.statusOfMacroQ.push(callBack);
-    }
-    if (type === 'pop') {
-      if (className === this.callStackClassName) this.statusOfcallStack.pop(callBack);
-      if (className === this.webAPIClassName) this.statusOfWebAPI.pop(callBack);
-      if (className === this.microQClassName) this.statusOfMicroQ.pop(callBack);
-      if (className === this.macroQClassName) this.statusOfMacroQ.pop(callBack);
-    }
+    if (type === 'push') this.classNameMap.get(className).push(callBack);
+    if (type === 'pop') this.classNameMap.get(className).pop(callBack);
   }
 
   // 태그 생성
