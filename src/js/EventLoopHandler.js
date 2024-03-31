@@ -5,10 +5,12 @@ class EventLoopHandler {
     this.webAPIClassName = classNames.webAPIClassName;
     this.microQClassName = classNames.microQClassName;
     this.macroQClassName = classNames.macroQClassName;
-    this.statusOfcallStack = [];
-    this.statusOfWebAPI = [];
-    this.statusOfMicroQ = [];
-    this.statusOfMacroQ = [];
+    this.status = {
+      callStack: [],
+      webAPI: [],
+      microQ: [],
+      macroQ: [],
+    };
     this.classNameMap = {};
     this.setToclassNameMap();
     this.EventLoopControl();
@@ -22,8 +24,16 @@ class EventLoopHandler {
    * @returns true - macro Q가 비어있음
    * @returns false
    */
+  checkIfWebAPIIsEmpty() {
+    return this.status.webAPI.length === 0;
+  }
+  /**
+   * macro Q가 비어있는지 확인
+   * @returns true - macro Q가 비어있음
+   * @returns false
+   */
   checkIfMacroQIsEmpty() {
-    return document.querySelector(this.macroQClassName).children.length === 0 ? true : false;
+    return this.status.macroQ.length === 0;
   }
   /**
    * micro Q가 비어있는지 확인
@@ -31,7 +41,7 @@ class EventLoopHandler {
    * @returns false
    */
   checkIfMicroQIsEmpty() {
-    return document.querySelector(this.microQClassName).children.length === 0 ? true : false;
+    return this.status.microQ.length === 0;
   }
   /**
    * 콜스택이 비어있는지 확인
@@ -39,11 +49,14 @@ class EventLoopHandler {
    * @returns false
    */
   checkIfCallStackIsEmpty() {
-    return document.querySelector(this.callStackClassName).children.length === 0 ? true : false;
+    return this.status.callStack.length === 0;
   }
 
   removeMatchingElement(callBack, className) {
     const callStackTarget = document.querySelector(className);
+
+    this.classNameMap.get(className).pop();
+
     const stuffs = Array.from(callStackTarget.children);
     stuffs.forEach((stuff) => {
       if (stuff.textContent === callBack.callBackCode) {
@@ -52,14 +65,15 @@ class EventLoopHandler {
     });
   }
 
+  delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
   // 태그 지우기
   async removeElementByTextAsync(callBack, className) {
+    await this.delay(2000);
     return new Promise((resolve) => {
-      setTimeout(() => {
-        this.removeMatchingElement(callBack, className);
-        this.updateStatusByClassName(callBack, className, 'pop');
-        resolve(true);
-      }, 2000);
+      this.removeMatchingElement(callBack, className);
+      this.updateStatusByClassName(callBack, className, 'pop');
+      resolve(true);
     });
   }
 
@@ -72,12 +86,11 @@ class EventLoopHandler {
 
   // 첫번째 태그 지우기
   async removeFirstElementByTextAsync(callBack, className) {
+    await this.delay(2000);
     return new Promise((resolve) => {
-      setTimeout(() => {
-        this.removeFirstElement(callBack, className);
-        this.updateStatusByClassName(callBack, className, 'pop');
-        resolve(true);
-      }, 2000);
+      this.removeFirstElement(callBack, className);
+      this.updateStatusByClassName(callBack, className, 'pop');
+      resolve(true);
     });
   }
 
@@ -108,18 +121,18 @@ class EventLoopHandler {
 
   setToclassNameMap() {
     let classNameMap = new Map();
-    classNameMap.set(this.callStackClassName, this.statusOfcallStack);
-    classNameMap.set(this.webAPIClassName, this.statusOfWebAPI);
-    classNameMap.set(this.microQClassName, this.statusOfMicroQ);
-    classNameMap.set(this.macroQClassName, this.statusOfMacroQ);
+    classNameMap.set(this.callStackClassName, this.status.callStack);
+    classNameMap.set(this.webAPIClassName, this.status.webAPI);
+    classNameMap.set(this.microQClassName, this.status.microQ);
+    classNameMap.set(this.macroQClassName, this.status.macroQ);
     this.classNameMap = classNameMap;
   }
 
   getCallBackStatusByClassName(className) {
-    if (className === this.callStackClassName) return this.statusOfcallStack[this.statusOfcallStack.length - 1];
-    if (className === this.webAPIClassName) return this.statusOfWebAPI[this.statusOfWebAPI.length - 1];
-    if (className === this.microQClassName) return this.statusOfMicroQ[this.statusOfMicroQ.length - 1];
-    if (className === this.macroQClassName) return this.statusOfMacroQ[this.statusOfMacroQ.length - 1];
+    const statusArray = this.classNameMap.get(className);
+    if (statusArray && statusArray.length > 0) {
+      return statusArray[statusArray.length - 1];
+    }
   }
 
   updateStatusByClassName(callBack, className, type) {
@@ -133,8 +146,10 @@ class EventLoopHandler {
     let backgroundColor = '#fffff';
     if (idx) backgroundColor = this.specifyBackgroundColor(idx);
     if (callBack.bgColor) backgroundColor = callBack.bgColor;
+
     const animationDivHtml = this.createAnimationDivMarkup(callBack, backgroundColor);
     Target2append.insertAdjacentHTML('beforeend', animationDivHtml);
+    this.updateStatusByClassName(callBack, className, 'push');
     this.updateStatusByClassName(callBack, className, 'push');
   }
 
@@ -153,60 +168,56 @@ class EventLoopHandler {
     }, callBack.delay);
   }
 
-  classifyTaskQueues(callBack, idx) {
-    if (callBack.type === 'then') this.setMicroTaskQueue(callBack, idx);
-    if (callBack.type === 'catch') this.setMicroTaskQueue(callBack, idx);
+  setTaskQueues(callBack, idx) {
+    if (callBack.type === 'then' || callBack.type === 'catch') this.setMicroTaskQueue(callBack, idx);
     if (callBack.type === 'setTimeout') this.setMacroTaskQueue(callBack, idx);
   }
 
-  async runEventLoop() {
-    const IsEmpty = this.checkIfCallStackIsEmpty();
-
-    if (IsEmpty) {
-      const isMicroQIsEmpty = this.checkIfMicroQIsEmpty();
-      const isMacroQIsEmpty = this.checkIfMacroQIsEmpty();
-      if (isMicroQIsEmpty && isMacroQIsEmpty) return true;
-
-      if (!isMicroQIsEmpty) {
-        const microCallBackObj = this.getCallBackStatusByClassName(this.microQClassName);
-        await this.removeFirstElementByTextAsync(this.microQClassName);
-        this.appendTag(microCallBackObj, this.callStackClassName);
-        return await this.removeElementByTextAsync(microCallBackObj, this.callStackClassName);
-      }
-      if (isMicroQIsEmpty && !isMacroQIsEmpty) {
-        const macroCallBackObj = this.getCallBackStatusByClassName(this.macroQClassName);
-        await this.removeFirstElementByTextAsync(this.macroQClassName);
-        this.appendTag(macroCallBackObj, this.callStackClassName);
-        return await this.removeElementByTextAsync(macroCallBackObj, this.callStackClassName);
-      }
+  async eventLoop(queueName, className) {
+    if (this.status.callStack.length === 0 && this.status[queueName].length !== 0) {
+      const statusObj = this.status[queueName][this.status[queueName].length - 1];
+      // 큐에서 지우기
+      const isElementRemoved = await this.removeElementByTextAsync(statusObj, className);
+      // 스택에 추가하기
+      if (isElementRemoved) this.appendTag(statusObj, this.callStackClassName);
+      // 스택에서 지우기
+      await this.removeElementByTextAsync(statusObj, this.callStackClassName);
     }
   }
 
   async runEvent(callBack, idx) {
-    //EVENT LOOP
-    const isEventLoopSuccess = idx === 0 ? true : await this.runEventLoop();
+    //CALL STACK
+    this.appendTag(callBack, this.callStackClassName, idx);
 
-    if (isEventLoopSuccess) {
-      //CALL STACK
-      this.appendTag(callBack, this.callStackClassName, idx);
-      const isElementRemoved = await this.removeElementByTextAsync(callBack, this.callStackClassName);
+    const isElementRemoved = await this.removeElementByTextAsync(callBack, this.callStackClassName);
 
-      //WEB APIS
-      if (isElementRemoved) this.appendTag(callBack, this.webAPIClassName, idx);
+    //WEB APIS
+    if (isElementRemoved) this.appendTag(callBack, this.webAPIClassName, idx);
 
-      //MICRO & MACRO TASK QUEUE
-      this.classifyTaskQueues(callBack, idx);
+    //MICRO & MACRO TASK QUEUE
+    this.setTaskQueues(callBack, idx);
 
-      //CALL STACK
-      //EVENT LOOP
+    // const isEmptyWebAPI = this.checkIfWebAPIIsEmpty();
+    // const isEmptyMicroQ = this.checkIfMicroQIsEmpty();
+    // const isEmptyMacroQ = this.checkIfMacroQIsEmpty();
+    // while (!this.checkIfWebAPIIsEmpty() || !this.checkIfMicroQIsEmpty() || !this.checkIfMacroQIsEmpty()) {
+    while (!this.checkIfMicroQIsEmpty() || !this.checkIfMacroQIsEmpty()) {
+      await this.eventLoop('microQ', this.microQClassName);
+      await this.eventLoop('macroQ', this.macroQClassName);
     }
   }
 
   // 콜스택 컨트롤
   async EventLoopControl() {
-    console.log(this.callBacks);
-    for (const [idx, callback] of this.callBacks.entries()) {
-      await this.runEvent(callback, idx);
+    // console.log(this.callBacks);
+
+    for (const [idx, callBack] of this.callBacks.entries()) {
+      await this.runEvent(callBack, idx);
+    }
+
+    while (!this.checkIfMicroQIsEmpty() || !this.checkIfMacroQIsEmpty()) {
+      await this.eventLoop('microQ', this.microQClassName);
+      await this.eventLoop('macroQ', this.macroQClassName);
     }
   }
 }
