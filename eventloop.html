@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>eventloop</title>
-    <link rel="stylesheet" href="./src/css/style.css" />
-  </head>
-  <body>
-    <div class="wrap">
-      <header>
-        <div class="enter">
-          <h1>코드 입력</h1>
-          <div class="enter-area">
-            <textarea
-              id="enter-code"
-              placeholder="여기에 비동기 콜백이 포함된 코드를 입력하세요."
-            ></textarea>
-          </div>
-          <button class="enter-btn">동작시키기</button>
-        </div>
-      </header>
-      <main>
-        <div class="event-loop">
-        <section>
-          <div class="call-stack">
-            <h1>CALL STACK</h1>
-            <div class="call-stack-area"></div>
-          </div>
-          <div class="web-apis">
-            <h1>WEB API</h1>
-            <div class="web-apis-area"></div>
-          </div>
-        </section>
-        <section>
-          <div class="event-loop-area">
-            <h1>EVENT LOOP</h1>
-            <img src="icon-rotate.png"/>
-          </div>
-          <div class="task-queue">
-            <h1>MICROTASK QUEUE</h1>
-            <div class="micro-queue"></div>
-            <h1>MACROTASK QUEUE</h1>
-            <div class="macro-queue"></div>
-          </div>
-        </section>
-      </div>
-      </main>
-    </div>
-  </body>
-  <script type="module" src="./src/js/main.js"></script>
-  <script src="https://unpkg.com/acorn"></script>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>eventloop</title>
+		<link rel="stylesheet" href="./src/css/style.css" />
+		<script defer type="module" src="./src/js/main.js"></script>
+		<script defer src="https://unpkg.com/acorn"></script>
+	</head>
+	<body>
+		<div class="wrap">
+			<header>
+				<div class="enter">
+					<h1>코드 입력</h1>
+					<div class="enter-area">
+						<textarea
+							id="enter-code"
+							placeholder="여기에 비동기 콜백이 포함된 코드를 입력하세요."
+						></textarea>
+					</div>
+					<button class="enter-btn">동작시키기</button>
+				</div>
+			</header>
+			<main>
+				<div class="event-loop">
+					<section>
+						<div class="call-stack">
+							<h1>CALL STACK</h1>
+							<div class="call-stack-area"></div>
+						</div>
+						<div class="web-apis">
+							<h1>WEB API</h1>
+							<div class="web-apis-area"></div>
+						</div>
+					</section>
+					<section>
+						<div class="event-loop-area">
+							<h1>EVENT LOOP</h1>
+							<img src="icon-rotate.png" />
+						</div>
+						<div class="task-queue">
+							<h1>MICROTASK QUEUE</h1>
+							<div class="micro-queue"></div>
+							<h1>MACROTASK QUEUE</h1>
+							<div class="macro-queue"></div>
+						</div>
+					</section>
+				</div>
+			</main>
+		</div>
+	</body>
 </html>
