@@ -1,4 +1,4 @@
-import { handleSubmit } from "./SubmitHandler.js";
+import { handleSubmit } from "./controller/SubmitHandler.js";
 
 function main() {
   handleSubmit();

@@ -1,6 +1,7 @@
 import parserUtils from "./ParserUtils.js";
 
-const validateAsyncFunc = (node) => parserUtils.isMicroTask(node) || parserUtils.isMacroTask(node);
+const validateAsyncFunc = (node) =>
+  parserUtils.isMicroTask(node) || parserUtils.isMacroTask(node);
 
 const traverse = (node, callbacks = []) => {
   Object.values(node).forEach((childNode) => {
@@ -22,7 +23,7 @@ export async function parseLiteral(code) {
   parser.extractCallbacks();
   const callbacks = parser.callbacks;
   return callbacks;
-}
+};
 
 class AsyncFunctionParser {
   constructor(code, ast) {
