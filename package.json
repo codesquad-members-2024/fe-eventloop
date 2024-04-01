@@ -2,6 +2,7 @@
   "name": "fe-eventloop",
   "version": "1.0.0",
   "description": "이벤트 루프 시각화",
+  "type": "module",
   "scripts": {
     "test": "jest --detectOpenHandles"
   },
@@ -9,6 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-jest": "^29.7.0",
     "jest": "^29.7.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.24.3"
   }
 }
