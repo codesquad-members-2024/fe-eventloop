@@ -108,16 +108,4 @@ class SubmitHandler {
   };
 }
 
-/**
- *  < 필요한 정보 >
-     fetch
-        : CallExpression 노드에서 callee가 fetch인 경우
-     .then / .catch의 콜백 함수
-        : CallExpression에서 callee의 property가 then 또는 catch인 경우를 찾고, 해당 arguments에서 콜백 함수를 추출
-     setTimeout의 콜백 함수
-        : CallExpression 노드에서 callee가 setTimeout인 경우를 찾고, arguments의 두 번째 요소(콜백 함수)를 추출
- */
-
 export default SubmitHandler;
-
-// test
