@@ -20,7 +20,6 @@ const MACRO_TASK_CALLEES = [
   "requestIdleCallback",
   "cancelIdleCallback",
 ];
-const LATEST_VERSION = "latest";
 const NO_ELEMENTS = 0;
 
 const parserUtils = {
