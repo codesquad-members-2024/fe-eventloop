@@ -1,7 +1,7 @@
 {
   "name": "fe-eventloop",
   "version": "1.0.0",
-  "description": "",
+  "description": "## 기능 요구 사항",
   "main": "src/js/main.js",
   "type": "module",
   "scripts": {
