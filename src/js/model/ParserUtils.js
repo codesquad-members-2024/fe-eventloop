@@ -24,7 +24,11 @@ const NO_ELEMENTS = 0;
 
 const parserUtils = {
   isEmpty(elements) {
-    return elements.length === NO_ELEMENTS;
+    return Array.isArray(elements) && elements.length === NO_ELEMENTS;
+  },
+
+  isObjectType(node) {
+    return node instanceof Object;
   },
 
   isValidNodeType({ type }, types) {
@@ -37,10 +41,6 @@ const parserUtils = {
 
   isFunction(node) {
     return this.isValidNodeType(node, FUNCTION_EXPRESSIONS);
-  },
-
-  isObjectType(node) {
-    return node instanceof Object;
   },
 
   isMicroTask({ callee }) {
