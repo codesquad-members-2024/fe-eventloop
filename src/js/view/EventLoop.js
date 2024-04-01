@@ -43,7 +43,7 @@ function moveCallstackToWebApi(callbacks) {
 }
 
 function viewCallStack(currentCall) {
-  callStackBox.innerHTML = `<div>${currentCall.funcType}</div>`;
+  callStackBox.innerHTML = `<div>${currentCall.calleeName}</div>`;
 }
 
 function viewWebAPIs(currentCall) {

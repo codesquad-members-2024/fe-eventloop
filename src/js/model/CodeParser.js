@@ -1,5 +1,7 @@
 import parserUtils from "./ParserUtils.js";
 
+const FIRST_INDEX = 0;
+
 const validateAsyncFunc = (node) =>
   parserUtils.isMicroTask(node) || parserUtils.isMacroTask(node);
 
@@ -23,9 +25,9 @@ export async function parseLiteral(code) {
   parser.extractCallbacks();
   const callbacks = parser.callbacks;
   return callbacks;
-};
+}
 
-class AsyncFunctionParser {
+export class AsyncFunctionParser {
   constructor(code, ast) {
     this.code = code;
     this.ast = ast;
@@ -39,12 +41,14 @@ class AsyncFunctionParser {
 
   extractCallbacks() {
     this.asyncNode.forEach((node) => {
-      const funcType = node.callee.name
-        ? node.callee.name
-        : node.callee.property.name;
-      const callbackArg = node.arguments[0];
+      const calleeName = parserUtils.getCalleeName(node);
+      const callbackArg = node.arguments[FIRST_INDEX];
       const callback = this.code.slice(callbackArg.start, callbackArg.end);
-      this.callbacks.push({ funcType: funcType, callback: callback });
+      this.callbacks.push({ calleeName: calleeName, callback: callback });
     });
+  }
+
+  getCallbacks() {
+    return this.callbacks;
   }
 }
