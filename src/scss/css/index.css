@@ -46,15 +46,9 @@ main {
 .neon {
   display: block;
   position: relative;
-  padding: 30px;
+  padding: 10px 16px;
   border-radius: 10px;
   border: 2px solid #fff;
-}
-.neon .task {
-  margin-right: 10px;
-}
-.neon .task:last-child {
-  margin-right: 0;
 }
 
 .section-code {
@@ -112,9 +106,19 @@ main {
 
 .call-stack .neon {
   display: flex;
+  min-width: 180px;
+  min-height: 300px;
+  align-items: center;
   flex-direction: column-reverse;
   border-color: #4ed6ff;
   box-shadow: 0 0 10px #4ed6ff;
+}
+.call-stack .neon .task {
+  animation: fadeIn 1s;
+  margin-top: 10px;
+}
+.call-stack .neon .task:last-child {
+  margin-top: 0;
 }
 
 .web-apis .neon {
@@ -164,7 +168,6 @@ main {
   color: #fff;
   line-height: 50px;
   text-align: center;
-  margin: 10px;
 }
 
 @keyframes Rotation {
@@ -173,5 +176,13 @@ main {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

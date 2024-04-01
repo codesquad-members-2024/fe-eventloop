@@ -1,87 +1,31 @@
-import { TaskComponent } from './component.js';
+export const microTaskApis = ['queueMicrotask', 'Promise', 'process.nextTick'];
+export const macroTaskApis = ['setTimeout', 'setInterval', 'setImmediate'];
+export const promiseMethods = ['then'];
 
-const microTaskApis = ['queueMicrotask', 'Promise', 'process.nextTick'];
-const macroTaskApis = [
-  'setTimeout',
-  'setInterval',
-  'setImmediate',
-  'requestAnimationFrame',
-];
-
-class CallStack {
-  constructor() {
-    this.stack = [];
-  }
-  push(task) {
-    this.stack.push(task);
-  }
-  pop() {
-    return this.stack.pop();
-  }
-  isEmpty() {
-    return this.stack.length === 0;
-  }
-}
-class WebAPI {
-  constructor() {
-    this.stack = [];
-  }
-  checkTaskType(task, time = 0) {
-    time = time || 0;
-    if (microTaskApis.includes(task)) {
-      microtask.addTask(task);
-    } else if (macroTaskApis.includes(task)) {
-      macrotask.addTask(task);
-    }
-  }
-  addTask(task) {
-    this.task.push(task);
-  }
-  removeTask(task) {
-    this.task = this.task.filter((t) => t !== task);
-  }
-}
-class Task {
-  constructor(name) {
-    this.id = Math.random();
-    this.name = name;
-  }
-}
-class TaskQueue {
-  constructor() {
-    this.task = [];
-  }
-  addTask(taskName) {
-    const task = new Task(taskName);
-    this.task.push(task);
-    this.generateTask(task);
-  }
-  generateTask(task) {
-    if (microTaskApis.includes(task.name)) {
-      console.log('microtask');
-      document.querySelector('#microtask').innerHTML += TaskComponent(
-        task.name,
-      );
-    } else if (macroTaskApis.includes(task.name)) {
-      console.log('macrotask');
-      document.querySelector('#macrotask').innerHTML += TaskComponent(
-        task.name,
-      );
-    }
-  }
-  moveToCallStack() {
-    if (CallStack.stack.length === 0) return;
-    if (CallStack.stack.isEmpty()) {
-      const task = this.task.shift();
-      CallStack.push(task);
-    }
-  }
-  removeTask(task) {
-    this.task = this.task.filter((t) => t !== task);
-  }
+export function CallStack() {
+  this.stack = [];
+  this.observers = []; // Observer 목록
 }
 
-export const callStack = new CallStack([]);
-export const webAPI = new WebAPI([]);
-export const microtask = new TaskQueue([], microTaskApis);
-export const macrotask = new TaskQueue([], macroTaskApis);
+CallStack.prototype.addObserver = function (observer) {
+  this.observers.push(observer);
+};
+
+CallStack.prototype.notifyObservers = function () {
+  this.observers.forEach((observer) => observer.update(this));
+};
+
+CallStack.prototype.addTask = function (task) {
+  this.stack.push(task);
+  this.notifyObservers(); // 콜 스택 업데이트 시 옵저버에게 알림
+};
+
+CallStack.prototype.removeTask = function () {
+  const task = this.stack.pop();
+  this.notifyObservers(); // 콜 스택 업데이트 시 옵저버에게 알림
+  return task;
+};
+
+export class WebAPI {}
+export class TaskQueue {}
+export class EventLoop {}
