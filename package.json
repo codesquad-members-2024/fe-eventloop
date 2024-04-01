@@ -1,0 +1,14 @@
+{
+  "name": "fe-eventloop",
+  "version": "1.0.0",
+  "description": "이벤트 루프 시각화",
+  "scripts": {
+    "test": "jest --detectOpenHandles"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^29.7.0"
+  }
+}
