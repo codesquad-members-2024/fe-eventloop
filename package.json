@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "acorn": "^8.11.3",
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0"
   },
