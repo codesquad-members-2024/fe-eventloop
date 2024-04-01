@@ -1,30 +1,25 @@
-import { Box } from "./animationHelper/boxModal.js"
-import { AnimationGenerator } from "./animationHelper/animationGenerator.js"
-import queueManager from "./queue.js"
-function WepApikManager() {
+import { Box, renderFunc } from "./animationHelper/boxModal.js";
+import { AnimationGenerator } from "./animationHelper/animationGenerator.js";
+import queueManager from "./queue.js";
 
-    const pushToWepApi = async(asynchronousFunc) => {
-        const id = await createWepApiHTML(asynchronousFunc)
-        queueManager.pushToQeuue(id, asynchronousFunc)
-    }
+const WebAPIkManager = {
+    async pushToWepApi(asynchronousFunc) {
+        const id = await this.createWepApiHTML(asynchronousFunc);
+        queueManager.pushToQeuue(id, asynchronousFunc);
+    },
 
-    const createWepApiHTML = async(contex) => {
-        const uniqueId = Date.now()
-        const box = new Box(contex.callBack, uniqueId)
-        const animationGenerator = new AnimationGenerator(uniqueId, "wep-Api-container")
-        renderFunc(box.creatBox())
-        await animationGenerator.delay(2000)
-        animationGenerator.applyWepApiInAnimation()
-        return uniqueId
-    }
-    
-    const renderFunc = (node) => {
-        const bodyEl = document.querySelector(".engine-container")
-        bodyEl.append(node)
-    }
+    async createWepApiHTML(contex) {
+        const uniqueId = Date.now();
+        const box = new Box(contex.callBack, uniqueId);
+        const animationGenerator = new AnimationGenerator(
+            uniqueId,
+            "wep-Api-container"
+        );
+        renderFunc(box.creatBox());
+        await animationGenerator.delay(2000);
+        animationGenerator.applyWepApiInAnimation();
+        return uniqueId;
+    },
+};
 
-    return {pushToWepApi}
-}
-
-const wepApikManager = WepApikManager()
-export default wepApikManager
+export default WebAPIkManager;

@@ -1,11 +1,12 @@
 import executionContextManager from "../main.js";
-import callStackManager from "./callStack.js";
+import CallStackManager from "./callStack.js";
 import queueManager from "./queue.js";
 import { AnimationGenerator } from "./animationHelper/animationGenerator.js";
 
 export async function eventLoop() {
     const moveToCallbackFromMain = () => {
-        if (callStackManager.isCallStackEmpty()) return callStackManager.pushToCallStack(executionContextManager.getMainFunction());
+        if (CallStackManager.isCallStackEmpty()) 
+            return CallStackManager.pushToCallStack(executionContextManager.getMainFunction());
     };
 
     const moveToCallbackFromQueue = async() => {

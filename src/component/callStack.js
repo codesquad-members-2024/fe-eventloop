@@ -1,47 +1,45 @@
-import { Box } from "./animationHelper/boxModal.js"
-import { AnimationGenerator } from "./animationHelper/animationGenerator.js"
-import wepApikManager from "./webApi.js"
-function CallStackManager() {
-    
-    const callStack = []
+import { Box, renderFunc } from "./animationHelper/boxModal.js";
+import { AnimationGenerator } from "./animationHelper/animationGenerator.js";
+import WebAPIkManager from "./webApi.js";
 
-    const pushToCallStack = (curExecutionContext) => {
-        callStack.push(curExecutionContext)
-        createCallStackHTML(curExecutionContext)
-        spliceCallBack(curExecutionContext)
-    }
+const CallStackManager = {
+    callStack: [],
 
-    const isCallBack = (curExecutionContext) => {
+    pushToCallStack(curExecutionContext) {
+        this.callStack.push(curExecutionContext);
+        this.createCallStackHTML(curExecutionContext);
+        this.spliceCallBack(curExecutionContext);
+    },
+
+    isCallBack(curExecutionContext) {
         if (curExecutionContext.code.includes("fetch")) {
-            callStack.pop()
+            this.callStack.pop();
             return false;
         }
         return true;
-    }
+    },
 
-    const spliceCallBack = (curExecutionContext) => {
-        if(!isCallBack(curExecutionContext)) return;
-        const asynchronousFunc = callStack.pop()
-        wepApikManager.pushToWepApi(asynchronousFunc);
-    }
+    spliceCallBack(curExecutionContext) {
+        const isCallBack = !this.isCallBack(curExecutionContext);
+        if (isCallBack) return;
+        const asynchronousFunc = this.callStack.pop();
+        WebAPIkManager.pushToWepApi(asynchronousFunc);
+    },
 
-    const createCallStackHTML = async(contex) => {
-        const uniqueId = Date.now()
-        const box = new Box(contex.code, uniqueId)
-        const animationGenerator = new AnimationGenerator(uniqueId, "call-stack-container")
-        renderFunc(box.creatBox())
-        return await animationGenerator.applyCallBackInAnimation()
-    }
+    async createCallStackHTML(contex) {
+        const uniqueId = Date.now();
+        const box = new Box(contex.code, uniqueId);
+        const animationGenerator = new AnimationGenerator(
+            uniqueId,
+            "call-stack-container"
+        );
+        renderFunc(box.creatBox());
+        return await animationGenerator.applyCallBackInAnimation();
+    },
 
-    const renderFunc = (node) => {
-        const bodyEl = document.querySelector(".engine-container")
-        bodyEl.append(node)
-    }
+    isCallStackEmpty() { // 키값으로 인식
+        return !this.callStack.length;
+    },
+};
 
-    const isCallStackEmpty = () => !callStack.length;
-
-    return {pushToCallStack, isCallStackEmpty}
-}
-
-const callStackManager = CallStackManager()
-export default callStackManager
+export default CallStackManager;
