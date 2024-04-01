@@ -1,10 +1,30 @@
-import getMainFunction from "../main.js";
+import executionContextManager from "../main.js";
 import callStackManager from "./callStack.js";
-export function eventLoop() {
-    const main = () => {
-        if(callStackManager.isCallStackEmpty()) callStackManager.pushToCallStack(getMainFunction())
+import queueManager from "./queue.js";
+import { AnimationGenerator } from "./animationHelper/animationGenerator.js";
+
+export async function eventLoop() {
+    const moveToCallbackFromMain = () => {
+        if (callStackManager.isCallStackEmpty()) return callStackManager.pushToCallStack(executionContextManager.getMainFunction());
+    };
+
+    const moveToCallbackFromQueue = async() => {
+        if (!queueManager.isQueueEmpty()) {
+            const curQueue = queueManager.getQueue()
+            const animationGenerator = new AnimationGenerator(curQueue.id, "call-stack-container")
+            await animationGenerator.delay(8000)
+            animationGenerator.applyQueueoutAnimation(curQueue.position)
+        }
     }
-    // setInterval(() => {
-        main()
-    // }, 500)
+
+    moveToCallbackFromMain();
+    
+    const executionContexLoop = setInterval(() => {
+        moveToCallbackFromMain();
+        if (executionContextManager.isFunc()) clearInterval(executionContexLoop);
+    }, 3000);
+
+    setInterval(() => {
+        moveToCallbackFromQueue();
+    }, 3000);
 }

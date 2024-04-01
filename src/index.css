@@ -105,7 +105,7 @@ body {
 
 .call-stack {
     font-size: 10px;
-    padding: 5px;
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -113,9 +113,16 @@ body {
     height: 65px;
     border-radius: 10px;
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: -100px;
+    top: -100px;
     background: #EF5EA7;
 }
+
+.call-stack-out {
+    transform: translateY(0px);
+    /* opacity: 1;
+    transition: opacity 2s ease-in-out; */
+}
+
 
 
