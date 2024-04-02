@@ -26,6 +26,11 @@ export class CallStack {
     this.notifyObservers(); // 콜 스택 업데이트 시 옵저버에게 알림
     return task;
   }
+
+  resetTask() {
+    this.stack.length = 0;
+    this.notifyObservers();
+  }
 }
 
 export class WebAPI extends CallStack {
@@ -35,7 +40,6 @@ export class WebAPI extends CallStack {
 
   addTask(task) {
     this.stack.push(task);
-    console.log(this.stack);
     this.notifyObservers(); // 콜 스택 업데이트 시 옵저버에게 알림
   }
 

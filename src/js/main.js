@@ -3,24 +3,6 @@ import { CallStackObserver, WebAPIObserver } from './observer.js';
 import { parseCode } from './parsing.js';
 import { code } from './test-code.js';
 
-function executeTasksSequentially(tasks) {
-  let promise = Promise.resolve();
-
-  tasks.forEach((task) => {
-    promise = promise.then(() => {
-      callStack.addTask(task.functionName || task.type);
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          callStack.removeTask();
-          resolve();
-        }, 3000);
-      });
-    });
-  });
-
-  return promise;
-}
-
 const tasks = parseCode(code);
 console.log(tasks);
 
@@ -35,19 +17,16 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function processTasks(tasks) {
   for (const task of tasks) {
-    await callStack.addTask(task.functionName || task.type);
-    await delay(1000);
+    callStack.addTask(task.functionName || task.type);
+    webAPI.addTask(task);
+    await delay(2000);
   }
+  callStack.resetTask();
 }
 
-async function registerCallbackToWebAPI(tasks) {
-  for (const task of tasks) {
-    await webAPI.addTask(task);
-  }
+async function main() {
+  await processTasks(tasks);
+  console.log('큐!');
 }
-processTasks(tasks);
-registerCallbackToWebAPI(tasks);
-// registerCallbackToWebAPI();
-// executeTasksSequentially(tasks).then(() => {
-//   console.log('모든 작업이 완료되었습니다.');
-// });
+
+main();

@@ -123,9 +123,31 @@ main {
 }
 
 .web-apis .neon {
+  display: flex;
+  flex-direction: column;
   height: 400px;
+  width: 280px;
   border-color: rgb(153, 116, 231);
   box-shadow: 0 0 10px rgb(153, 116, 231);
+  gap: 10px;
+}
+
+.web-apis .task {
+  animation: slideRight 1s ease-in-out;
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-100%);
+    opacity: 0.2;
+    position: absolute; /* 시작 위치를 고정으로 설정 */
+    left: 0px; /* 시작 위치를 화면 왼쪽 끝에 고정 */
+    top: 150px;
+  }
+  to {
+    transform: translate(0);
+    opacity: 1;
+  }
 }
 
 .event-loop .neon {
@@ -163,16 +185,16 @@ main {
 }
 
 .task {
-  display: block;
+  display: flex;
   width: -moz-fit-content;
   width: fit-content;
   padding: 0 10px;
   border-radius: 10px;
-  height: 50px;
+  min-height: 50px;
   background: hotpink;
   color: #fff;
-  line-height: 50px;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes Rotation {
