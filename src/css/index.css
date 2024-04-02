@@ -74,7 +74,8 @@ main {
   text-align: left;
   resize: none;
 }
-.input-code:hover, .input-code:focus {
+.input-code:hover,
+.input-code:focus {
   box-shadow: 0 0 20px #fff;
   outline: none;
 }
@@ -136,7 +137,11 @@ main {
   text-align: center;
   line-height: 6;
   font-size: 40px;
-  text-shadow: 0 0 10px #c8ff00, 0 0 20px #c8ff00, 0 0 30px #c8ff00, 0 0 40px #c8ff00;
+  text-shadow:
+    0 0 10px #c8ff00,
+    0 0 20px #c8ff00,
+    0 0 30px #c8ff00,
+    0 0 40px #c8ff00;
   color: #c8ff00;
   animation: Rotation 2s infinite linear;
 }
