@@ -37,7 +37,7 @@ class SubmitHandler {
   createSetTimeoutCallbackInfo(originalCode, parseNode, callBackNode) {
     const callBackNodeBody = callBackNode.body.body[0];
     const callBackCode = originalCode.substring(callBackNodeBody.start, callBackNodeBody.end);
-    const delay = parseNode.arguments[1].value; // setTimeout의 지연 시간
+    const delay = parseNode.arguments[1].value;
     const callBackInfo = {
       type: 'setTimeout',
       callBackCode,
@@ -55,43 +55,34 @@ class SubmitHandler {
 
       const callBackNode = parseNode.arguments[0];
 
-      // .then, .catch, setTimeout의 콜백 파악
       if (callee.type === 'MemberExpression' && callee.property.name === 'then') {
         callBackInfo = this.createThenCallbackInfo(originalCode, callBackNode);
-        if (callBackInfo) this.callBacks.unshift(callBackInfo);
+        this.callBacks.unshift(callBackInfo);
       }
 
       if (callee.type === 'MemberExpression' && callee.property.name === 'catch') {
         callBackInfo = this.createCatchCallbackInfo(originalCode, callBackNode);
-        if (callBackInfo) this.callBacks.unshift(callBackInfo);
+        this.callBacks.unshift(callBackInfo);
       }
 
       if (callee.type === 'Identifier' && callee.name === 'setTimeout') {
         callBackInfo = this.createSetTimeoutCallbackInfo(originalCode, parseNode, callBackNode);
-        if (callBackInfo) this.callBacks.push(callBackInfo);
+        this.callBacks.push(callBackInfo);
       }
     }
 
     // 재귀적으로 자식 노드 순회
     Object.keys(parseNode).forEach((key) => {
-      if (parseNode.hasOwnProperty(key)) {
         const child = parseNode[key];
         if (typeof child === 'object' && child !== null) {
           this.extractCallbackCode(child, originalCode);
         }
-      }
     });
   }
 
   createParseCode() {
-    const userCodeTarget = document.getElementById(this.textId);
-    const userCode = userCodeTarget.value;
-    this.userCode = userCode;
-
-    const parseCode = acorn.parse(userCode, {
-      sourceType: 'module',
-    });
-
+    this.userCode = document.getElementById(this.textId).value;
+    const parseCode = acorn.parse(this.userCode, {sourceType: 'module'});
     return parseCode;
   }
 
@@ -109,3 +100,9 @@ class SubmitHandler {
 }
 
 export default SubmitHandler;
+
+function sayHi (name = 'there') {
+	return `Hi ${name}!`;
+}
+
+export {sayHi};
