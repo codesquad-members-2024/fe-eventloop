@@ -17,7 +17,7 @@ const AST = {
 		body.forEach((exp) => {
 			const calleeNames = [];
 			this.getCalleeName(exp.expression, calleeNames);
-			callExpressions.push(calleeNames.reverse());
+			callExpressions.push(...calleeNames.reverse());
 		});
 		return callExpressions;
 	},
