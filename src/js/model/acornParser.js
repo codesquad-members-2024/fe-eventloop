@@ -1,8 +1,7 @@
-// import EventLoopHandler from "./EventLoopHandler.js";
 const MICRO_NAMES = ["then", "catch"]
 const MACRO_NAMES = ["setTimeout"]
 
-const createㅂQueueCallbackInfo = (originalCode, callBackNode, parseNode) => {
+const createQueueCallbackInfo = (originalCode, callBackNode, parseNode) => {
     const callBackNodeBody = (callBackNode.body.body ?? [])[0] || callBackNode.body;
     const thenCallCode = originalCode.substring(callBackNodeBody.start, callBackNodeBody.end);
     const delay = parseNode.arguments[1]?.value ?? undefined;
@@ -21,7 +20,7 @@ export const extractCallbackCode = (parseNode, originalCode, nodeList = []) => {
     if (parseNode.type === 'CallExpression') {
         const callee = parseNode.callee;
         const callBackNode = parseNode.arguments[0];
-        if(isMicroTask(callee) || isMacroTask(callee)) nodeList.push(createㅂQueueCallbackInfo(originalCode, callBackNode, parseNode)); 
+        if(isMicroTask(callee) || isMacroTask(callee)) nodeList.push(createQueueCallbackInfo(originalCode, callBackNode, parseNode)); 
     }
 
     Object.keys(parseNode).forEach((key) => {
@@ -33,3 +32,5 @@ export const extractCallbackCode = (parseNode, originalCode, nodeList = []) => {
 
     return nodeList;
 };
+
+export {isMicroTask, isMacroTask}

@@ -1,4 +1,4 @@
-import { selectorsMap } from "../contants.js";
+import { selectorsMap } from "../utill/contants.js";
 import { extractCallbackCode } from "../model/acornParser.js";
 
 const createParseCode = () => {
@@ -15,6 +15,8 @@ const handleFormSubmit = (e) => {
     e.preventDefault();
     const [parseCode, userCode] = createParseCode();
     const nodeList = parseCode.body.map((obj) => extractCallbackCode(obj, userCode));
-    console.log(nodeList.flat())
+    // console.log(nodeList.flat())
     // new EventLoopHandler(callBacks, animationContainerClassNames);
 };
+
+export {createParseCode, handleFormSubmit}
