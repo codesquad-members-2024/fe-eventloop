@@ -20,3 +20,7 @@ setTimeout(function() {
 new Promise((resolve)=>resolve("Promise"))
 .then((res) => console.log(res));
 `;
+
+export const MICRO_TASK = ["Promise", "then"];
+export const MACRO_TASK = ["setTimeout", "setInterval"];
+export const TASK_DELAY = 3000;

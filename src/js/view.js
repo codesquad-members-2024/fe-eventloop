@@ -1,8 +1,5 @@
 import delay from "./components/delay.js";
-
-const microTasks = ["process", "Promise", "async", "then"];
-const macroTasks = ["setTimeout", "setInterval"];
-const TASK_DELAY = 3000;
+import { MICRO_TASK, MACRO_TASK, TASK_DELAY } from "./utils/constans.js";
 
 class Task {
 	constructor(className) {
@@ -36,9 +33,9 @@ async function moveTasks(tasks) {
 		webApis.appendTask(task + " cb");
 
 		await delay(TASK_DELAY);
-		if (microTasks.includes(task)) {
+		if (MICRO_TASK.includes(task)) {
 			microQueue.appendTask(task + " cb");
-		} else if (macroTasks.includes(task)) {
+		} else if (MACRO_TASK.includes(task)) {
 			macroQueue.appendTask(task + " cb");
 		}
 
