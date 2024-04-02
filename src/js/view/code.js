@@ -15,26 +15,35 @@ function getCode() {
 	return calleeNames;
 }
 
-function handleButtonClick(code) {
-	const image = document.querySelector(".event-loop-area img");
-	image.classList.add("active");
-
-	moveTasks(code).then(() => {
-		image.classList.remove("active");
+function handleButtonClick($eventLoop, stopState, code) {
+	moveTasks(code, stopState).then(() => {
+		$eventLoop.classList.remove("active");
 	});
 }
 
-function onEvent() {
-	const EventTarget = {
-		START: (code) => handleButtonClick(code),
-		STOP: () => {},
-	};
-	const code = getCode();
+const EventTarget = {
+	START: ($eventLoop, stopState, code) => {
+		$eventLoop.classList.add("active");
+		stopState.stop = false;
+		handleButtonClick($eventLoop, stopState, code);
+	},
+	STOP: ($eventLoop, stopState) => {
+		$eventLoop.classList.remove("active");
+		stopState.stop = true;
+	},
+};
 
+function onEvent() {
+	const $eventLoop = document.querySelector(".event-loop-area img");
 	const $enterButton = document.querySelector(".enter-btn-wrap");
-	$enterButton.addEventListener("click", ({ target }) => {
-		EventTarget[target.innerText]?.(code);
-	});
+	const code = getCode();
+	const stopState = {
+		stop: false,
+	};
+
+	$enterButton.addEventListener("click", ({ target }) =>
+		EventTarget[target.innerText]?.($eventLoop, stopState, code)
+	);
 }
 
 export default onEvent;
