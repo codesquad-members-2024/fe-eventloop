@@ -2,7 +2,7 @@ class EventLoopHandler {
   constructor(callBacks, classNames) {
     this.callBacks = callBacks;
     this.callStackClassName = classNames.callStackClassName;
-    this.webAPIClassName = classNames.webAPIClassName;
+    this.webAPIClassName = classNames.webApiClassName;
     this.microQClassName = classNames.microQClassName;
     this.macroQClassName = classNames.macroQClassName;
     this.status = {
@@ -12,7 +12,7 @@ class EventLoopHandler {
       macroQ: [],
     };
     this.classNameMap = {};
-    this.setToclassNameMap();
+    this.setClassNameMap();
     this.EventLoopControl();
   }
 
@@ -58,9 +58,7 @@ class EventLoopHandler {
 
   removeFirstElement(className) {
     const ElementTarget = document.querySelector(className);
-    if (ElementTarget.children.length > 0) {
-      ElementTarget.children[0].remove();
-    }
+    ElementTarget.children[0].remove();
   }
 
   async removeFirstElementByTextAsync(callBack, className) {
@@ -91,7 +89,7 @@ class EventLoopHandler {
     return backgroundColor;
   }
 
-  setToclassNameMap() {
+  setClassNameMap() {
     let classNameMap = new Map();
     classNameMap.set(this.callStackClassName, this.status.callStack);
     classNameMap.set(this.webAPIClassName, this.status.webAPI);
@@ -100,12 +98,12 @@ class EventLoopHandler {
     this.classNameMap = classNameMap;
   }
 
-  getCallBackStatusByClassName(className) {
-    const statusArray = this.classNameMap.get(className);
-    if (statusArray && statusArray.length > 0) {
-      return statusArray[statusArray.length - 1];
-    }
-  }
+  // getCallBackStatusByClassName(className) {
+  //   const statusArray = this.classNameMap.get(className);
+  //   if (statusArray && statusArray.length > 0) {
+  //     return statusArray[statusArray.length - 1];
+  //   }
+  // }
 
   updateStatusByClassName(callBack, className, type) {
     if (type === 'push') this.classNameMap.get(className).push(callBack);

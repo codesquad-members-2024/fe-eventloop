@@ -7,7 +7,7 @@ describe('isMicroTask함수 테스트', () => {
         expect(result).toBe(true);
     });
 
-    test('MemberExpression, then을 인수로 전달했을때 true를 반환하는지 확인합니다.', () => {
+    test('MemberExpression, catch을 인수로 전달했을때 true를 반환하는지 확인합니다.', () => {
         const callee = {type: 'MemberExpression', property: { name: 'catch' }};
         const result = isMicroTask(callee);
         expect(result).toBe(true);

@@ -1,5 +1,13 @@
-import { selectorsMap } from "../utill/contants.js";
+import { selectorsMap } from "../util/constants.js";
 import { extractCallbackCode } from "../model/acornParser.js";
+import EventLoopHandler from "../prevCode/prevEventLoopHandler.js";
+
+const classNames = {
+    callStackClassName: ".animation__call_stack_box",
+    webApiClassName: ".animation__web_api_box",
+    microQClassName: ".animation__micro_task_box",
+    macroQClassName: ".animation__macro_task_box",
+};
 
 const createParseCode = () => {
     const userCode = document.getElementById(selectorsMap.textId).value;
@@ -15,8 +23,7 @@ const handleFormSubmit = (e) => {
     e.preventDefault();
     const [parseCode, userCode] = createParseCode();
     const nodeList = parseCode.body.map((obj) => extractCallbackCode(obj, userCode));
-    // console.log(nodeList.flat())
-    // new EventLoopHandler(callBacks, animationContainerClassNames);
+    new EventLoopHandler(nodeList.flat(), classNames);
 };
 
 export {createParseCode, handleFormSubmit}
