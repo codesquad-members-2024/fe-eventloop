@@ -28,8 +28,6 @@ setTimeout(function() {
 
     // when
     const parser = new AsyncFunctionParser(code, ast);
-    parser.findAsyncFunctions();
-    parser.extractCallbacks();
     const callbacks = parser.getCallbacks();
 
     // then
