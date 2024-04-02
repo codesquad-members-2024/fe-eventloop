@@ -101,10 +101,11 @@
 	align-items: center;
 	justify-content: center;
 	background-color: pink;
-	width: 80%;
-	height: 40%;
+	width: 150px;
+	height: 60px;
 	border-radius: 20px;
-	font-size: 2rem;
+	font-size: 24px;
+	text-align: center;
 	animation: fadeInDown 0.5s ease-in;
 }
 
