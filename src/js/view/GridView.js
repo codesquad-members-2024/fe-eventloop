@@ -37,3 +37,5 @@ export const updateGridComponents = ({ className, contents, maxLength }) => {
 
   return `<div class="${className}__components" style="animation-play-state: paused;">${baseComponents}${emptyComponents}</div>`;
 };
+
+export { isFirstIndex, isEven, isLastIndex, isToCopy };
