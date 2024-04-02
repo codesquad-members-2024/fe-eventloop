@@ -56,6 +56,10 @@ const parserUtils = {
     );
   },
 
+  isAsyncFunction(node) {
+    return this.isMicroTask(node) || this.isMacroTask(node);
+  },
+
   getCalleeName({ callee }) {
     return callee?.type === "Identifier"
       ? callee.name

@@ -266,6 +266,41 @@ describe("isMacroTask 단위 테스트", () => {
   });
 });
 
+describe("isAsyncFunction 단위 테스트", () => {
+  test("노드가 Microtask 콜백 함수일 때, true를 반환", () => {
+    // given
+    const microTaskNode = { callee: { name: "then" } };
+
+    // when
+    const result = parserUtils.isAsyncFunction(microTaskNode);
+
+    // then
+    expect(result).toBe(true);
+  });
+
+  test("노드가 Macrotask 콜백 함수일 때, true를 반환", () => {
+    // given
+    const macroTaskNode = { callee: { type: "Identifier", name: "setTimeout" } };
+
+    // when
+    const result = parserUtils.isAsyncFunction(macroTaskNode);
+
+    // then
+    expect(result).toBe(true);
+  });
+
+  test("노드가 비동기 콜백 함수가 아닐 때, false를 반환", () => {
+    // given
+    const node = { callee: { type: "Identifier", name: "log" } };
+
+    // when
+    const result = parserUtils.isAsyncFunction(node);
+
+    // then
+    expect(result).toBe(false);
+  });
+});
+
 describe("getCalleeName 단위 테스트", () => {
   test("노드의 callee.type이 Identifier일 때, callee.name을 반환", () => {
     // given
