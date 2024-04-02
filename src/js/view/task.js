@@ -12,25 +12,27 @@ function createTasks() {
 	}, {});
 }
 
+async function runAnimation(taskMap, task) {
+	await delay(TASK_DELAY);
+	taskMap.callStack.appendTask(task);
+	if (task === "fetch") return;
+
+	await delay(TASK_DELAY);
+	taskMap.webAPIs.appendTask(`${task} cb`);
+	if (task === "catch") return;
+
+	await delay(TASK_DELAY);
+	if (MICRO_TASK.includes(task)) taskMap.microQueue.appendTask(`${task} cb`);
+	if (MACRO_TASK.includes(task)) taskMap.macroQueue.appendTask(`${task} cb`);
+
+	await delay(TASK_DELAY);
+	taskMap.callStack.appendTask(`${task} cb`);
+}
+
 async function moveTasks(tasks) {
-	const Task = createTasks();
-
+	const taskMap = createTasks();
 	for (const task of tasks) {
-		await delay(TASK_DELAY);
-		Task.callStack.appendTask(task);
-
-		await delay(TASK_DELAY);
-		Task.webAPIs.appendTask(task + " cb");
-
-		await delay(TASK_DELAY);
-		if (MICRO_TASK.includes(task)) {
-			Task.microQueue.appendTask(task + " cb");
-		} else if (MACRO_TASK.includes(task)) {
-			Task.macroQueue.appendTask(task + " cb");
-		}
-
-		await delay(TASK_DELAY);
-		Task.callStack.appendTask(task + " cb");
+		await runAnimation(taskMap, task);
 	}
 }
 
