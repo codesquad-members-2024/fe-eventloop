@@ -115,6 +115,7 @@ main {
 .web-apis {
   .neon {
     height: 400px;
+    width: 250px;
     border-color: rgb(153, 116, 231);
     box-shadow: 0 0 10px rgb(153, 116, 231);
   }
@@ -143,8 +144,6 @@ main {
 .queue-list {
   width: 100%;
   background-color: blue;
-  .square {
-  }
 }
 .macrotask {
   .neon {
@@ -161,15 +160,15 @@ main {
   }
 }
 .task {
-  display: block;
+  display: flex;
   width: fit-content;
   padding: 0 10px;
   border-radius: 10px;
-  height: 50px;
+  min-height: 50px;
   background: hotpink;
   color: #fff;
-  line-height: 50px;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes Rotation {

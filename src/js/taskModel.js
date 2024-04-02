@@ -2,32 +2,49 @@ export const microTaskApis = ['queueMicrotask', 'Promise', 'process.nextTick'];
 export const macroTaskApis = ['setTimeout', 'setInterval', 'setImmediate'];
 export const promiseMethods = ['then', 'catch'];
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+export class CallStack {
+  constructor() {
+    this.stack = [];
+    this.observers = [];
+  }
 
-export function CallStack() {
-  this.stack = [];
-  this.observers = []; // Observer 목록
+  addObserver(observer) {
+    this.observers.push(observer);
+  }
+
+  notifyObservers() {
+    this.observers.forEach((observer) => observer.update(this.stack));
+  }
+
+  addTask(task) {
+    this.stack.push(task);
+    this.notifyObservers(); // 콜 스택 업데이트 시 옵저버에게 알림
+  }
+
+  removeTask() {
+    const task = this.stack.pop();
+    this.notifyObservers(); // 콜 스택 업데이트 시 옵저버에게 알림
+    return task;
+  }
 }
 
-CallStack.prototype.addObserver = function (observer) {
-  this.observers.push(observer);
-};
+export class WebAPI extends CallStack {
+  constructor() {
+    super(); // 부모 클래스의 생성자 호출
+  }
 
-CallStack.prototype.notifyObservers = function () {
-  this.observers.forEach((observer) => observer.update(this.stack));
-};
+  addTask(task) {
+    this.stack.push(task);
+    console.log(this.stack);
+    this.notifyObservers(); // 콜 스택 업데이트 시 옵저버에게 알림
+  }
 
-CallStack.prototype.addTask = function (task) {
-  this.stack.push(task);
-  this.notifyObservers(); // 콜 스택 업데이트 시 옵저버에게 알림
-};
+  removeTask() {
+    const task = this.stack.pop();
+    this.notifyObservers(); // 콜 스택 업데이트 시 옵저버에게 알림
+    return task;
+  }
+}
 
-CallStack.prototype.removeTask = function () {
-  const task = this.stack.pop();
-  this.notifyObservers(); // 콜 스택 업데이트 시 옵저버에게 알림
-  return task;
-};
-
-export class WebAPI {}
 export class TaskQueue {}
 export class EventLoop {}
