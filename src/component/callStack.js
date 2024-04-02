@@ -10,7 +10,7 @@ const CallStackManager = {
         this.createCallStackHTML(curExecutionContext);
         this.spliceCallBack(curExecutionContext);
     },
-
+    
     isCallBack(curExecutionContext) {
         if (curExecutionContext.code.includes("fetch")) {
             this.callStack.pop();
@@ -20,26 +20,29 @@ const CallStackManager = {
     },
 
     spliceCallBack(curExecutionContext) {
-        const isCallBack = !this.isCallBack(curExecutionContext);
-        if (isCallBack) return;
+        const isNotCallBack = !this.isCallBack(curExecutionContext);
+        if (isNotCallBack) return;
         const asynchronousFunc = this.callStack.pop();
         WebAPIkManager.pushToWepApi(asynchronousFunc);
     },
 
-    async createCallStackHTML(contex) {
-        const uniqueId = Date.now();
-        const box = new Box(contex.code, uniqueId);
-        const animationGenerator = new AnimationGenerator(
-            uniqueId,
-            "call-stack-container"
-        );
-        renderFunc(box.creatBox());
-        return await animationGenerator.applyCallBackInAnimation();
+    async createCallStackHTML(context){
+        const uniqueId = Date.now(); 
+
+        const box = new Box(context.code, uniqueId);
+        renderFunc(box.createBox());
+
+        return await this.initializeAnimation(uniqueId);
     },
 
-    isCallStackEmpty() { // 키값으로 인식
+    isCallStackEmpty() { 
         return !this.callStack.length;
     },
+
+    async initializeAnimation(uniqueId) {
+        const animationGenerator = new AnimationGenerator(uniqueId, "call-stack-container");
+        return await animationGenerator.applyCallBackInAnimation();
+    }
 };
 
 export default CallStackManager;

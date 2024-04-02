@@ -3,7 +3,7 @@ export function Box(funcString, id) {
     this.id = id;
 }
 
-Box.prototype.creatBox = function () {
+Box.prototype.createBox = function () {
     const divEl = document.createElement("div");
     divEl.id = `${this.id}`;
     divEl.className = "call-stack";

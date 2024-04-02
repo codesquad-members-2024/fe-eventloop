@@ -10,16 +10,17 @@ const WebAPIkManager = {
 
     async createWepApiHTML(contex) {
         const uniqueId = Date.now();
+
         const box = new Box(contex.callBack, uniqueId);
-        const animationGenerator = new AnimationGenerator(
-            uniqueId,
-            "wep-Api-container"
-        );
-        renderFunc(box.creatBox());
+        renderFunc(box.createBox());
+
+        const animationGenerator = new AnimationGenerator(uniqueId, "wep-Api-container");
         await animationGenerator.delay(2000);
         animationGenerator.applyWepApiInAnimation();
+
         return uniqueId;
     },
 };
+
 
 export default WebAPIkManager;

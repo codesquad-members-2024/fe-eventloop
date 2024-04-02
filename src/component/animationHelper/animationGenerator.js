@@ -1,4 +1,5 @@
 import locationCalculater from "./locationCalculator.js";
+
 export class AnimationGenerator{
     constructor(id, drawPosition) {
         this.id = id
@@ -30,11 +31,11 @@ export class AnimationGenerator{
         );
         await animation.finished;
         await this.delay(1000)
-        this.applyCallBackIOutAnimation()
+        this.applyCallBackOutAnimation()
         return Location
     }
 
-    async applyCallBackIOutAnimation() {
+    async applyCallBackOutAnimation() {
         const Location = locationCalculater.getLocation(this.drawPosition);
         const element = document.getElementById(`${this.id}`);
         const animation = element.animate(
@@ -121,6 +122,10 @@ export class AnimationGenerator{
         );
         await animation.finished;
         await this.delay(1000)
-        this.applyCallBackIOutAnimation()
+        this.applyCallBackOutAnimation()
+    }
+
+    setDrawPosition(drawPosition) {
+        this.drawPosition = drawPosition;
     }
 }

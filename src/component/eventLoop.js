@@ -5,24 +5,25 @@ import { AnimationGenerator } from "./animationHelper/animationGenerator.js";
 
 export async function eventLoop() {
     const moveToCallbackFromMain = () => {
-        if (CallStackManager.isCallStackEmpty()) 
+        if (CallStackManager.isCallStackEmpty())
             return CallStackManager.pushToCallStack(executionContextManager.getMainFunction());
     };
 
-    const moveToCallbackFromQueue = async() => {
+    const moveToCallbackFromQueue = async () => {
         if (!queueManager.isQueueEmpty()) {
-            const curQueue = queueManager.getQueue()
-            const animationGenerator = new AnimationGenerator(curQueue.id, "call-stack-container")
-            await animationGenerator.delay(8000)
-            animationGenerator.applyQueueoutAnimation(curQueue.position)
+            const curQueue = queueManager.getQueue();
+            const animationGenerator = new AnimationGenerator(curQueue.id, "call-stack-container");
+            await animationGenerator.delay(8000);
+            animationGenerator.applyQueueoutAnimation(curQueue.position);
         }
-    }
+    };
 
     moveToCallbackFromMain();
-    
+
     const executionContexLoop = setInterval(() => {
         moveToCallbackFromMain();
-        if (executionContextManager.isFunc()) clearInterval(executionContexLoop);
+        if (executionContextManager.isFunc())
+            clearInterval(executionContexLoop);
     }, 3000);
 
     setInterval(() => {
