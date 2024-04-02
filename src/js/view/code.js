@@ -25,9 +25,16 @@ function handleButtonClick(code) {
 }
 
 function onEvent() {
+	const EventTarget = {
+		START: (code) => handleButtonClick(code),
+		STOP: () => {},
+	};
 	const code = getCode();
-	const $enterButton = document.querySelector(".enter-btn");
-	$enterButton.addEventListener("click", () => handleButtonClick(code));
+
+	const $enterButton = document.querySelector(".enter-btn-wrap");
+	$enterButton.addEventListener("click", ({ target }) => {
+		EventTarget[target.innerText]?.(code);
+	});
 }
 
 export default onEvent;
