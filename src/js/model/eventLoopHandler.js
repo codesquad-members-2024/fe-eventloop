@@ -13,7 +13,7 @@ class EventLoopHandler {
     };
     this.classNameMap = {};
     this.setClassNameMap();
-    this.EventLoopControl();
+    // this.EventLoopControl();
   }
 
   checkIfWebAPIIsEmpty() {
