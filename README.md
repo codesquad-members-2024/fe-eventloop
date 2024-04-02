@@ -39,11 +39,71 @@
 
 ### 4/1 ~ 4/4 (4d)
 
-- [ ] 코드 분석
-- [ ] 테스트 코드 - jest 학습
+- [x] 코드 분석 - 그림으로 그려보기
+- [ ] 코드 분석 - [mermaid](https://www.mermaidchart.com/landing)로 다이어그램 사용해보기 (Option)
+- [ ] 테스트 코드 - [jest](https://jestjs.io/docs/getting-started) 학습
 - [ ] 테스트 코드 - 비 ui요소를 먼저 테스트 해보자 (유틸리티)
 
 ### 4/5 (1d) ?
 
 - [ ] 튜토리얼 보여주기 기능 - 노출 영역은 임의 공간을 활용한다.
 - [ ] 튜토리얼 보여주기 기능 - 옵저버 패턴을 적용해서 단계별로 진행되는 과정을 텍스트 형태로 화면에 노출
+
+### 🔧 Setting
+
+<b>🃏 Jest</b>
+
+- package.json 파일 만들기  
+  $ `npm init -y`
+
+- Jest 라이브러리를 개발 의존성으로 설치  
+  $ `npm install --save-dev jest`
+
+  - @types/jest 를 설치 해줘야 코드 자동완성 기능이 활성화된다.
+    $ `npm install --save-dev jest @types/jest`
+
+- package.json 파일 수정
+
+  ```json
+  "script" : {
+    "test": "jest --watch"
+  }
+  ```
+
+  `--watch`옵션은 파일을 수정하고 저장하면 자동으로 파일의 변경을 감지하고 테스트 코드를 실행한다.
+
+- 그럼 이제, 터미널에 $ `npm test`를 입력하면 jest 커맨드가 실행된다.
+
+<br>
+
+<b>⚡ Babel</b>
+
+jest 실행 시($ `npm test`) import(ES6+)가 안되는 이슈.
+
+- Babel 관련 패키지 설치  
+   `npm install --save-dev jest @babel/preset-env`
+
+- babel.config.cjs 파일 생성
+
+  ```js
+  module.exports = {
+    presets: ['@babel/preset-env'],
+  };
+  ```
+
+- jest.config.cjs 파일 생성
+
+  ```js
+  module.exports = {
+    testEnvironment: 'node',
+    moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx'],
+    transform: {
+      '^.+\\.(js|jsx)?$': 'babel-jest',
+    },
+    moduleNameMapper: {
+      '^@/(.*)$': '<rootDir>/$1',
+    },
+    testMatch: ['<rootDir>/**/*.test.(js|jsx|ts|tsx)', '<rootDir>/(tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))'],
+    transformIgnorePatterns: ['<rootDir>/node_modules/'],
+  };
+  ```
