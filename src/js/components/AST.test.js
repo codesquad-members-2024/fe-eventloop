@@ -35,8 +35,8 @@ setTimeout(function(){
 ];
 
 const results = [
-	[["fetch", "then", "then", "catch"], ["setTimeout"]],
-	[["Promise", "then"], ["setTimeout"]],
+	["fetch", "then", "then", "catch", "setTimeout"],
+	["Promise", "then", "setTimeout"],
 ];
 
 describe("AST findCallExpressions 함수 테스트", () => {
