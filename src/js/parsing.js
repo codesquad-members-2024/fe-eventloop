@@ -39,7 +39,10 @@ export function parseCode(code) {
             arg.type === 'FunctionExpression' ||
             arg.type === 'ArrowFunctionExpression'
           ) {
-            return 'callback function';
+            const startIndex = arg.start;
+            const endIndex = arg.end;
+            const callback = code.slice(startIndex, endIndex);
+            return callback;
           } else {
             return 'unknown';
           }
@@ -49,16 +52,6 @@ export function parseCode(code) {
           functionName,
           arguments: argumentsDetail,
           type: taskType,
-        });
-
-        argumentsDetail.forEach((arg) => {
-          if (arg === 'callback function') {
-            tasks.push({
-              type: 'callback',
-              name: 'anonymous callback',
-              taskType: taskType,
-            });
-          }
         });
       }
     },

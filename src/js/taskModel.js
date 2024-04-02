@@ -1,6 +1,8 @@
 export const microTaskApis = ['queueMicrotask', 'Promise', 'process.nextTick'];
 export const macroTaskApis = ['setTimeout', 'setInterval', 'setImmediate'];
-export const promiseMethods = ['then'];
+export const promiseMethods = ['then', 'catch'];
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export function CallStack() {
   this.stack = [];
@@ -12,7 +14,7 @@ CallStack.prototype.addObserver = function (observer) {
 };
 
 CallStack.prototype.notifyObservers = function () {
-  this.observers.forEach((observer) => observer.update(this));
+  this.observers.forEach((observer) => observer.update(this.stack));
 };
 
 CallStack.prototype.addTask = function (task) {

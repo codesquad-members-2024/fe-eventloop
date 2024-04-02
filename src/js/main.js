@@ -28,9 +28,16 @@ const callStack = new CallStack();
 const callStackObserver = new CallStackObserver('callStack');
 callStack.addObserver(callStackObserver);
 
-tasks.forEach((task) => {
-  callStack.addTask(task.functionName || task.type);
-});
-executeTasksSequentially(tasks).then(() => {
-  console.log('모든 작업이 완료되었습니다.');
-});
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function processTasks(tasks) {
+  for (const task of tasks) {
+    await callStack.addTask(task.functionName || task.type); // 비동기 작업을 수행하고 1초 동안 대기
+    await delay(1000); // 1초 대기
+  }
+}
+
+processTasks(tasks);
+// executeTasksSequentially(tasks).then(() => {
+//   console.log('모든 작업이 완료되었습니다.');
+// });
