@@ -6,7 +6,7 @@ export async function handleSubmit() {
 
   runButton.addEventListener("click", async () => {
     const code = document.getElementById("codeInput").value;
-    const callbacks = await parseLiteral(code).then((resolve) => resolve);
-    controllEventLoop(callbacks);
+    parseLiteral(code)
+      .then((callbacks) => controllEventLoop(callbacks));
   });
-};
+}

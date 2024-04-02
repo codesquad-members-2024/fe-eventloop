@@ -2,7 +2,7 @@ import acorn from "acorn";
 import { AsyncFunctionParser } from "./CodeParser";
 
 describe("CodeParser Integration Test", () => {
-  test("루카스 페이지 예제 코드의 콜백을 호출한 함수 이름과 파싱한 calleeName이 일치하는지 검증", () => {
+  test("예제 코드의 callee.name과 파싱한 calleeName이 일치하는지 검증", () => {
     // given
     const code = `fetch('https://api.example.com/data', {
 method: 'GET',
