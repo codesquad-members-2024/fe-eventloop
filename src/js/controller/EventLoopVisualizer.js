@@ -1,13 +1,13 @@
-import { MACRO_TASK_PROTOTYPES, MICRO_TASK_PROTOTYPES, Macrotask, Microtask } from "../model/Callback.js";
-import CodeAnalyzer from "../model/CodeAnalyzer.js";
-import { ComponentBox } from "../model/ComponentBox.js";
-import { reverseGridComponents, updateComponents } from "../view/Component.js";
+import { MACRO_TASK_PROTOTYPES, MICRO_TASK_PROTOTYPES, Macrotask, Microtask } from '../model/Callback.js';
+import CodeAnalyzer from '../model/CodeAnalyzer.js';
+import { ComponentBox } from '../model/ComponentBox.js';
+import { reverseGridComponents, updateComponents } from '../view/Component.js';
 
 const CLASS_NAME = {
-  CALL_STACK: "call-stack",
-  WEB_APIS: "web-apis",
-  MICRO_TASK: "microtask-queue",
-  MACRO_TASK: "macrotask-queue",
+  CALL_STACK: 'call-stack',
+  WEB_APIS: 'web-apis',
+  MICRO_TASK: 'microtask-queue',
+  MACRO_TASK: 'macrotask-queue',
 };
 const MAX_LENGTH = {
   CALL_STACK: 1,
@@ -28,11 +28,11 @@ const setAnimationPlayState = (state) => {
   Object.values(CLASS_NAME).forEach((className) => {
     const componentsTag = document.querySelector(`.${className}__components`);
 
-    if (componentsTag) componentsTag.style["animation-play-state"] = state;
+    if (componentsTag) componentsTag.style['animation-play-state'] = state;
   });
 };
 
-const startAnimation = () => setAnimationPlayState("running");
+const startAnimation = () => setAnimationPlayState('running');
 
 const transferFirstComponent = (source, target) => {
   const components = source.getComponents();
@@ -45,8 +45,8 @@ const transferFirstComponent = (source, target) => {
 };
 
 export default class EventLoopVisualizer {
-  inputArea = document.querySelector(".input-view__text-input");
-  submitButton = document.querySelector(".input-view__submit");
+  inputArea = document.querySelector('.input-view__text-input');
+  submitButton = document.querySelector('.input-view__submit');
   componentBox = {};
   animationInterval;
 
@@ -68,7 +68,7 @@ export default class EventLoopVisualizer {
   }
 
   initializeEventListener() {
-    this.submitButton.addEventListener("click", this.handleSubmit.bind(this));
+    this.submitButton.addEventListener('click', this.handleSubmit.bind(this));
   }
 
   initializeSubscribes() {

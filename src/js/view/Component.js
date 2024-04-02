@@ -1,19 +1,19 @@
-import { updateGridComponents } from "./GridView.js";
-import { updateQueueComponents } from "./QueueView.js";
-import { updateStackComponents } from "./StackView.js";
+import { updateGridComponents } from './GridView.js';
+import { updateQueueComponents } from './QueueView.js';
+import { updateStackComponents } from './StackView.js';
 
-const INPUT_TITLE = "코드 입력";
-const INPUT_PLACEHOLDER = "여기에 비동기 콜백이 포함된 코드를 입력하세요.";
-const INPUT_SUBMIT = "동작시키기";
+const INPUT_TITLE = '코드 입력';
+const INPUT_PLACEHOLDER = '여기에 비동기 콜백이 포함된 코드를 입력하세요.';
+const INPUT_SUBMIT = '동작시키기';
 
 const RENDER_TYPE = {
-  "call-stack": updateStackComponents,
-  "web-apis": updateGridComponents,
-  "microtask-queue": updateQueueComponents,
-  "macrotask-queue": updateQueueComponents,
+  'call-stack': updateStackComponents,
+  'web-apis': updateGridComponents,
+  'microtask-queue': updateQueueComponents,
+  'macrotask-queue': updateQueueComponents,
 };
 
-export const renderContainer = ({ className, content = "" }) => {
+export const renderContainer = ({ className, content = '' }) => {
   return `<div class="${className}__container">${content}</div>`;
 };
 
@@ -35,22 +35,22 @@ export const renderLoopIcon = ({ className, fillProperty }) => {
   </svg>`;
 };
 
-export const renderComponent = ({ className, content = "", style = "" }) => {
+export const renderComponent = ({ className, content = '', style = '' }) => {
   return `<div class="${className}__component" style="${style}">${content}</div>`;
 };
 
 export const renderBaseComponents = ({ contents, className, maxLength, condition }) => {
   return contents.reduce((acc, content, index) => {
     let component = renderComponent({ className, content });
-    
+
     if (condition && condition(index, maxLength)) {
       component += renderComponent({ className, content });
     }
     return acc + component;
-  }, "");
+  }, '');
 };
 
-export const renderComponentBox = ({ className, title, content = "" }) => {
+export const renderComponentBox = ({ className, title, content = '' }) => {
   return `<div class="${className}__component-box">
     <span class="${className}__title">${title}</span>
     <div class="${className}__component-content">${content}</div>
@@ -73,18 +73,18 @@ export const reverseGridComponents = (className) => {
 };
 
 export const renderIndex = () => {
-  const body = document.querySelector("body");
-  const callStack = renderComponentBox({ className: "call-stack", title: "Call Stack" });
-  const webApis = renderComponentBox({ className: "web-apis", title: "WEB APIs" });
-  const loopIcon = renderLoopIcon({ className: "event-loop", fillProperty: "#fff" });
-  const eventLoop = renderComponentBox({ className: "event-loop", title: "Event Loop", content: loopIcon });
-  const micro = renderComponentBox({ className: "microtask-queue", title: "Microtask Queue" });
-  const macro = renderComponentBox({ className: "macrotask-queue", title: "Macrotask Queue" });
-  const taskContainer = renderContainer({ className: "task-queue", content: micro + macro });
+  const body = document.querySelector('body');
+  const callStack = renderComponentBox({ className: 'call-stack', title: 'Call Stack' });
+  const webApis = renderComponentBox({ className: 'web-apis', title: 'WEB APIs' });
+  const loopIcon = renderLoopIcon({ className: 'event-loop', fillProperty: '#fff' });
+  const eventLoop = renderComponentBox({ className: 'event-loop', title: 'Event Loop', content: loopIcon });
+  const micro = renderComponentBox({ className: 'microtask-queue', title: 'Microtask Queue' });
+  const macro = renderComponentBox({ className: 'macrotask-queue', title: 'Macrotask Queue' });
+  const taskContainer = renderContainer({ className: 'task-queue', content: micro + macro });
   const execution = renderContainer({
-    className: "execution",
+    className: 'execution',
     content: callStack + webApis + eventLoop + taskContainer,
   });
 
-  body.innerHTML = renderInputView("input-view") + execution;
+  body.innerHTML = renderInputView('input-view') + execution;
 };

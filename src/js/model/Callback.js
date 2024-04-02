@@ -1,21 +1,21 @@
 export const MICRO_TASK_PROTOTYPES = {
-  then: "Promise",
-  catch: "Promise",
-  finally: "Promise",
-  MutationObserver: "MutationObserver",
-  queueMicrotask: "Window",
-  nextTick: "Process",
+  then: 'Promise',
+  catch: 'Promise',
+  finally: 'Promise',
+  MutationObserver: 'MutationObserver',
+  queueMicrotask: 'Window',
+  nextTick: 'Process',
 };
 export const MACRO_TASK_PROTOTYPES = {
-  setTimeout: "Window",
-  setInterval: "Window",
-  setImmediate: "Window",
-  clearInterval: "Window",
-  clearTimeout: "Window",
-  requestAnimationFrame: "Window",
-  cancelAnimationFrame: "Window",
-  requestIdleCallback: "Window",
-  cancelIdleCallback: "Window",
+  setTimeout: 'Window',
+  setInterval: 'Window',
+  setImmediate: 'Window',
+  clearInterval: 'Window',
+  clearTimeout: 'Window',
+  requestAnimationFrame: 'Window',
+  cancelAnimationFrame: 'Window',
+  requestIdleCallback: 'Window',
+  cancelIdleCallback: 'Window',
 };
 
 const INCREMENT = 1;
