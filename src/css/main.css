@@ -72,8 +72,6 @@ grey main {
 .animation__call_stack_box {
   margin-top: 10px;
   display: flex;
-  /* flex-direction: column; */
-  /* justify-content: flex-end; */
   flex-direction: column-reverse;
   justify-content: flex-start;
   align-items: center;

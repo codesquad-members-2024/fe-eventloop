@@ -100,9 +100,3 @@ class SubmitHandler {
 }
 
 export default SubmitHandler;
-
-function sayHi (name = 'there') {
-	return `Hi ${name}!`;
-}
-
-export {sayHi};
