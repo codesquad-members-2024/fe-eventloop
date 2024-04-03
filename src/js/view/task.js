@@ -1,4 +1,5 @@
 import { TASK_DELAY, EXPLIAN_CODE } from "../utils/constans.js";
+import delay from "../utils/delay.js";
 
 class Task {
 	#$excutionBox;
@@ -14,13 +15,15 @@ class Task {
 		this.#$explainBox.innerHTML = "";
 	}
 
-	appendTask(calleeName, startAnimation) {
+	async appendTask(calleeName, startAnimation) {
 		this.#$excutionBox.innerHTML = `<div class="task center">${calleeName}</div>`;
 		this.#$explainBox.innerHTML = EXPLIAN_CODE[calleeName];
-		startAnimation(this.#$excutionBox.children[0]);
+		const [$taskBox] = this.#$excutionBox.children;
+		startAnimation($taskBox);
 		setTimeout(() => {
 			this.removeTask();
 		}, TASK_DELAY);
+		await delay(TASK_DELAY);
 	}
 }
 

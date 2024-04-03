@@ -1,6 +1,5 @@
 import Task from "./Task.js";
-import delay from "../utils/delay.js";
-import { MICRO_TASK, MACRO_TASK, TASK_DELAY } from "../utils/constans.js";
+import { MICRO_TASK, MACRO_TASK } from "../utils/constans.js";
 import startAnimation from "../utils/animation.js";
 
 function createTasks() {
@@ -14,21 +13,18 @@ function createTasks() {
 }
 
 async function runOneCycle(taskMap, task, stopState) {
-	// await delay(TASK_DELAY);
-	taskMap.callStack.appendTask(task, startAnimation);
+	await taskMap.callStack.appendTask(task, startAnimation);
 	if (task === "fetch" || stopState.stop) return;
 
-	await delay(TASK_DELAY);
-	taskMap.webAPIs.appendTask(`${task} cb`, startAnimation);
+	await taskMap.webAPIs.appendTask(`${task} cb`, startAnimation);
 	if (task === "catch" || stopState.stop) return;
 
-	await delay(TASK_DELAY);
-	if (MICRO_TASK.includes(task)) taskMap.microQueue.appendTask(`${task} cb`, startAnimation);
-	if (MACRO_TASK.includes(task)) taskMap.macroQueue.appendTask(`${task} cb`, startAnimation);
+	if (MICRO_TASK.includes(task)) await taskMap.microQueue.appendTask(`${task} cb`, startAnimation);
+	if (MACRO_TASK.includes(task)) await taskMap.macroQueue.appendTask(`${task} cb`, startAnimation);
 	if (stopState.stop) return;
 
-	await delay(TASK_DELAY);
-	taskMap.callStack.appendTask(`${task} cb`, startAnimation);
+	await taskMap.callStack.appendTask(`${task} cb`, startAnimation);
+	if (stopState.stop) return;
 }
 
 async function moveTasks(tasks, stopState) {
