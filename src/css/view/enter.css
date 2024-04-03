@@ -57,6 +57,10 @@
 	border: 2px dashed rgba(255, 255, 255, 0.3);
 	border-radius: 10px;
 	.explain {
-		color: #000;
+		color: #fff;
+		font-size: 20px;
+		text-align: center;
+		width: 80%;
+		transition: all 0.3s ease;
 	}
 }

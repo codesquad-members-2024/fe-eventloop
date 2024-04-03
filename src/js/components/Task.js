@@ -1,17 +1,22 @@
-import { TASK_DELAY } from "../utils/constans.js";
+import { TASK_DELAY, EXPLIAN_CODE } from "../utils/constans.js";
 
 class Task {
+	#$excutionBox;
+	#$explainBox;
+
 	constructor(className) {
-		this.className = className;
-		this.element = document.querySelector(`.${className}`);
+		this.#$excutionBox = document.querySelector(`.${className}`);
+		this.#$explainBox = document.querySelector(".explain");
 	}
 
 	removeTask() {
-		this.element.innerHTML = "";
+		this.#$excutionBox.innerHTML = "";
+		this.#$explainBox.innerHTML = "";
 	}
 
 	appendTask(calleeName) {
-		this.element.innerHTML = `<div class="task center">${calleeName}</div>`;
+		this.#$excutionBox.innerHTML = `<div class="task center">${calleeName}</div>`;
+		this.#$explainBox.innerHTML = EXPLIAN_CODE[calleeName];
 		setTimeout(() => {
 			this.removeTask();
 		}, TASK_DELAY);
