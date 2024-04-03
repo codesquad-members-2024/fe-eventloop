@@ -37,6 +37,7 @@ const processQueueNode = async (queueNode, fromQueue, toQueue, memory) => {
     appendTag(queueNode, toQueue, memory);
     await delay(2000);
     removeMatchingElement(queueNode, toQueue, memory);
+    await delay(2000);
 };
 
 const eventLoop = async (memory) => {
