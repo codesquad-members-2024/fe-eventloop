@@ -14,7 +14,7 @@ const traverse = (node, callbacks = []) => {
   return callbacks;
 };
 
-export async function parseLiteral(code) {
+export function parseLiteral(code) {
   const ast = acorn.parse(code, { ecmaVersion: "latest" });
 
   const parser = new AsyncFunctionParser(code, ast);

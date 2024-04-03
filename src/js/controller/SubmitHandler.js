@@ -1,11 +1,12 @@
 import { parseLiteral } from "../model/CodeParser.js";
 import { controllEventLoop } from "../view/EventLoop.js";
 
-export async function handleSubmit() {
+export function handleSubmit() {
   const runButton = document.querySelector(".submit-btn");
+  const inputArea = document.getElementById("codeInput");
 
-  runButton.addEventListener("click", async () => {
-    const code = document.getElementById("codeInput").value;
+  runButton.addEventListener("click", () => {
+    const code = inputArea.value;
     parseLiteral(code)
       .then((callbacks) => controllEventLoop(callbacks));
   });
