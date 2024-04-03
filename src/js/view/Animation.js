@@ -1,185 +1,108 @@
+const FULL_ROTATION_DEGREES = 360;
+const MAX_TRANSLATE_DISTANCE = 2000;
+const MAX_MOVE_DOWN_DISTANCE = 15.5;
+const PROGRESS_THRESHOLD = 0.25;
+const SECONDARY_PROGRESS_THRESHOLD = 0.75;
+const MAX_PRGORESS_THRESHOLD = 1;
 const ANIMATION_DURATION = 2000;
 
-const createSlideInOutStep = (element) => {
+const createAnimationStep = (element, transformFunction) => {
   let start = null;
   const step = (timestamp) => {
     if (!start) start = timestamp;
     const progress = (timestamp - start) / ANIMATION_DURATION;
     
-    if (progress < 1) {
-      element.style.transform = `translateY(${-(progress - 0.75) * 2000}px)`;
-    }
-    if (progress < 0.75) {
-      element.style.transform = `translateY(0)`;
-    }
-    if (progress < 0.25) {
-      element.style.transform = `translateY(${(- 0.25 + progress) * 2000}px)`;
-    }
+    transformFunction(element, progress);
     requestAnimationFrame(step);
   }
-
   return step;
+};
+
+const animateElement = (element, transformFunction) => {
+  const step = createAnimationStep(element, transformFunction);
+  requestAnimationFrame(step);
+};
+
+const rotateTransform = (element, progress) => {
+  element.style.transform = `rotate(${progress * FULL_ROTATION_DEGREES}deg)`;
+};
+
+const slideInOutTransform = (element, progress) => {
+  if (progress < MAX_PRGORESS_THRESHOLD) {
+    element.style.transform = `translateY(${-(progress - SECONDARY_PROGRESS_THRESHOLD) * MAX_TRANSLATE_DISTANCE}px)`;
+  }
+  if (progress < SECONDARY_PROGRESS_THRESHOLD) {
+    element.style.transform = `translateY(0)`;
+  }
+  if (progress < PROGRESS_THRESHOLD) {
+    element.style.transform = `translateY(${(- PROGRESS_THRESHOLD + progress) * MAX_TRANSLATE_DISTANCE}px)`;
+  }
+};
+
+const pushTopInTransform = (element, progress) => {
+  if (progress > PROGRESS_THRESHOLD) {
+    element.style.transform = `translateY(0)`;
+    return;
+  }
+
+  element.style.transform = `translateY(${(- PROGRESS_THRESHOLD + progress) * MAX_TRANSLATE_DISTANCE}px)`;
+};
+
+const pushLeftInTransform = (element, progress) => {
+  if (progress > PROGRESS_THRESHOLD) {
+    element.style.transform = `translateX(0)`;
+    return;
+  }
+
+  element.style.transform = `translateX(${(PROGRESS_THRESHOLD - progress) * MAX_TRANSLATE_DISTANCE}px)`;
+};
+
+const moveDownTransform = (element, progress) => {
+  if (progress > PROGRESS_THRESHOLD) return;
+
+  element.style.transform = `translateY(${progress / PROGRESS_THRESHOLD * MAX_MOVE_DOWN_DISTANCE}px)`;
+};
+
+const moveLeftOutTransform = (element, progress) => {
+  if (progress > PROGRESS_THRESHOLD) return;
+
+  element.style.transform = `translateX(${-progress / PROGRESS_THRESHOLD * MAX_TRANSLATE_DISTANCE}px)`;
+};
+
+const moveRightOutTransform = (element, progress) => {
+  if (progress > PROGRESS_THRESHOLD) return;
+
+  element.style.transform = `translateX(${progress / PROGRESS_THRESHOLD * MAX_TRANSLATE_DISTANCE}px)`;
+};
+
+const animateRoate = (element) => {
+  animateElement(element, rotateTransform);
 }
 
 const animateSlideInOut = (box) => {
-  const elementToAnimate = box.firstElementChild;
-  const step = createSlideInOutStep(elementToAnimate);
-  requestAnimationFrame(step);
+  animateElement(box.firstElementChild, slideInOutTransform);
 };
-
-const createBounceInOutStep = (element) => {
-  let start = null;
-  const step = (timestamp) => {
-    if (!start) start = timestamp;
-    const progress = (timestamp - start) / ANIMATION_DURATION;
-    
-    if (progress < 1) element.style.transform = `translateY(-500%)`;
-    if (progress <= 0.7) element.style.transform = `translateY(120%)`;
-    if (progress <= 0.3) element.style.transform = `translateY(120%)`;
-    if (progress <= 0.1) element.style.transform = `translateY(110%)`;
-    if (progress === 0) element.style.transform = `translateY(300%)`;
-    requestAnimationFrame(step);
-  }
-
-  return step;
-}
-
-const animateBounceInOut = (box) => {
-  const elementToAnimate = box.firstElementChild;
-  const step = createBounceInOutStep(elementToAnimate);
-
-  requestAnimationFrame(step);
-};
-
-const createPushTopInStep = (element) => {
-  let start = null;
-  const step = (timestamp) => {
-    if (!start) start = timestamp;
-    const progress = (timestamp - start) / ANIMATION_DURATION;
-
-    if (progress > 1) start = null;
-    if (progress <= 0.25) {
-      element.style.transform = `translateY(${(- 0.25 + progress) * 2000}px)`;
-    } else {
-      element.style.transform = `translateY(0)`;
-    }
-    requestAnimationFrame(step);
-  }
-
-  return step;
-}
 
 const animatePushTopIn = (box) => {
-  const elementToAnimate = box.lastElementChild;
-  const step = createPushTopInStep(elementToAnimate);
-
-  requestAnimationFrame(step);
+  animateElement(box.lastElementChild, pushTopInTransform);
 };
-
-const createPushLeftInStep = (element) => {
-  let start = null;
-  const step = (timestamp) => {
-    if (!start) start = timestamp;
-    const progress = (timestamp - start) / ANIMATION_DURATION;
-
-    if (progress <= 0.25) {
-      element.style.transform = `translateX(${(0.25 - progress) * 2000}px)`;
-    } else {
-      element.style.transform = `translateX(0)`;
-    }
-    requestAnimationFrame(step);
-  }
-
-  return step;
-}
 
 const animatePushLeftIn = (box) => {
-  const elementToAnimate = box.lastElementChild;
-  const step = createPushLeftInStep(elementToAnimate);
-
-  requestAnimationFrame(step);
+  animateElement(box.lastElementChild, pushLeftInTransform);
 };
-
-const createMoveDownStep = (element) => {
-  let start = null;
-  const step = (timestamp) => {
-    if (!start) start = timestamp;
-    const progress = (timestamp - start) / ANIMATION_DURATION;
-
-    if (progress <= 0.25) {
-      element.style.transform = `translateY(${progress / 0.25 * 42.5}px)`;
-    }
-    requestAnimationFrame(step);
-  }
-
-  return step;
-}
-
-const createMoveLeftOutStep = (element) => {
-  let start = null;
-  const step = (timestamp) => {
-    if (!start) start = timestamp;
-    const progress = (timestamp - start) / ANIMATION_DURATION;
-
-    if (progress <= 0.25) {
-      element.style.transform = `translateX(${-progress / 0.25 * 1000}px)`;
-    }
-    requestAnimationFrame(step);
-  }
-
-  return step;
-}
 
 const animatePopLeft = (box) => {
   const elementsToMoveDown = [...box.children];
   const elementToMoveLeftOut = elementsToMoveDown.shift();
-  const moveDownSteps = elementsToMoveDown.map((element) => createMoveDownStep(element))
-  const moveLeftOutStep = createMoveLeftOutStep(elementToMoveLeftOut);
 
-  moveDownSteps.forEach((step) => requestAnimationFrame(step));
-  requestAnimationFrame(moveLeftOutStep);
+  elementsToMoveDown.forEach((element) => animateElement(element, moveDownTransform));
+  animateElement(elementToMoveLeftOut, moveLeftOutTransform);
 };
-
-const createMoveRightOutStep = (element) => {
-  let start = null;
-  const step = (timestamp) => {
-    if (!start) start = timestamp;
-    const progress = (timestamp - start) / ANIMATION_DURATION;
-
-    if (progress <= 0.25) {
-      element.style.transform = `translateX(${progress / 0.25 * 1000}px)`;
-    }
-    requestAnimationFrame(step);
-  }
-
-  return step;
-}
 
 const animatePopRight = (box) => {
   const elementsToMoveDown = [...box.children];
   const elementToMoveRightOut = elementsToMoveDown.shift();
-  const moveDownSteps = elementsToMoveDown.map((element) => createMoveDownStep(element))
-  const moveRightOutStep = createMoveRightOutStep(elementToMoveRightOut);
 
-  moveDownSteps.forEach((step) => requestAnimationFrame(step));
-  requestAnimationFrame(moveRightOutStep);
+  elementsToMoveDown.forEach((element) => animateElement(element, moveDownTransform));
+  animateElement(elementToMoveRightOut, moveRightOutTransform);
 };
-
-const createRotateStep = (element) => {
-  let start = null;
-  const step = (timestamp) => {
-    if (!start) start = timestamp;
-    const progress = (timestamp - start) / ANIMATION_DURATION;
-    const degrees = progress * 360;
-
-    element.style.transform = `rotate(${degrees}deg)`;
-    requestAnimationFrame(step);
-  }
-
-  return step;
-}
-
-const anmiateRotateElement = (element) => {
-  const step = createRotateStep(element);
-  requestAnimationFrame(step);
-}
