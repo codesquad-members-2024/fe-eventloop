@@ -1,7 +1,6 @@
 @font-face {
-  font-family: "Pretendard-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
-    format("woff");
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
 }
@@ -11,6 +10,7 @@
   --component-inline: 0.01rem solid grey;
   --container-padding: 0.5rem;
   --box-bg-color: #b7e3ff;
+  --tutorial-box-bg-color: pink;
   --container-width: 60rem;
   --input-bg-color: #3cbc8d;
   --box-width: 26rem;
@@ -36,7 +36,7 @@ body {
   height: 15rem;
 }
 
-.input-view__text-input[type="text"] {
+.input-view__text-input[type='text'] {
   width: calc(var(--full) - var(--container-padding));
   height: var(--full);
   border: var(--container-border);
@@ -61,8 +61,15 @@ body {
 .web-apis__component-box,
 .event-loop__component-box,
 .microtask-queue__component-box,
-.macrotask-queue__component-box {
+.macrotask-queue__component-box,
+.tutorial__component-box {
   width: var(--box-width);
+}
+
+.tutorial__component-content {
+  min-height: var(--large-box-height);
+  border: var(--container-border);
+  background-color: var(--tutorial-box-bg-color);
 }
 
 .call-stack__component-content {
