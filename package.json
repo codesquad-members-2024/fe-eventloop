@@ -1,7 +1,7 @@
 {
   "name": "fe-eventloop",
   "version": "1.0.0",
-  "description": "",
+  "description": "## 기능 요구 사항",
   "main": "src/js/main.js",
   "type": "module",
   "scripts": {
@@ -23,8 +23,6 @@
   },
   "dependencies": {
     "acorn": "^8.11.3",
-    "acorn-walk": "^8.3.2",
-    "node-sass": "^9.0.0",
-    "sass": "^1.72.0"
+    "acorn-walk": "^8.3.2"
   }
 }

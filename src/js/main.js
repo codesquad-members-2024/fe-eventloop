@@ -1,7 +1,18 @@
-import { parse } from '/node_modules/.vite/deps/acorn.js?v=ca8a5aa0';
+import {
+  registerToWebAPI,
+  classifyIntoMacroAndMicro,
+  moveToQueue,
+} from './controller.js';
+import { parseCode } from './parsing.js';
+import { code } from './test-code.js';
 
-import * as acornWalk from '/node_modules/.vite/deps/acorn-walk.js?v=ca8a5aa0';
+async function main() {
+  const tasks = parseCode(code);
+  console.log(tasks);
+  await registerToWebAPI(tasks);
+  const { microTask, macroTask } = classifyIntoMacroAndMicro(tasks);
+  await moveToQueue(microTask);
+  moveToQueue(macroTask);
+}
 
-const code = `const a = 1;`;
-const ast = parse(code, { ecmaVersion: 2020 }); // 'parse' 함수를 사용합니다.
-console.log(ast);
+main();

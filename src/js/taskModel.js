@@ -1,87 +1,86 @@
-import { TaskComponent } from './component.js';
+export const microTaskApis = ['queueMicrotask', 'Promise', 'process.nextTick'];
+export const macroTaskApis = ['setTimeout', 'setInterval', 'setImmediate'];
+export const promiseMethods = ['then', 'catch'];
 
-const microTaskApis = ['queueMicrotask', 'Promise', 'process.nextTick'];
-const macroTaskApis = [
-  'setTimeout',
-  'setInterval',
-  'setImmediate',
-  'requestAnimationFrame',
-];
-
-class CallStack {
+export class CallStack {
   constructor() {
     this.stack = [];
+    this.observers = [];
+    this.removeObservers = [];
   }
-  push(task) {
-    this.stack.push(task);
+
+  addObserver(observer) {
+    this.observers.push(observer);
   }
-  pop() {
-    return this.stack.pop();
+
+  addRemoveObserver(observer) {
+    this.removeObservers.push(observer);
   }
-  isEmpty() {
-    return this.stack.length === 0;
+
+  notifyObservers() {
+    this.observers.forEach((observer) => observer.update(this.stack));
   }
-}
-class WebAPI {
-  constructor() {
-    this.stack = [];
-  }
-  checkTaskType(task, time = 0) {
-    time = time || 0;
-    if (microTaskApis.includes(task)) {
-      microtask.addTask(task);
-    } else if (macroTaskApis.includes(task)) {
-      macrotask.addTask(task);
-    }
+
+  notifyRemoveObservers() {
+    this.removeObservers.forEach((observer) => observer.update(this.stack));
   }
   addTask(task) {
-    this.task.push(task);
+    this.stack.push(task);
+    this.notifyObservers();
   }
-  removeTask(task) {
-    this.task = this.task.filter((t) => t !== task);
-  }
-}
-class Task {
-  constructor(name) {
-    this.id = Math.random();
-    this.name = name;
-  }
-}
-class TaskQueue {
-  constructor() {
-    this.task = [];
-  }
-  addTask(taskName) {
-    const task = new Task(taskName);
-    this.task.push(task);
-    this.generateTask(task);
-  }
-  generateTask(task) {
-    if (microTaskApis.includes(task.name)) {
-      console.log('microtask');
-      document.querySelector('#microtask').innerHTML += TaskComponent(
-        task.name,
-      );
-    } else if (macroTaskApis.includes(task.name)) {
-      console.log('macrotask');
-      document.querySelector('#macrotask').innerHTML += TaskComponent(
-        task.name,
-      );
-    }
-  }
-  moveToCallStack() {
-    if (CallStack.stack.length === 0) return;
-    if (CallStack.stack.isEmpty()) {
-      const task = this.task.shift();
-      CallStack.push(task);
-    }
-  }
-  removeTask(task) {
-    this.task = this.task.filter((t) => t !== task);
+
+  resetTask() {
+    this.stack.length = 0;
+    this.notifyObservers();
   }
 }
 
-export const callStack = new CallStack([]);
-export const webAPI = new WebAPI([]);
-export const microtask = new TaskQueue([], microTaskApis);
-export const macrotask = new TaskQueue([], macroTaskApis);
+export class WebAPI extends CallStack {
+  constructor() {
+    super();
+  }
+
+  addTask(task) {
+    this.stack.push(task);
+    this.notifyObservers();
+  }
+
+  removeTask() {
+    this.stack.shift();
+    this.notifyRemoveObservers();
+  }
+}
+
+export class MicroTaskQueue extends CallStack {
+  constructor() {
+    super();
+  }
+
+  addTask(task) {
+    this.stack.push(task);
+    this.notifyObservers();
+  }
+
+  removeTask() {
+    const task = this.stack.pop();
+    this.notifyObservers();
+    return task;
+  }
+}
+
+export class MacroTaskQueue extends CallStack {
+  constructor() {
+    super();
+  }
+
+  addTask(task) {
+    this.stack.push(task);
+    this.notifyObservers();
+  }
+
+  removeTask() {
+    const task = this.stack.pop();
+    this.notifyObservers();
+    return task;
+  }
+}
