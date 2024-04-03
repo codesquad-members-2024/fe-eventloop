@@ -1,4 +1,4 @@
-import { selectorsMap } from "../util/constants.js";
+import { selectorsMap, FIRST_IDX, EMPTY_LENGTH } from "../util/constants.js";
 
 export class Memory {
     constructor() {
@@ -6,9 +6,9 @@ export class Memory {
         this.setClassNameMap();
     }
 
-    isEmpty = (className) => this.classNameMap.get(className).length === 0;
+    isEmpty = (className) => this.classNameMap.get(className).length === EMPTY_LENGTH;
 
-    getCallBack = (className) => this.classNameMap.get(className).slice(-1)[0];
+    getCallBack = (className) => this.classNameMap.get(className).slice(-1)[FIRST_IDX];
 
     updateStatusByClassName(callBack, className, type) {
         if (type === "push") this.classNameMap.get(className).push(callBack);

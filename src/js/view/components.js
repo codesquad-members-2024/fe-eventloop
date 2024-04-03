@@ -1,9 +1,8 @@
-import { delay } from "../util/constants.js";
-
+import { FIRST_IDX } from "../util/constants.js";
 const removeMatchingElement = (callBack, className, memory) => {
     const callStackTarget = document.querySelector(className);
     const stuff = Array.from(callStackTarget.children).filter(curStuff => curStuff.textContent === callBack.callBackCode);
-    stuff[0].remove();
+    stuff[FIRST_IDX].remove();
     memory.updateStatusByClassName(callBack, className, "pop");
 };
 

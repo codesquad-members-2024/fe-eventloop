@@ -3,6 +3,8 @@ import { extractCallbackCode } from "../model/acornParser.js";
 import { Memory } from "../model/memory.js";
 import { removeMatchingElement, appendTag } from "../view/components.js";
 
+const DELAY_TIME = 2000
+
 const createParseCode = () => {
     const userCode = document.getElementById(textId).value;
     const parseCode = acorn.parse(userCode, { sourceType: "module" });
@@ -22,7 +24,7 @@ const handleFormSubmit = (e) => {
 
 const checkQueue = (callBack) => {
     if (callBack.type === "setTimeout") return [selectorsMap.macroQClassName, callBack.delay]
-    return [selectorsMap.microQClassName, 0]
+    return [selectorsMap.microQClassName]
 }
 
 const setTaskQueues = async(callBack, memory) => {
@@ -35,9 +37,9 @@ const setTaskQueues = async(callBack, memory) => {
 const processQueueNode = async (queueNode, fromQueue, toQueue, memory) => {
     removeMatchingElement(queueNode, fromQueue, memory);
     appendTag(queueNode, toQueue, memory);
-    await delay(2000);
+    await delay(DELAY_TIME);
     removeMatchingElement(queueNode, toQueue, memory);
-    await delay(2000);
+    await delay(DELAY_TIME);
 };
 
 const eventLoop = async (memory) => {
@@ -54,10 +56,10 @@ const eventLoopControl = async (nodeList) => {
     const memory = new Memory()
     for (const callBack of nodeList) {
         appendTag(callBack, selectorsMap.callStackClassName, memory);
-        await delay(2000)
+        await delay(DELAY_TIME)
         removeMatchingElement(callBack, selectorsMap.callStackClassName, memory)
         appendTag(callBack, selectorsMap.webAPIClassName, memory);
-        await delay(2000)
+        await delay(DELAY_TIME)
         setTaskQueues(callBack, memory);
     }
     
