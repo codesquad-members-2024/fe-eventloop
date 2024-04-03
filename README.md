@@ -91,3 +91,12 @@
   `--watch`옵션은 파일을 수정하고 저장하면 자동으로 파일의 변경을 감지하고 테스트 코드를 실행한다.
 
 - 그럼 이제, 터미널에 $ `npm test`를 입력하면 jest 커맨드가 실행된다.
+
+### 🖼 그림으로 그려본 코드의 흐름
+
+<details>
+  <summary>🔽</summary>
+  <img src="https://github.com/codesquad-members-2024/fe-eventloop/assets/96780693/b424d668-4b2e-4901-8d95-a4b39c1d81a4"  width="550" />
+  <br>
+  <img src="https://github.com/codesquad-members-2024/fe-eventloop/assets/96780693/d42e4993-eeb2-48c5-9482-42c16fbe68e0"  width="550" />
+</details>
