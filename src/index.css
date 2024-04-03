@@ -2,8 +2,13 @@ body {
     background: #313030;
     color: white;
     position: relative;
+    width: 900px;
+    height: 750px;
 }
 
+* {
+    outline: 1px solid pink;
+}
 .code-input {
     display: block;
     width: 350px;
@@ -14,7 +19,7 @@ body {
 }
 
 .run-btn {
-    background: #312CB0;
+    background: #312cb0;
     color: white;
     border: none;
     border-radius: 4px;
@@ -23,41 +28,33 @@ body {
 }
 
 .engine-container {
-    width: 1200px;
+    width: 900px;
     height: 550px;
-    margin:  10px auto;
+    margin: 10px auto;
 }
 
 .stack-and-wepApi-view,
 .eventLoop-and-queue-view {
-    width: 80%;
-    height: 45%;
-    margin: 10px auto;
+    width: 900px;
+    height: 50%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
+    align-items: center;
 }
 
-.eventLoop-and-queue-view {
-    margin-top: 40px;
-}
 .call-stack-view,
 .wep-Api-view {
-    width: 40%;
-    height: 95%;
-    margin: 10px;
+    width: 50%;
+    height: 80%;
     text-align: center;
-}
-
-.call-stack-view {
-    margin-right: -120px;
 }
 
 .call-stack-container,
 .wep-Api-container {
     border-radius: 10px;
-    border: 2px solid #55B730;
-    width: 70%;
-    height: 90%;
+    border: 2px solid #55b730;
+    width: 80%;
+    height: 80%;
     margin: 7px auto 0;
 }
 
@@ -65,42 +62,48 @@ body {
     border: 2px solid rgb(207, 206, 206);
 }
 
-.event-loop-view {
+.eventloop {
+    width: 50%;
+    height: 100%;
     display: flex;
-    border: 2px solid #1DACA2;
-    border-radius: 10px;
-    width: 10%;
-    height: 90%;
-    justify-content: center;
     align-items: center;
-    margin-right: -145px;
+    justify-content: center;
+}
+
+.event-loop-view {
+    border: 2px solid #1daca2;
+    border-radius: 10px;
+    width: 30%;
+    height: 90%;
+    text-align: center;
 }
 
 .queue-view {
+    display: flex;
     width: 50%;
-    height: 40%;
-    margin: -40px;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;    
+    align-items: center;
 }
 
 .microtask-queue-view,
 .macrotask-queue-view {
-    width: 100%;
-    height: 100%;
-    margin: 25px;
+    width: 80%;
+    height: 50%;
     text-align: center;
 }
 
 .microtask-container,
 .macrotask-container {
     border-radius: 10px;
-    border: 2px solid #C4730C;
-    width: 90%;
-    height: 90%;
+    border: 2px solid #c4730c;
+    height: 60%;
     margin: 0 auto;
 }
 
 .macrotask-container {
-    border: 2px solid #8E8028;
+    border: 2px solid #8e8028;
 }
 
 .call-stack {
@@ -115,7 +118,7 @@ body {
     position: absolute;
     left: -100px;
     top: -100px;
-    background: #EF5EA7;
+    background: #ef5ea7;
 }
 
 .call-stack-out {
@@ -123,6 +126,3 @@ body {
     /* opacity: 1;
     transition: opacity 2s ease-in-out; */
 }
-
-
-

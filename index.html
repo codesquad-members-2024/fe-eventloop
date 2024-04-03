@@ -1,47 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/acorn/8.6.0/acorn.js"
+            defer
+        ></script>
+        <script src="/src/main.js" type="module" defer></script>
+        <link rel="stylesheet" href="/src/index.css" />
+        <title>EVENT-LOOP</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/acorn/8.6.0/acorn.js" defer></script>
-    <script src="/src/main.js" type="module" defer></script>
-    <link rel="stylesheet" href="/src/index.css">
-    <title>EVENT-LOOP</title>
-</head>
+    <body>
+        <header>
+            <div class="code-input-text">코드입력</div>
+            <textarea
+                class="code-input"
+                placeholder="여기에 비동기 콜백이 포함된 코드를 입력하세요."
+            ></textarea>
+            <button class="run-btn">동작시키기</button>
+        </header>
 
-<body>
-    <header>
-        <div class="code-input-text">코드입력</div>
-        <textarea class="code-input" placeholder="여기에 비동기 콜백이 포함된 코드를 입력하세요."></textarea>
-        <button class="run-btn">동작시키기</button>
-    </header>
-
-    <main class="engine-container">
-        <div class="stack-and-wepApi-view">
-            <div class="call-stack-view">
-                <div class="call-stack-text">CALL STACK</div>
-                <div class="call-stack-container"></div>
-            </div>
-            <div class="wep-Api-view">
-                <div class="wep-Api-text">WEb API</div>
-                <div class="wep-Api-container"></div>
-            </div>
-        </div>
-        <div class="eventLoop-and-queue-view">
-            <div class="event-loop-view">EVENT LOOP</div>
-            <div class="queue-view">
-                <div class="microtask-queue-view">
-                    <div class="microtask-text">MICROTASK QUEUE</div>
-                    <div class="microtask-container"></div>
+        <main class="engine-container">
+            <div class="stack-and-wepApi-view">
+                <div class="call-stack-view">
+                    <div class="call-stack-text">CALL STACK</div>
+                    <div class="call-stack-container"></div>
                 </div>
-                <div class="macrotask-queue-view">
-                    <div class="macrotask-text">MACROTASK QUEUE</div>
-                    <div class="macrotask-container"></div>
+                <div class="wep-Api-view">
+                    <div class="wep-Api-text">WEb API</div>
+                    <div class="wep-Api-container"></div>
                 </div>
             </div>
-        </div>
-    </main>
-</body>
-
+            <div class="eventLoop-and-queue-view">
+                <div class="eventloop">
+                    <div class="event-loop-view">EVENT LOOP</div>
+                </div>
+                <div class="queue-view">
+                    <div class="microtask-queue-view">
+                        <div class="microtask-text">MICROTASK QUEUE</div>
+                        <div class="microtask-container"></div>
+                    </div>
+                    <div class="macrotask-queue-view">
+                        <div class="macrotask-text">MACROTASK QUEUE</div>
+                        <div class="macrotask-container"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
 </html>
