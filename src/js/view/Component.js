@@ -81,9 +81,10 @@ export const renderIndex = () => {
   const micro = renderComponentBox({ className: 'microtask-queue', title: 'Microtask Queue' });
   const macro = renderComponentBox({ className: 'macrotask-queue', title: 'Macrotask Queue' });
   const taskContainer = renderContainer({ className: 'task-queue', content: micro + macro });
+  const tutorial = renderComponentBox({ className: 'tutorial', title: 'Show tutorial' });
   const execution = renderContainer({
     className: 'execution',
-    content: callStack + webApis + eventLoop + taskContainer,
+    content: callStack + webApis + eventLoop + taskContainer + tutorial,
   });
 
   body.innerHTML = renderInputView('input-view') + execution;
