@@ -132,16 +132,16 @@ main {
   gap: 10px;
 }
 
-.web-apis .task {
+.web-apis .to-webAPI {
   animation: slideRight 1s ease-in-out;
 }
 
 @keyframes slideRight {
   from {
     transform: translateX(-100%);
-    opacity: 0.2;
-    position: absolute; /* 시작 위치를 고정으로 설정 */
-    left: 0px; /* 시작 위치를 화면 왼쪽 끝에 고정 */
+    opacity: 0;
+    position: absolute;
+    left: 0px;
     top: 150px;
   }
   to {
@@ -176,19 +176,21 @@ main {
   display: flex;
   border-color: #fe9d00;
   box-shadow: 0 0 10px #fe9d00;
+  gap: 10px;
 }
 
 .microtask .neon {
   display: flex;
   border-color: #ffdb4e;
   box-shadow: 0 0 10px #ffdb4e;
+  gap: 10px;
 }
 
 .task {
   display: flex;
   width: -moz-fit-content;
   width: fit-content;
-  padding: 0 10px;
+  padding: 5px 10px;
   border-radius: 10px;
   min-height: 50px;
   background: hotpink;

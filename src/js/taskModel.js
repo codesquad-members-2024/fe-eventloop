@@ -18,12 +18,12 @@ export class CallStack {
 
   addTask(task) {
     this.stack.push(task);
-    this.notifyObservers(); // 콜 스택 업데이트 시 옵저버에게 알림
+    this.notifyObservers();
   }
 
   removeTask() {
     const task = this.stack.pop();
-    this.notifyObservers(); // 콜 스택 업데이트 시 옵저버에게 알림
+    this.notifyObservers();
     return task;
   }
 
@@ -35,20 +35,51 @@ export class CallStack {
 
 export class WebAPI extends CallStack {
   constructor() {
-    super(); // 부모 클래스의 생성자 호출
+    super();
   }
 
   addTask(task) {
     this.stack.push(task);
-    this.notifyObservers(); // 콜 스택 업데이트 시 옵저버에게 알림
+    this.notifyObservers();
   }
 
   removeTask() {
-    const task = this.stack.pop();
-    this.notifyObservers(); // 콜 스택 업데이트 시 옵저버에게 알림
+    const task = this.stack.unshift();
+    this.notifyObservers();
     return task;
   }
 }
 
-export class TaskQueue {}
-export class EventLoop {}
+export class MicroTaskQueue extends CallStack {
+  constructor() {
+    super();
+  }
+
+  addTask(task) {
+    this.stack.push(task);
+    this.notifyObservers();
+  }
+
+  removeTask() {
+    const task = this.stack.pop();
+    this.notifyObservers();
+    return task;
+  }
+}
+
+export class MacroTaskQueue extends CallStack {
+  constructor() {
+    super();
+  }
+
+  addTask(task) {
+    this.stack.push(task);
+    this.notifyObservers();
+  }
+
+  removeTask() {
+    const task = this.stack.pop();
+    this.notifyObservers();
+    return task;
+  }
+}

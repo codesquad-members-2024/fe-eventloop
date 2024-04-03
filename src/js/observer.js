@@ -11,13 +11,13 @@ export function CallStackObserver(elementId) {
   };
 }
 
-export function WebAPIObserver(elementId) {
+export function CallbackObserver(elementId, animation) {
   this.webAPIEl = document.getElementById(elementId);
 
   this.update = function (webAPIStack) {
     const currentCall = webAPIStack[webAPIStack.length - 1];
     const callbackBox = document.createElement('div');
-    callbackBox.classList.add('task');
+    callbackBox.classList.add('task', animation);
     callbackBox.innerText = currentCall.arguments;
     this.webAPIEl.appendChild(callbackBox);
   };
