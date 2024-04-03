@@ -15,18 +15,18 @@
 }
 
 .event-loop-area {
-	padding: 20px 5px;
 	display: flex;
-	width: 150px;
-	height: 200px;
-	border: 10px double aqua;
-	margin-right: 10px;
-	border-radius: 20px;
 	flex-direction: column;
 	align-items: center;
+	margin-top: 43px;
+	padding: 20px 5px;
+	width: 150px;
+	height: 243px;
+	border: 10px double aqua;
+	border-radius: 20px;
 	img {
 		width: 130px;
-		transform-origin: 50% 50%;
+		margin-top: 20px;
 	}
 }
 
@@ -78,4 +78,3 @@
 		transform: translateZ(0);
 	}
 }
-

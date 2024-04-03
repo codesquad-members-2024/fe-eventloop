@@ -5,14 +5,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>eventloop</title>
 		<link rel="stylesheet" href="./src/css/style.css" />
-		<script defer src="https://unpkg.com/acorn"></script>
+		<script defer type="module" src="https://unpkg.com/acorn"></script>
 		<script defer type="module" src="./src/js/main.js"></script>
 	</head>
-	<body>
+	<body class="center">
 		<div class="wrap">
-			<header>
-				<div class="enter">
-					<h1>코드 입력</h1>
+			<header class="enter-wrap center">
+				<div class="enter center">
+					<span>코드 입력</span>
 					<div class="enter-area">
 						<textarea
 							class="enter-code"
@@ -24,29 +24,30 @@
 						<button class="enter-btn">STOP</button>
 					</div>
 				</div>
+				<div class="explain-wrap center"><span class="explain">코드설명</span></div>
 			</header>
 			<main>
 				<div class="event-loop">
 					<section>
 						<div class="call-stack">
-							<h1>CALL STACK</h1>
-							<div class="call-stack-area"></div>
+							<span>CALL STACK</span>
+							<div class="call-stack-area flex-end"></div>
 						</div>
 						<div class="web-apis">
-							<h1>WEB API</h1>
-							<div class="web-apis-area"></div>
+							<span>WEB API</span>
+							<div class="web-apis-area flex-end"></div>
 						</div>
 					</section>
 					<section>
 						<div class="event-loop-area">
-							<h1>EVENT LOOP</h1>
+							<span>EVENT LOOP</span>
 							<img src="/src/images/icon-rotate.png" />
 						</div>
 						<div class="task-queue">
-							<h1>MICROTASK QUEUE</h1>
-							<div class="micro-queue"></div>
-							<h1>MACROTASK QUEUE</h1>
-							<div class="macro-queue"></div>
+							<span>MICROTASK QUEUE</span>
+							<div class="micro-queue flex-end"></div>
+							<span>MACROTASK QUEUE</span>
+							<div class="macro-queue flex-end"></div>
 						</div>
 					</section>
 				</div>
