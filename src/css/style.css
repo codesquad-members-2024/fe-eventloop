@@ -1,11 +1,12 @@
-@import "./reset.css";
-@import "./enter.css";
-@import "./eventloop.css";
+/* Components */
+@import "./components/reset.css";
+@import "./components/components.css";
+
+/* view */
+@import "./view/enter.css";
+@import "./view/eventloop.css";
 
 body {
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	background-color: #282828;
 	font-family: "Segoe UI";
 	width: 100vw;
@@ -18,10 +19,7 @@ body {
 }
 
 header {
-	display: flex;
 	flex-wrap: wrap;
-	align-content: center;
-	justify-content: center;
 	width: 600px;
 }
 
@@ -36,9 +34,10 @@ textarea {
 	font-family: inherit;
 }
 
-h1 {
+span {
+	display: block;
 	color: #fff;
 	text-align: center;
-	font-size: 26px;
+	font-size: 30px;
 	margin-bottom: 10px;
 }

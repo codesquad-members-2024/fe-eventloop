@@ -11,7 +11,7 @@ class Task {
 	}
 
 	appendTask(calleeName) {
-		this.element.innerHTML = `<div class="task">${calleeName}</div>`;
+		this.element.innerHTML = `<div class="task center">${calleeName}</div>`;
 		setTimeout(() => {
 			this.removeTask();
 		}, TASK_DELAY);
