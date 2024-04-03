@@ -41,7 +41,7 @@ const CallStackManager = {
 
     async initializeAnimation(uniqueId) {
         const animationGenerator = new AnimationGenerator(uniqueId, "call-stack-container");
-        return await animationGenerator.applyCallBackInAnimation();
+        return await animationGenerator.applyCallBackAnimation();
     }
 };
 

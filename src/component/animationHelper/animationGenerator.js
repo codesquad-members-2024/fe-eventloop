@@ -1,59 +1,46 @@
-import locationCalculater from "./locationCalculator.js";
+import LocationCalculator from "./locationCalculator.js";
 
-export class AnimationGenerator{
+export class AnimationGenerator {
     constructor(id, drawPosition) {
-        this.id = id
-        this.drawPosition = drawPosition
+        this.id = id;
+        this.drawPosition = drawPosition;
     }
 
     delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-    async applyCallBackInAnimation() {
-        const Location = locationCalculater.getLocation(this.drawPosition);
+    async applyCallBackAnimation(isInAnimation = true) {
+        const Location = LocationCalculator.getLocation(this.drawPosition);
         const element = document.getElementById(`${this.id}`);
-        const animation = element.animate(
-            [
-                {
-                    transform: `translate(${Location.x}px, 0px)`,
-                    opacity: 0,
-                },
-                {
-                    transform: `translate(${Location.x}px, ${Location.y}px)`,
-                    opacity: 1,
-                },
-            ],
-            {
-                duration: 2000,
-                easing: "ease-in-out",
-                direction: "normal",
-                fill: "forwards",
-            }
-        );
-        await animation.finished;
-        await this.delay(1000)
-        this.applyCallBackOutAnimation()
-        return Location
-    }
+        let animations = [];
 
-    async applyCallBackOutAnimation() {
-        const Location = locationCalculater.getLocation(this.drawPosition);
-        const element = document.getElementById(`${this.id}`);
-        const animation = element.animate(
-            [
-                {
-                    transform: `translate(${Location.x}px, 0px)`,
-                    opacity: 0,
-                }
-            ],
-            {
-                duration: 2000,
-                easing: "ease-in-out",
-                direction: "normal",
-                fill: "forwards",
-            }
-        );
+        animations.push({
+            transform: `translate(${Location.x}px, 0px)`,
+            opacity: 0,
+        });
+        if (isInAnimation) {
+            animations.push({
+                transform: `translate(${Location.x}px, ${Location.y}px)`,
+                opacity: isInAnimation ? 1 : 0,
+            });
+        }
+
+        const animation = element.animate(animations, {
+            duration: 2000,
+            easing: "ease-in-out",
+            direction: "normal",
+            fill: "forwards",
+        });
+
         await animation.finished;
-        element.remove()
+
+        if (!isInAnimation) {
+            element.remove();
+        } else {
+            await this.delay(1000);
+            this.applyCallBackAnimation(false);
+        }
+
+        return Location;
     }
 
     animateElement(elementId, prevLocation, newLocation) {
@@ -75,30 +62,29 @@ export class AnimationGenerator{
             }
         );
     }
-    
+
     applyWepApiInAnimation() {
-        const prevLocation = locationCalculater.getLocation("call-stack-container");
-        const newLocation = locationCalculater.getLocation(this.drawPosition);
+        const prevLocation = LocationCalculator.getLocation("call-stack-container");
+        const newLocation = LocationCalculator.getLocation(this.drawPosition);
         this.animateElement(this.id, prevLocation, newLocation);
     }
-    
+
     applyQueueInAnimation() {
-        const prevLocation = locationCalculater.getLocation("wep-Api-container");
-        const newLocation = locationCalculater.getQueueLocation(this.drawPosition);
+        const prevLocation = LocationCalculator.getLocation("wep-Api-container");
+        const newLocation = LocationCalculator.getQueueLocation(this.drawPosition);
         this.animateElement(this.id, prevLocation, newLocation);
     }
-    
+
     async applyQueueoutAnimation(queueContainer) {
-        const prevLocation = locationCalculater.getQueueLocation(queueContainer);
-        const newLocation = locationCalculater.getLocation(this.drawPosition);
+        const prevLocation = LocationCalculator.getQueueLocation(queueContainer);
+        const newLocation = LocationCalculator.getLocation(this.drawPosition);
         const animation = this.animateElement(this.id, prevLocation, newLocation);
         await animation.finished;
         await this.delay(1000);
-        this.applyCallBackOutAnimation();
-    }    
+        this.applyCallBackAnimation(false); // out animation
+    }
 
     setDrawPosition(drawPosition) {
         this.drawPosition = drawPosition;
     }
 }
-

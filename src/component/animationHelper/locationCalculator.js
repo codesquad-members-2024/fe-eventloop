@@ -1,30 +1,27 @@
-function LocationCalculater() {
-    const positionMap = {
-        'call-stack-container': { x: 0, y: 0, },
-        'wep-Api-container': { x: 0, y: 0 },
-        'microtask-container': { x: 0, y: 0 },
-        'macrotask-container': { x: 0, y: 0 },
-    }
+const LocationCalculator = {
+    positionMap: {
+        "call-stack-container": { x: 0, y: 0 },
+        "wep-Api-container": { x: 0, y: 0 },
+        "microtask-container": { x: 0, y: 0 },
+        "macrotask-container": { x: 0, y: 0 },
+    },
 
-    const getLocation = (drawPosition) => {
+    getPosition(drawPosition, offsetX, offsetY) {
         const drawPositionContainer = document.querySelector(`.${drawPosition}`);
         const rect = drawPositionContainer.getBoundingClientRect();
-        positionMap[drawPosition].x = rect.left + 135;
-        positionMap[drawPosition].y = rect.top + rect.height / 2 + 100;
-        return positionMap[drawPosition]
-    };
+        this.positionMap[drawPosition].x = rect.left + offsetX;
+        this.positionMap[drawPosition].y = rect.top + rect.height / 2 + offsetY;
+        return this.positionMap[drawPosition];
+    },
 
-    const getQueueLocation = (drawPosition) => {
-        const drawPositionContainer = document.querySelector(`.${drawPosition}`);
-        const rect = drawPositionContainer.getBoundingClientRect();
-        positionMap[drawPosition].x = rect.left + 100 ;
-        positionMap[drawPosition].y = rect.top + rect.height / 2 + 50;
-        return positionMap[drawPosition]
-    };
+    getLocation(drawPosition) {
+        return this.getPosition(drawPosition, 135, 100);
+    },
 
-    
-    return {getLocation, getQueueLocation}
-}
+    getQueueLocation(drawPosition) {
+        return this.getPosition(drawPosition, 100, 50);
+    },
+};
 
-const locationCalculater = LocationCalculater()
-export default locationCalculater
+
+export default LocationCalculator;
