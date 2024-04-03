@@ -1,4 +1,5 @@
 import { AnimationGenerator } from "./animationHelper/animationGenerator.js"
+
 function QueueManager() {
     const queue = {
         microtask: [],
