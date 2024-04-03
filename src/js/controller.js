@@ -6,7 +6,7 @@ import {
   promiseMethods,
   macroTaskApis,
 } from './taskModel.js';
-import { CallStackObserver, CallbackObserver } from './observer.js';
+import { CallStackObserver, CallbackObserver, RemoveCallback } from './view.js';
 
 const callStack = new CallStack();
 const webAPI = new WebAPI();
@@ -19,8 +19,12 @@ const microQueueObserver = new CallbackObserver('microTaskQueue');
 const macroQueueObserver = new CallbackObserver('macroTaskQueue');
 callStack.addObserver(callStackObserver);
 webAPI.addObserver(webAPIObserver);
+
 microTaskQueue.addObserver(microQueueObserver);
 macroTaskQueue.addObserver(macroQueueObserver);
+
+const webAPIRemover = new RemoveCallback('webAPIs');
+webAPI.addRemoveObserver(webAPIRemover);
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -46,8 +50,10 @@ export function classifyIntoMacroAndMicro(tasks) {
 export async function moveToQueue(tasks) {
   for (const task of tasks) {
     if (task.type === 'microTask') {
+      webAPI.removeTask();
       microTaskQueue.addTask(task);
     } else if (task.type === 'macroTask') {
+      webAPI.removeTask();
       macroTaskQueue.addTask(task);
     }
     await delay(2000);

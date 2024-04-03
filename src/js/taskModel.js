@@ -6,25 +6,27 @@ export class CallStack {
   constructor() {
     this.stack = [];
     this.observers = [];
+    this.removeObservers = [];
   }
 
   addObserver(observer) {
     this.observers.push(observer);
   }
 
+  addRemoveObserver(observer) {
+    this.removeObservers.push(observer);
+  }
+
   notifyObservers() {
     this.observers.forEach((observer) => observer.update(this.stack));
   }
 
+  notifyRemoveObservers() {
+    this.removeObservers.forEach((observer) => observer.update(this.stack));
+  }
   addTask(task) {
     this.stack.push(task);
     this.notifyObservers();
-  }
-
-  removeTask() {
-    const task = this.stack.pop();
-    this.notifyObservers();
-    return task;
   }
 
   resetTask() {
@@ -44,9 +46,8 @@ export class WebAPI extends CallStack {
   }
 
   removeTask() {
-    const task = this.stack.unshift();
-    this.notifyObservers();
-    return task;
+    this.stack.shift();
+    this.notifyRemoveObservers();
   }
 }
 

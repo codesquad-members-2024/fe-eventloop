@@ -13,7 +13,6 @@ async function main() {
   const { microTask, macroTask } = classifyIntoMacroAndMicro(tasks);
   await moveToQueue(microTask);
   moveToQueue(macroTask);
-  console.log('큐!');
 }
 
 main();
