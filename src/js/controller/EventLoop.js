@@ -41,7 +41,9 @@ export class EventLoop {
   }
 
   initializeSubscribes() {
-    const componentBoxList = Object.values(this.componentBox);
+    const componentBoxList = Object
+      .values(this.componentBox)
+      .filter((box) => box !== this.componentBox.callbacks);
 
     componentBoxList.forEach((box) => box.subscribe(renderComponents))
   }
