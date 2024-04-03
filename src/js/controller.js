@@ -15,8 +15,8 @@ const macroTaskQueue = new MacroTaskQueue();
 
 const callStackObserver = new CallStackObserver('callStack');
 const webAPIObserver = new CallbackObserver('webAPIs', 'to-webAPI');
-const microQueueObserver = new CallbackObserver('microTaskQueue');
-const macroQueueObserver = new CallbackObserver('macroTaskQueue');
+const microQueueObserver = new CallbackObserver('microTaskQueue', 'to-micro');
+const macroQueueObserver = new CallbackObserver('macroTaskQueue', 'to-macro');
 callStack.addObserver(callStackObserver);
 webAPI.addObserver(webAPIObserver);
 

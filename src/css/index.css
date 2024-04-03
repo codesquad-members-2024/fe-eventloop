@@ -136,20 +136,6 @@ main {
   animation: slideRight 1s ease-in-out;
 }
 
-@keyframes slideRight {
-  from {
-    transform: translateX(-100%);
-    opacity: 0;
-    position: absolute;
-    left: 0px;
-    top: 150px;
-  }
-  to {
-    transform: translate(0);
-    opacity: 1;
-  }
-}
-
 .event-loop .neon {
   border-color: #c8ff00;
   text-align: center;
@@ -179,11 +165,19 @@ main {
   gap: 10px;
 }
 
+.macrotask .to-macro {
+  animation: slideToMacro 1s ease-in-out;
+}
+
 .microtask .neon {
   display: flex;
   border-color: #ffdb4e;
   box-shadow: 0 0 10px #ffdb4e;
   gap: 10px;
+}
+
+.microtask .to-micro {
+  animation: slideToMicro 1s ease-in-out;
 }
 
 .task {
@@ -212,6 +206,47 @@ main {
     opacity: 0;
   }
   to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+    position: absolute;
+    left: 0px;
+    top: 150px;
+  }
+  to {
+    transform: translate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideToMicro {
+  from {
+    transform: translateY(-200%);
+    opacity: 0;
+    position: absolute;
+    left: 200px;
+    top: -150px;
+  }
+  to {
+    transform: translate(0);
+    opacity: 1;
+  }
+}
+@keyframes slideToMacro {
+  from {
+    transform: translateY(-700%);
+    opacity: 0;
+    position: absolute;
+    left: 200px;
+    top: -150px;
+  }
+  to {
+    transform: translate(0);
     opacity: 1;
   }
 }
