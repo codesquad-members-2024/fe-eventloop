@@ -1,7 +1,3 @@
-import onEvent from "./event.js";
+import onEvent from "./view/code.js";
 
-function main() {
-  onEvent();
-}
-
-main();
+onEvent();

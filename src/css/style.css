@@ -1,30 +1,43 @@
-@import "./reset.css";
-@import "./enter.css";
-@import "./eventloop.css";
+/* Components */
+@import "./components/reset.css";
+@import "./components/components.css";
+
+/* view */
+@import "./view/enter.css";
+@import "./view/eventloop.css";
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #282828;
+	background-color: #282828;
+	font-family: "Segoe UI";
+	width: 100vw;
+	height: 100vh;
 }
 
 .wrap {
-  display: flex;
-  width: 1200px;
+	display: flex;
+	width: 1200px;
 }
 
 header {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  justify-content: center;
-  width: 600px;
+	flex-wrap: wrap;
+	width: 600px;
 }
 
 section {
-  display: flex;
-  margin: 20px 0px;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	margin: 20px 0px;
+	justify-content: space-between;
+	align-items: center;
+}
+
+textarea {
+	font-family: inherit;
+}
+
+span {
+	display: block;
+	color: #fff;
+	text-align: center;
+	font-size: 30px;
+	margin-bottom: 10px;
 }
