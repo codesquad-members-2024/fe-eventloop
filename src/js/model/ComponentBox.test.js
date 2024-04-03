@@ -48,25 +48,22 @@ describe('Observable 단위 테스트', () => {
 describe('ComponentBox 단위 테스트', () => {
   let componentBox;
   const className = 'test-class';
-  const maxLength = 10;
   const mockObserver = jest.fn();
 
   beforeEach(() => {
-    componentBox = new ComponentBox(className, maxLength);
+    componentBox = new ComponentBox(className);
     componentBox.subscribe(mockObserver);
     mockObserver.mockClear();
   });
 
-  test('초기화를 할 시에 알맞은 className과 maxLength를 초기화', () => {
+  test('초기화를 할 시에 알맞은 className를 초기화', () => {
     // given in beforeEach()
     
     // when
     const classNameResult = componentBox.getClassName();
-    const maxLengthResult = componentBox.maxLength;
 
     // then
     expect(classNameResult).toBe(className);
-    expect(maxLengthResult).toBe(maxLength);
   });
 
   test('setComponents가 components를 업데이트하고, 구독한 옵저버에게 notify를 전송', () => {
@@ -82,7 +79,6 @@ describe('ComponentBox 단위 테스트', () => {
     expect(mockObserver).toHaveBeenCalledWith({
       className: className,
       contents: newComponents.map(component => component.toString()),
-      maxLength: maxLength,
     });
   });
 });
