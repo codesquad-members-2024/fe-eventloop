@@ -41,8 +41,8 @@
 
 - [x] 코드 분석 - 그림으로 그려보기
 - [ ] 코드 분석 - [mermaid](https://www.mermaidchart.com/landing)로 다이어그램 사용해보기 (Option)
-- [ ] 테스트 코드 - [jest](https://jestjs.io/docs/getting-started) 학습
-- [ ] 테스트 코드 - 비 ui요소를 먼저 테스트 해보자 (유틸리티)
+- [x] 테스트 코드 - [jest](https://jestjs.io/docs/getting-started) 학습
+- [x] 테스트 코드 - 비 ui요소를 먼저 테스트 해보자 (유틸리티)
 
 ### 4/5 (1d) ?
 
@@ -59,8 +59,26 @@
 - Jest 라이브러리를 개발 의존성으로 설치  
   $ `npm install --save-dev jest`
 
-  - @types/jest 를 설치 해줘야 코드 자동완성 기능이 활성화된다.
+  - @types/jest 를 설치 해줘야 코드 자동완성 기능이 활성화된다.  
     $ `npm install --save-dev jest @types/jest`
+
+- Jest 설정파일 생성  
+  $ `npm init jest@latest`
+
+      > ✔ Would you like to use Jest when running "test" script in "package.json"? … yes
+      >  Choose the test environment that will be used for testing › jsdom
+      >  나머지 아무거나..
+
+- 추가 모듈 설치 (<b>⚡ Babel</b>)  
+  $ `npm install --save-dev babel-jest @babel/core @babel/preset-env`
+
+  - `babel-jest` : Jest와 Babel을 통합하여, Jest가 테스트를 실행하기 전에 Babel을 사용해 코드를 변환할 수 있도록 함
+  - `@babel/core`: Babel 컴파일러의 핵심 기능을 제공한다. JavaScript 코드를 변환하는 데 필요한 핵심 API를 포함
+
+  $ `npm install --save-dev jest-environment-jsdom`
+
+  - `jest-environment-jsdom` : 기본적으로 Jest는 Node.js 환경에서 테스트를 실행하지만,  
+    웹 브라우저 환경을 테스트 해야 할 경우 웹 브라우저의 API를 모방하여 DOM 조작이나 브라우저 API를 사용하는 코드를 테스트할 수 있게 해주는 가상의 환경을 제공한다.
 
 - package.json 파일 수정
 
@@ -73,37 +91,3 @@
   `--watch`옵션은 파일을 수정하고 저장하면 자동으로 파일의 변경을 감지하고 테스트 코드를 실행한다.
 
 - 그럼 이제, 터미널에 $ `npm test`를 입력하면 jest 커맨드가 실행된다.
-
-<br>
-
-<b>⚡ Babel</b>
-
-jest 실행 시($ `npm test`) import(ES6+)가 안되는 이슈.
-
-- Babel 관련 패키지 설치  
-   `npm install --save-dev jest @babel/preset-env`
-
-- babel.config.cjs 파일 생성
-
-  ```js
-  module.exports = {
-    presets: ['@babel/preset-env'],
-  };
-  ```
-
-- jest.config.cjs 파일 생성
-
-  ```js
-  module.exports = {
-    testEnvironment: 'node',
-    moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx'],
-    transform: {
-      '^.+\\.(js|jsx)?$': 'babel-jest',
-    },
-    moduleNameMapper: {
-      '^@/(.*)$': '<rootDir>/$1',
-    },
-    testMatch: ['<rootDir>/**/*.test.(js|jsx|ts|tsx)', '<rootDir>/(tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))'],
-    transformIgnorePatterns: ['<rootDir>/node_modules/'],
-  };
-  ```
