@@ -2,7 +2,7 @@ const SIMPLE_ARROW_REGEX = /=>\s*[^{]+/;
 const BLOCK_ARROW_REGEX = /=>\s*{[^{}]*}/;
 const GENERAL_ANONYM_REGEX = /function\(\)\s*{[^{}]*}/g;
 
-const MICRO_TASK_PROTOTYPES = {
+export const MICRO_TASK_PROTOTYPES = {
   then: "Promise",
   catch: "Promise",
   finally: "Promise",
@@ -10,7 +10,7 @@ const MICRO_TASK_PROTOTYPES = {
   queueMicrotask: "Window",
   nextTick: "Process",
 };
-const MACRO_TASK_PROTOTYPES = {
+export const MACRO_TASK_PROTOTYPES = {
   setTimeout: "Window",
   setInterval: "Window",
   setImmediate: "Window",
