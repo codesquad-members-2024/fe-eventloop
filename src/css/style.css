@@ -20,6 +20,7 @@ h2 {
   width: 200px;
   height: 300px;
   margin-bottom: 50px;
+  padding: 10px;
 
   display: flex;
   justify-content: center;
@@ -32,18 +33,6 @@ h2 {
   width: auto;
   height: auto;
   position: absolute;
-  animation: slide-in 1s ease-in-out;
-}
-
-@keyframes slide-in {
-  from {
-    top: 50px;
-    opacity: 0;
-  }
-  to {
-    top: 280px;
-    opacity: 1;
-  }
 }
 
 .call-stack-wrap {
@@ -53,8 +42,7 @@ h2 {
 }
 
 .event-loop {
-  font-size: 130px;
-  padding-left: 100px;
+  font-size: 110px;
 }
 
 .event-loop-wrap {
@@ -71,11 +59,17 @@ h2 {
 .web-api-box {
   height: 200px;
   width: 400px;
+  padding: 10px;
   position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow: hidden;
 }
 
 .microtask-box,
 .macrotask-box {
   width: 400px;
   height: 100px;
+  padding: 10px;
+  overflow: hidden;
 }
