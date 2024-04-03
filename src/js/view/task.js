@@ -1,5 +1,5 @@
 import Task from "../components/Task.js";
-import delay from "../components/delay.js";
+import delay from "../utils/delay.js";
 import { MICRO_TASK, MACRO_TASK, TASK_DELAY } from "../utils/constans.js";
 
 function createTasks() {
