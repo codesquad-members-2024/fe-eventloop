@@ -10,7 +10,7 @@ const CallStackManager = {
         this.createCallStackHTML(curExecutionContext);
         this.spliceCallBack(curExecutionContext);
     },
-    
+
     isCallBack(curExecutionContext) {
         if (curExecutionContext.code.includes("fetch")) {
             this.callStack.pop();
@@ -26,8 +26,8 @@ const CallStackManager = {
         WebAPIkManager.pushToWepApi(asynchronousFunc);
     },
 
-    async createCallStackHTML(context){
-        const uniqueId = Date.now(); 
+    async createCallStackHTML(context) {
+        const uniqueId = Date.now();
 
         const box = new Box(context.code, uniqueId);
         renderFunc(box.createBox());
@@ -35,14 +35,17 @@ const CallStackManager = {
         return await this.initializeAnimation(uniqueId);
     },
 
-    isCallStackEmpty() { 
+    isCallStackEmpty() {
         return !this.callStack.length;
     },
 
     async initializeAnimation(uniqueId) {
-        const animationGenerator = new AnimationGenerator(uniqueId, "call-stack-container");
+        const animationGenerator = new AnimationGenerator(
+            uniqueId,
+            "call-stack-container"
+        );
         return await animationGenerator.applyCallBackAnimation();
-    }
+    },
 };
 
 export default CallStackManager;

@@ -1,5 +1,5 @@
-import { astParser } from "./utill/astParser.js";
-import { eventLoop } from "./component/eventLoop.js";
+import { astParser } from "./utils/astParser.js";
+import { eventLoop } from "./view/eventLoop.js";
 
 function ExecutionContextManager() {
     const executionContextList = [];

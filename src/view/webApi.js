@@ -1,5 +1,5 @@
-import { Box, renderFunc } from "./animationHelper/boxModal.js";
-import { AnimationGenerator } from "./animationHelper/animationGenerator.js";
+import { Box, renderFunc } from "../view/animationHelper/boxModal.js";
+import { AnimationGenerator } from "../view/animationHelper/animationGenerator.js";
 import queueManager from "./queue.js";
 
 const WebAPIkManager = {
@@ -14,13 +14,15 @@ const WebAPIkManager = {
         const box = new Box(contex.callBack, uniqueId);
         renderFunc(box.createBox());
 
-        const animationGenerator = new AnimationGenerator(uniqueId, "wep-Api-container");
+        const animationGenerator = new AnimationGenerator(
+            uniqueId,
+            "wep-Api-container"
+        );
         await animationGenerator.delay(2000);
         animationGenerator.applyWepApiInAnimation();
 
         return uniqueId;
     },
 };
-
 
 export default WebAPIkManager;
