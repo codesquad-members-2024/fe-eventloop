@@ -1,6 +1,6 @@
 import AST from "../components/AST.js";
 import { CODE } from "../utils/constans.js";
-import moveTasks from "./task.js";
+import moveTasks from "./excution.js";
 
 function initTextarea() {
 	const $textarea = document.querySelector(".enter-code");

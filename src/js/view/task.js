@@ -1,41 +1,27 @@
-import Task from "../components/Task.js";
-import delay from "../utils/delay.js";
-import { MICRO_TASK, MACRO_TASK, TASK_DELAY } from "../utils/constans.js";
+import { TASK_DELAY, EXPLIAN_CODE } from "../utils/constans.js";
 
-function createTasks() {
-	const keys = ["callStack", "webAPIs", "microQueue", "macroQueue"];
-	const classNames = ["call-stack-area", "web-apis-area", "micro-queue", "macro-queue"];
+class Task {
+	#$excutionBox;
+	#$explainBox;
 
-	return keys.reduce((prev, curr, i) => {
-		prev[curr] = new Task(classNames[i]);
-		return prev;
-	}, {});
-}
+	constructor(className) {
+		this.#$excutionBox = document.querySelector(`.${className}`);
+		this.#$explainBox = document.querySelector(".explain");
+	}
 
-async function runAnimation(taskMap, task, stopState) {
-	await delay(TASK_DELAY);
-	taskMap.callStack.appendTask(task);
-	if (task === "fetch" || stopState.stop) return;
+	removeTask() {
+		this.#$excutionBox.innerHTML = "";
+		this.#$explainBox.innerHTML = "";
+	}
 
-	await delay(TASK_DELAY);
-	taskMap.webAPIs.appendTask(`${task} cb`);
-	if (task === "catch" || stopState.stop) return;
-
-	await delay(TASK_DELAY);
-	if (MICRO_TASK.includes(task)) taskMap.microQueue.appendTask(`${task} cb`);
-	if (MACRO_TASK.includes(task)) taskMap.macroQueue.appendTask(`${task} cb`);
-	if (stopState.stop) return;
-
-	await delay(TASK_DELAY);
-	taskMap.callStack.appendTask(`${task} cb`);
-}
-
-async function moveTasks(tasks, stopState) {
-	const taskMap = createTasks();
-	for (const task of tasks) {
-		if (stopState.stop) return;
-		await runAnimation(taskMap, task, stopState);
+	appendTask(calleeName, startAnimation) {
+		this.#$excutionBox.innerHTML = `<div class="task center">${calleeName}</div>`;
+		this.#$explainBox.innerHTML = EXPLIAN_CODE[calleeName];
+		startAnimation(this.#$excutionBox.children[0]);
+		setTimeout(() => {
+			this.removeTask();
+		}, TASK_DELAY);
 	}
 }
 
-export default moveTasks;
+export default Task;
