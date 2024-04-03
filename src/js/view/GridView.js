@@ -8,8 +8,10 @@ const RENDERING_COUNT_ONCE = 1;
 
 const isFirstIndex = (index) => index === FIRST_INDEX;
 
-const isEven = (number) => number % 2 === 0;
-
+const isEven = (number) => {
+  if (typeof number !== 'number') return false;
+  return number % 2 === 0;
+};
 const isLastIndex = (index, maxLength) => index >= maxLength - 1;
 
 const isToCopy = (index, maxLength) => !isFirstIndex(index) && isEven(index) && !isLastIndex(index, maxLength);
