@@ -9,6 +9,7 @@ import { renderComponents } from "../view/Components.js";
 
 const FIRST_INDEX = 0;
 const NO_ELEMENTS = 0;
+const ANIMATION_DURATION = 3000;
 
 const isMicrotask = (callback) =>
   Object.keys(MICRO_TASK_PROTOTYPES).includes(callback.calleeName);
@@ -64,7 +65,7 @@ export class EventLoop {
     this.componentBox.callbacks.setComponents(callbackLiterals);
     setInterval(() => {
       this.updateComponents();
-    }, 3000);
+    }, ANIMATION_DURATION);
   }
 
   updateComponents() {

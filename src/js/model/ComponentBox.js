@@ -1,4 +1,5 @@
 const NO_ELEMENTS = 0;
+const DELAY = 1000;
 
 export class Observable {
   constructor() {
@@ -31,17 +32,6 @@ export class ComponentBox extends Observable {
     return this.className;
   }
 
-  setComponents(components) {
-    this.components.length = NO_ELEMENTS;
-    this.components = [...components];
-
-    const contents = components.map((component) => component.toString())
-
-    setTimeout(() => {
-      this.notify(this.className, contents);  
-    }, 1000);
-  }
-
   pushComponent(component) {
     this.components.push(component);
 
@@ -59,7 +49,7 @@ export class ComponentBox extends Observable {
 
     setTimeout(() => {
       this.notify(this.className, contents);
-    }, 1000);
+    }, DELAY);
     return component;
   }
 

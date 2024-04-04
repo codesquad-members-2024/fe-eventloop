@@ -23,9 +23,7 @@ export const MACRO_TASK_PROTOTYPES = {
 };
 
 export const replaceCallbackBody = (codeText) => {
-  if (BLOCK_ARROW_REGEX.test(codeText)) {
-    return codeText.replace(BLOCK_ARROW_REGEX, "=> {...}");
-  }
+  if (BLOCK_ARROW_REGEX.test(codeText)) return codeText.replace(BLOCK_ARROW_REGEX, "=> {...}");
   if (SIMPLE_ARROW_REGEX.test(codeText)) return codeText.replace(SIMPLE_ARROW_REGEX, "=> ...");
   if (GENERAL_ANONYM_REGEX.test(codeText)) return codeText.replace(GENERAL_ANONYM_REGEX, "function() {...}");
 
