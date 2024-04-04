@@ -1,5 +1,5 @@
 const SIMPLE_ARROW_REGEX = /=>\s*[^{]+/;
-const BLOCK_ARROW_REGEX = /=>\s*{[^{}]*}/;
+const BLOCK_ARROW_REGEX = /=>\s*{[\s\S]+}/;
 const GENERAL_ANONYM_REGEX = /function\(\)\s*{[^{}]*}/g;
 
 export const MICRO_TASK_PROTOTYPES = {
@@ -23,7 +23,9 @@ export const MACRO_TASK_PROTOTYPES = {
 };
 
 export const replaceCallbackBody = (codeText) => {
-  if (BLOCK_ARROW_REGEX.test(codeText)) return codeText.replace(BLOCK_ARROW_REGEX, "=> {...}");
+  if (BLOCK_ARROW_REGEX.test(codeText)) {
+    return codeText.replace(BLOCK_ARROW_REGEX, "=> {...}");
+  }
   if (SIMPLE_ARROW_REGEX.test(codeText)) return codeText.replace(SIMPLE_ARROW_REGEX, "=> ...");
   if (GENERAL_ANONYM_REGEX.test(codeText)) return codeText.replace(GENERAL_ANONYM_REGEX, "function() {...}");
 
@@ -31,8 +33,8 @@ export const replaceCallbackBody = (codeText) => {
 };
 
 export class Callback {
-  constructor(codeBlock, calleeName) {
-    this.codeBlock = codeBlock;
+  constructor(code, calleeName) {
+    this.code = code;
     this.calleeName = calleeName;
   }
 
@@ -45,7 +47,7 @@ export class Microtask extends Callback {
   toString() {
     const prototypeName = MICRO_TASK_PROTOTYPES[this.calleeName];
 
-    return `<pre>${prototypeName}.${this.calleeName} : ${replaceCallbackBody(this.codeBlock)}</pre>`;
+    return `<pre>${prototypeName}.${this.calleeName} : ${replaceCallbackBody(this.code)}</pre>`;
   }
 }
 
@@ -53,6 +55,6 @@ export class Macrotask extends Callback {
   toString() {
     const prototypeName = MACRO_TASK_PROTOTYPES[this.calleeName];
 
-    return `<pre>${prototypeName}.${this.calleeName} : ${replaceCallbackBody(this.codeBlock)}</pre>`;
+    return `<pre>${prototypeName}.${this.calleeName} : ${replaceCallbackBody(this.code)}</pre>`;
   }
 }

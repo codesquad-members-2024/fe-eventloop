@@ -5,11 +5,11 @@ const COMPONENT_BOX = {
   "macrotask-box": document.querySelector(".macrotask-box"),
 }
 
-export const renderComponents = ({ className, contents = "" }) => {
+export const renderComponents = ({ className, contents = [] }) => {
   const box = COMPONENT_BOX[className] ?
     COMPONENT_BOX[className] :
     document.querySelector(`.${className}`);
 
-  box.innerHTML = contents;
+  box.innerHTML = contents.join("");
   return box.innerHTML;
 };
