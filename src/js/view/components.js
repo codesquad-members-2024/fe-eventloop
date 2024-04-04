@@ -1,4 +1,5 @@
 import { FIRST_IDX } from "../util/constants.js";
+
 const removeMatchingElement = (callBack, className, memory) => {
     const callStackTarget = document.querySelector(className);
     const stuff = Array.from(callStackTarget.children).filter(curStuff => curStuff.textContent === callBack.callBackCode);
