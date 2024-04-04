@@ -62,7 +62,7 @@ export class EventLoop {
         return new Macrotask(literal.code, literal.calleeName);
     });
 
-    this.componentBox.callbacks.setComponents(callbackLiterals);
+    callbackLiterals.forEach((literal) => this.componentBox.callbacks.pushComponent(literal));
     setInterval(() => {
       this.updateComponents();
     }, ANIMATION_DURATION);
