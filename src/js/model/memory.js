@@ -5,7 +5,7 @@ export class Memory {
         this.classNameMap = new Map();
         this.setClassNameMap();
     }
-
+    
     isEmpty = (className) => this.classNameMap.get(className).length === EMPTY_LENGTH;
 
     getCallBack = (className) => this.classNameMap.get(className).slice(0)[FIRST_IDX];

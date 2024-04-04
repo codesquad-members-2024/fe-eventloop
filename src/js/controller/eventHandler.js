@@ -1,7 +1,7 @@
 import { formId, textId, selectorsMap, delay } from "../util/constants.js";
 import { extractCallbackCode } from "../model/acornParser.js";
 import { Memory } from "../model/memory.js";
-import { removeMatchingElement, appendTag } from "../view/components.js";
+import { removeMatchingElement, appendTag, addQueueAnimation } from "../view/components.js";
 
 const DELAY_TIME = 2700
 
@@ -36,18 +36,19 @@ const setTaskQueues = async(callBack, memory) => {
 
 const processQueueNode = async (queueNode, fromQueue, toQueue, memory) => {
     removeMatchingElement(queueNode, fromQueue, memory);
-    appendTag(queueNode, toQueue, memory);
+    appendTag(queueNode, toQueue, memory, fromQueue);
     await delay(DELAY_TIME);
     removeMatchingElement(queueNode, toQueue, memory);
-    await delay(DELAY_TIME);
 };
 
 const eventLoop = async (memory) => {
     while (!memory.isEmpty(selectorsMap.microQClassName)) {
         const queueNode = memory.getCallBack(selectorsMap.microQClassName);
+        await addQueueAnimation(selectorsMap.microQClassName)
         await processQueueNode(queueNode, selectorsMap.microQClassName, selectorsMap.callStackClassName, memory);
     }
     const queueNode = memory.getCallBack(selectorsMap.macroQClassName);
+    await addQueueAnimation(selectorsMap.macroQClassName)
     await processQueueNode(queueNode, selectorsMap.macroQClassName, selectorsMap.callStackClassName, memory);
 };
 
@@ -62,7 +63,6 @@ const eventLoopControl = async (nodeList) => {
         await delay(DELAY_TIME)
         setTaskQueues(callBack, memory);
     }
-    
     eventLoop(memory);
 };
 

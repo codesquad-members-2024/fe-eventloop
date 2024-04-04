@@ -189,7 +189,7 @@ grey main {
 }
 
 .callStack {
-  animation: call 2.5s ease-in-out forwards;
+  animation: call 3s ease-in-out forwards;
   position: relative;
 }
 
@@ -208,7 +208,7 @@ grey main {
   60% {
     transform: translateY(0%);
   }
-  75% {
+  70% {
     transform: translateY(0%);
   }
   100% {
@@ -217,13 +217,13 @@ grey main {
 }
 
 .webAPI {
-  animation: web 2.5s ease-in-out forwards;
+  animation: web 2.5s ease-out forwards;
   position: relative;
 }
 
 @keyframes web {
   0% {
-    transform: translateX(-245%);
+    transform: translateX(-170%);
   }
   40% {
     transform: translateX(0%);
@@ -232,12 +232,12 @@ grey main {
     transform: translateX(0%);
   }  
   100% {
-    transform: translateX(400%);
+    transform: translateX(170%);
   }  
 }
 
 .micro {
-  animation: microTask 1.5s ease-in-out;
+  animation: microTask 2.5s ease-in-out;
 }
 
 @keyframes microTask {
@@ -249,7 +249,7 @@ grey main {
   }
 }
 .macro {
-  animation: macroTask 1s ease-in-out;
+  animation: macroTask 2s ease-in-out;
 }
 
 @keyframes macroTask {
@@ -260,6 +260,51 @@ grey main {
     transform: translateX(0%);
   }
 }
+
+.queue-move {
+  animation: leftMove 1s ease-in-out;
+}
+
+@keyframes leftMove {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.eventLoop {
+  animation: moveUp 3s ease-in-out forwards;
+  position: relative;
+}
+
+@keyframes moveUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  20% {
+    transform: translateY(-10%);
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(10%);
+  }
+  60% {
+    transform: translateY(0%);
+  }
+  70% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-300%);
+  }
+}
+
+
+
+
 
 
 

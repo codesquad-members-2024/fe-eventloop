@@ -1,4 +1,5 @@
-import { FIRST_IDX } from "../util/constants.js";
+import { FIRST_IDX, delay } from "../util/constants.js";
+import { selectorsMap } from "../util/constants.js";
 
 const removeMatchingElement = (callBack, className, memory) => {
     const callStackTarget = document.querySelector(className);
@@ -14,17 +15,25 @@ const animationMap = {
     ".animation__macro_task_box": "macro",
 }
 
-const createAnimationDivMarkup = (callBack, className) => {
-    // const animationClassName = 
-    const newHTML = `<div class="animation__stuff ${animationMap[className]}">${callBack.callBackCode}</div>`;
+const createAnimationDivMarkup = (callBack, className, fromQueue) => {
+    const animationLocation = !fromQueue ? animationMap[className] : "eventLoop"
+    const newHTML = `<div class="animation__stuff ${animationLocation}">${callBack.callBackCode}</div>`;
     return newHTML;
 };
 
-const appendTag = async(callBack, className, memory) => {
+const appendTag = async(callBack, className, memory, fromQueue) => {
     const TargetAppend = document.querySelector(className);
-    const animationDivHtml = createAnimationDivMarkup(callBack, className);
+    const animationDivHtml = createAnimationDivMarkup(callBack, className, fromQueue);
     TargetAppend.insertAdjacentHTML("beforeend", animationDivHtml); 
     memory.updateStatusByClassName(callBack, className, "push");
 };
+
+export const addQueueAnimation = async(className) => {
+    const queueBoxes = [...document.querySelector(className).children]
+    const queueName = className === ".animation__micro_task_box" ? "micro" : "macro";
+    queueBoxes.forEach(curBox => curBox.classList.add("queue-move"))
+    await delay(1000)
+    queueBoxes.forEach(curBox => curBox.classList.remove("queue-move", queueName))
+}
 
 export {removeMatchingElement, createAnimationDivMarkup, appendTag}
