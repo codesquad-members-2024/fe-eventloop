@@ -83,8 +83,4 @@ export class AnimationGenerator {
         await this.delay(1000);
         this.applyCallBackAnimation(false); // out animation
     }
-
-    setDrawPosition(drawPosition) {
-        this.drawPosition = drawPosition;
-    }
 }

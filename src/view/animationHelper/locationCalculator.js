@@ -15,13 +15,12 @@ const LocationCalculator = {
     },
 
     getLocation(drawPosition) {
-        return this.getPosition(drawPosition, 135, 100);
+        return this.getPosition(drawPosition, 180, 100);
     },
 
     getQueueLocation(drawPosition) {
         return this.getPosition(drawPosition, 100, 50);
     },
 };
-
 
 export default LocationCalculator;

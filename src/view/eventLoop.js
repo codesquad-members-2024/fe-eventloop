@@ -1,4 +1,4 @@
-import executionContextManager from "../main.js";
+import executionContextManager from "./executionContextManager.js";
 import CallStackManager from "./callStack.js";
 import queueManager from "./queue.js";
 import { AnimationGenerator } from "./animationHelper/animationGenerator.js";
