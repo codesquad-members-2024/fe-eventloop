@@ -38,7 +38,7 @@ export class AsyncFunctionParser {
       const calleeName = parserUtils.getCalleeName(node);
       const callbackArg = node.arguments[FIRST_INDEX];
       const callback = this.code.slice(callbackArg.start, callbackArg.end);
-      return { calleeName: calleeName, callback: callback };
+      return { calleeName: calleeName, code: callback };
     });
   }
 

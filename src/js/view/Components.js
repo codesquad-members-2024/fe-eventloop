@@ -6,7 +6,10 @@ const COMPONENT_BOX = {
 }
 
 export const renderComponents = ({ className, contents = "" }) => {
-  const box = COMPONENT_BOX[className];
+  const box = COMPONENT_BOX[className] ?
+    COMPONENT_BOX[className] :
+    document.querySelector(`.${className}`);
 
   box.innerHTML = contents;
+  return box.innerHTML;
 };
