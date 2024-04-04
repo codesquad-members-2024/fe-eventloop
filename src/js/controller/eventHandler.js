@@ -66,4 +66,4 @@ const eventLoopControl = async (nodeList) => {
     eventLoop(memory);
 };
 
-export {createParseCode, handleFormSubmit}
+export {createParseCode, handleFormSubmit, checkQueue}
