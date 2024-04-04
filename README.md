@@ -29,11 +29,11 @@
  - [ ] 버그 및 할일 이슈 등록
  - [ ] 버그 수정
    - [ ] input에 커서를 올렸을때 body태그가 무한 리로딩됨
-   - [ ] 처음 코드만 동작되고 뒤에 queue에 쌓인 코드들은 callStack으로 넘어가지 않음
+   - [X] 처음 코드만 동작되고 뒤에 queue에 쌓인 코드들은 callStack으로 넘어가지 않음
 
 3. 기능 추가 사항
- - [ ] callStack이 비었을때 queue에서 callStack으로 넘어가는 기능
- - [ ] callStack, queue(micro, macro)비어있는지 확인할 수 있는 로직 X
+ - [X] callStack이 비었을때 queue에서 callStack으로 넘어가는 기능
+ - [X] callStack, queue(micro, macro)비어있는지 확인할 수 있는 로직 X
  - [ ] input에 새로운 코드를 입력하고 동작시키기를 누르면 현재 동작을 멈추고 새로 입력한 코드가 동작해야한다. 
 
 4. 애니메이션 변경

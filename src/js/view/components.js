@@ -12,9 +12,9 @@ const createAnimationDivMarkup = (callBack) => {
 };
 
 const appendTag = async(callBack, className, memory) => {
-    const Target2append = document.querySelector(className);
+    const TargetAppend = document.querySelector(className);
     const animationDivHtml = createAnimationDivMarkup(callBack);
-    Target2append.insertAdjacentHTML("beforeend", animationDivHtml); 
+    TargetAppend.insertAdjacentHTML("beforeend", animationDivHtml); 
     memory.updateStatusByClassName(callBack, className, "push");
 };
 
