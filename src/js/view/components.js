@@ -7,14 +7,21 @@ const removeMatchingElement = (callBack, className, memory) => {
     memory.updateStatusByClassName(callBack, className, "pop");
 };
 
-const createAnimationDivMarkup = (callBack) => {
-    const newHTML = `<div class="animation__stuff">${callBack.callBackCode}</div>`;
+const animationMap = {
+    ".animation__call_stack_box": "callStack",
+    ".animation__web_api_box": "webAPI",
+    ".animation__micro_task_box": "micro",
+    ".animation__macro_task_box": "macro",
+}
+
+const createAnimationDivMarkup = (callBack, className) => {
+    const newHTML = `<div class="animation__stuff ${animationMap[className]}">${callBack.callBackCode}</div>`;
     return newHTML;
 };
 
 const appendTag = async(callBack, className, memory) => {
     const TargetAppend = document.querySelector(className);
-    const animationDivHtml = createAnimationDivMarkup(callBack);
+    const animationDivHtml = createAnimationDivMarkup(callBack, className);
     TargetAppend.insertAdjacentHTML("beforeend", animationDivHtml); 
     memory.updateStatusByClassName(callBack, className, "push");
 };
