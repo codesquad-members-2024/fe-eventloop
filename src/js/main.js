@@ -2,6 +2,7 @@ import {
   registerToWebAPI,
   classifyIntoMacroAndMicro,
   moveToQueue,
+  moveToCallstack,
 } from './controller.js';
 import { parseCode } from './parsing.js';
 import { code } from './test-code.js';
@@ -12,7 +13,9 @@ async function main() {
   await registerToWebAPI(tasks);
   const { microTask, macroTask } = classifyIntoMacroAndMicro(tasks);
   await moveToQueue(microTask);
-  moveToQueue(macroTask);
+  await moveToQueue(macroTask);
+  await moveToCallstack(microTask);
+  moveToCallstack(macroTask);
 }
 
 main();

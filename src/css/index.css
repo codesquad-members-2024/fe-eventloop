@@ -164,9 +164,16 @@ main {
   box-shadow: 0 0 10px #fe9d00;
   gap: 10px;
 }
+.macrotask .task {
+  max-width: 150px;
+}
 
 .macrotask .to-macro {
   animation: slideToMacro 1s ease-in-out;
+}
+
+.macrotask .to-callstack {
+  animation: slideToEventloop 1s ease-in-out;
 }
 
 .microtask .neon {
@@ -176,8 +183,17 @@ main {
   gap: 10px;
 }
 
+.microtask .task {
+  max-width: 150px;
+}
+
 .microtask .to-micro {
   animation: slideToMicro 1s ease-in-out;
+}
+
+.microtask .to-callstack {
+  animation: slideToEventloop 1s ease-in-out;
+  max-width: 150px;
 }
 
 .task {
@@ -243,10 +259,30 @@ main {
     opacity: 0;
     position: absolute;
     left: 200px;
-    top: -150px;
+    top: -200px;
   }
   to {
     transform: translate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideToEventloop {
+  0% {
+    position: absolute;
+    left: 0px;
+    top: 30px;
+    opacity: 0;
+  }
+  50% {
+    position: absolute;
+    left: -150px;
+    top: 150px;
+  }
+  100% {
+    position: absolute;
+    left: -150px;
+    top: -200px;
     opacity: 1;
   }
 }
