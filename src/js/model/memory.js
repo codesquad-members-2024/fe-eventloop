@@ -8,11 +8,11 @@ export class Memory {
 
     isEmpty = (className) => this.classNameMap.get(className).length === EMPTY_LENGTH;
 
-    getCallBack = (className) => this.classNameMap.get(className).slice(-1)[FIRST_IDX];
+    getCallBack = (className) => this.classNameMap.get(className).slice(0)[FIRST_IDX];
 
     updateStatusByClassName(callBack, className, type) {
         if (type === "push") this.classNameMap.get(className).push(callBack);
-        if (type === "pop") this.classNameMap.get(className).pop(callBack);
+        if (type === "pop") this.classNameMap.get(className).shift(callBack);
     }
 
     setClassNameMap() {

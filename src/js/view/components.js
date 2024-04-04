@@ -15,6 +15,7 @@ const animationMap = {
 }
 
 const createAnimationDivMarkup = (callBack, className) => {
+    // const animationClassName = 
     const newHTML = `<div class="animation__stuff ${animationMap[className]}">${callBack.callBackCode}</div>`;
     return newHTML;
 };

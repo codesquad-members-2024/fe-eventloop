@@ -30,7 +30,7 @@ export const extractCallbackCode = (parseNode, originalCode, nodeList = []) => {
         }
     });
 
-    return nodeList;
+    return nodeList.reverse();
 };
 
 export {isMicroTask, isMacroTask}

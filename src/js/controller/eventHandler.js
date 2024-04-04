@@ -3,7 +3,7 @@ import { extractCallbackCode } from "../model/acornParser.js";
 import { Memory } from "../model/memory.js";
 import { removeMatchingElement, appendTag } from "../view/components.js";
 
-const DELAY_TIME = 2000
+const DELAY_TIME = 2700
 
 const createParseCode = () => {
     const userCode = document.getElementById(textId).value;
