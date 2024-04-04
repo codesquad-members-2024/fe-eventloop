@@ -19,11 +19,11 @@ class Observable {
 }
 
 export class ComponentBox extends Observable {
-  constructor(className, maxLength) {
+  constructor(className, maxLength, components = []) {
     super();
     this.className = className;
     this.maxLength = maxLength;
-    this.components = [];
+    this.components = components;
   }
 
   getClassName() {
@@ -34,7 +34,7 @@ export class ComponentBox extends Observable {
     this.components.length = NO_ELEMENTS;
     this.components = [...components];
 
-    const contents = components.map((component) => component.toString())
+    const contents = components.map((component) => component.toString());
 
     this.notify(this.className, contents, this.maxLength);
   }
@@ -44,6 +44,6 @@ export class ComponentBox extends Observable {
   }
 
   notify(className, contents, maxLength) {
-    this._observers.forEach((observer) => observer({className, contents, maxLength}));
+    this._observers.forEach((observer) => observer({ className, contents, maxLength }));
   }
 }

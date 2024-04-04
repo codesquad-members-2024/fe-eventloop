@@ -1,20 +1,30 @@
 import { MACRO_TASK_PROTOTYPES, MICRO_TASK_PROTOTYPES, Macrotask, Microtask } from '../model/Callback.js';
 import CodeAnalyzer from '../model/CodeAnalyzer.js';
 import { ComponentBox } from '../model/ComponentBox.js';
-import { reverseGridComponents, updateComponents } from '../view/Component.js';
+import { reverseGridComponents, updateComponentsOfView } from '../view/Component.js';
 
 const CLASS_NAME = {
   CALL_STACK: 'call-stack',
   WEB_APIS: 'web-apis',
   MICRO_TASK: 'microtask-queue',
   MACRO_TASK: 'macrotask-queue',
+  TUTORIAL: 'tutorial',
 };
 const MAX_LENGTH = {
   CALL_STACK: 1,
   WEB_APIS: 7,
   MICRO_TASK: 3,
   MACRO_TASK: 3,
+  TUTORIAL: 0,
 };
+
+const TUTORIAL_DESCRIPTION = {
+  then: 'then의 callback이 [Microtask Queue]에 등록됩니다.',
+  catch: 'catch의 callback이 [Microtask Queue]에 등록됩니다.',
+  setTimeout: 'setTimeout의 callback이 [Macrotask Queue]에 등록됩니다.',
+  callStack: '[Queue]에 있던 callback이 [CallStack]에 등록되어 실행됩니다.',
+};
+
 const ANIMATION_DELAY = 500;
 const ANMIATON_DURATION = 2000;
 const NO_ELEMENTS = 0;
@@ -55,6 +65,7 @@ export default class EventLoopVisualizer {
     this.componentBox.webApis = new ComponentBox(CLASS_NAME.WEB_APIS, MAX_LENGTH.WEB_APIS);
     this.componentBox.microTasks = new ComponentBox(CLASS_NAME.MICRO_TASK, MAX_LENGTH.MICRO_TASK);
     this.componentBox.macroTasks = new ComponentBox(CLASS_NAME.MACRO_TASK, MAX_LENGTH.MACRO_TASK);
+    this.componentBox.tutorial = new ComponentBox(CLASS_NAME.TUTORIAL, MAX_LENGTH.TUTORIAL, TUTORIAL_DESCRIPTION);
     this.codeAnalyzer = new CodeAnalyzer();
     this.initializeEventListener();
     this.initializeSubscribes();
@@ -74,7 +85,8 @@ export default class EventLoopVisualizer {
   initializeSubscribes() {
     const componentBoxList = Object.values(this.componentBox);
 
-    componentBoxList.forEach((box) => box.subscribe(updateComponents));
+    //1. 생성한 객체들 돌면서 subscribe키에 updateComponents()함수 값 설정
+    componentBoxList.forEach((box) => box.subscribe(updateComponentsOfView));
   }
 
   setCallbacks(code) {
@@ -98,12 +110,29 @@ export default class EventLoopVisualizer {
   }
 
   updateComponents() {
-    const { callStack, webApis, microTasks, macroTasks } = this.componentBox;
+    const { callStack, webApis, microTasks, macroTasks, tutorial } = this.componentBox;
     const firstComponent = webApis.getComponents()[FIRST_INDEX];
+    this.updateTutorial(tutorial, firstComponent);
 
-    if (firstComponent && firstComponent instanceof Microtask && transferFirstComponent(webApis, microTasks)) return;
-    if (firstComponent && firstComponent instanceof Macrotask && transferFirstComponent(webApis, macroTasks)) return;
-    if (transferFirstComponent(microTasks, callStack) || transferFirstComponent(macroTasks, callStack)) return;
+    // 웹API -> 큐
+    const isMicro = firstComponent && firstComponent instanceof Microtask && transferFirstComponent(webApis, microTasks);
+    if (isMicro) return;
+    const isMacro = firstComponent && firstComponent instanceof Microtask && transferFirstComponent(webApis, macroTasks);
+    if (isMacro) return;
+
+    // 큐 -> 콜스택
+    const isFromMicroToCallStack = transferFirstComponent(microTasks, callStack);
+    const isFromMacroToCallStack = transferFirstComponent(macroTasks, callStack);
+    if (isFromMicroToCallStack || isFromMacroToCallStack) return;
+  }
+
+  updateTutorial(tutorial, firstComponent) {
+    const tutorialTarget = document.querySelector('.tutorial__component-content');
+    if (firstComponent) {
+      tutorialTarget.innerHTML = tutorial.components[firstComponent.calleeName];
+      return;
+    }
+    tutorialTarget.innerHTML = tutorial.components.callStack;
   }
 
   updateSchedule() {
