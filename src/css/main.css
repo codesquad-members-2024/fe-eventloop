@@ -82,6 +82,7 @@ grey main {
   height: 200px;
   border: double 8px;
   border-color: var(--neon-green);
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.5);
   border-radius: 10px;
   overflow: hidden;
 }
@@ -111,6 +112,7 @@ grey main {
   padding: 5px;
   border: double 8px;
   border-color: var(--neon-sky);
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.5);
   border-radius: 10px;
   overflow: hidden;
 }
@@ -134,6 +136,7 @@ grey main {
   height: 252px;
   border: solid 3px;
   border-color: var(--neon-blue);
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.5);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -146,9 +149,13 @@ grey main {
     font-weight: bold;
   }
   & .animation__event_loop_icon {
-    font-size: 2.5em;
-    animation: spin 2s linear infinite;
+    width: 50px;
+    height: 50px;
   }
+}
+
+.spinAnimation {
+  animation: spin 2s linear forwards;
 }
 
 .Qbox {
@@ -159,12 +166,14 @@ grey main {
 }
 .animation__micro_task_box {
   border-color: var(--neon-orange);
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.5);
   display: flex;
   align-items: center;
   overflow: hidden;
 }
 .animation__macro_task_box {
   border-color: var(--neon-yellow);
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.5);
   display: flex;
   align-items: center;
   overflow: hidden;
