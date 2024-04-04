@@ -6,9 +6,6 @@ body {
     height: 750px;
 }
 
-* {
-    outline: 1px solid pink;
-}
 .code-input {
     display: block;
     width: 350px;
@@ -54,8 +51,8 @@ body {
     border-radius: 10px;
     border: 2px solid #55b730;
     width: 80%;
-    height: 80%;
-    margin: 7px auto 0;
+    height: 90%;
+    margin: auto;
 }
 
 .wep-Api-container {
@@ -76,6 +73,10 @@ body {
     width: 30%;
     height: 90%;
     text-align: center;
+    img {
+        height: 130px;
+        margin: 45px 0px;
+    }
 }
 
 .queue-view {
@@ -83,7 +84,7 @@ body {
     width: 50%;
     height: 100%;
     flex-direction: column;
-    justify-content: center;    
+    justify-content: center;
     align-items: center;
 }
 
@@ -98,7 +99,7 @@ body {
 .macrotask-container {
     border-radius: 10px;
     border: 2px solid #c4730c;
-    height: 60%;
+    height: 70%;
     margin: 0 auto;
 }
 
