@@ -1,31 +1,31 @@
-import { AnimationGenerator } from "./animationHelper/animationGenerator.js"
+import { AnimationGenerator } from "./animationHelper/animationGenerator.js";
 
-function QueueManager() {
-    const queue = {
+const QueueManager = {
+    queue: {
         microtask: [],
-        macrotask: []
-    }
+        macrotask: [],
+    },
 
-    const pushToQeuue = async(id, asynchronousFunc) => {
-        if(asynchronousFunc.type === "then") queue.microtask.push(id)
-        if(asynchronousFunc.type === "setTimeout") queue.macrotask.push(id)
-        const animationGenerator = new AnimationGenerator(id, asynchronousFunc.type === "then" ? "microtask-container": "macrotask-container")
-        await animationGenerator.delay(2000)
-        animationGenerator.applyQueueInAnimation()
-    }
+    async pushToQeuue(id, asynchronousFunc) {
+        if (asynchronousFunc.type === "then") this.queue.microtask.push(id);
+        if (asynchronousFunc.type === "setTimeout")
+            this.queue.macrotask.push(id);
+        const animationGenerator = new AnimationGenerator(id, asynchronousFunc.type === "then" ? "microtask-container" : "macrotask-container");
+        await animationGenerator.delay(2000);
+        animationGenerator.applyQueueInAnimation();
+    },
 
-    const getQueue = () => {
-        if (!queue.microtask.length) return {id: queue.macrotask.shift(), position: "macrotask-container"}
-        return {id: queue.microtask.shift(), position: "microtask-container"}
-    }
+    getQueue() {
+        if (!this.queue.microtask.length)
+            return {id: this.queue.macrotask.shift(), position: "macrotask-container"};
+        return {id: this.queue.microtask.shift(), position: "microtask-container"};
+    },
 
-    const isQueueEmpty = () => {
-        if (!queue.microtask.length && !queue.macrotask.length) return true;
-        return false
-    }
+    isQueueEmpty() {
+        if (!this.queue.microtask.length && !this.queue.macrotask.length)
+            return true;
+        return false;
+    },
+};
 
-    return {pushToQeuue, getQueue, isQueueEmpty}
-}
-
-const queueManager = QueueManager()
-export default queueManager
+export default QueueManager;

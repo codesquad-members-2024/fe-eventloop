@@ -129,7 +129,7 @@ body {
 }
 
 .active {
-    animation: rotate_image 6s linear infinite;
+    animation: rotate_image 2s linear ;
 }
 
 @keyframes rotate_image {

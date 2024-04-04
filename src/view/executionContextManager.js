@@ -1,10 +1,10 @@
 import { astParser } from "../utils/astParser.js";
-import { eventLoop } from "./eventLoop.js";
+import { eventLoop, stopEventLoop } from "./eventLoop.js";
 
 const ExecutionContextManager = {
     executionContextList: [],
 
-    main(inputCode) {
+    analyzeInputCode(inputCode) {
         const functionList = [...astParser.splitCodeByFunctions(inputCode)];
         functionList.forEach((curFunc) => {
             const node = acorn.parse(curFunc, { ecmaVersion: "latest" });
@@ -34,16 +34,13 @@ const ExecutionContextManager = {
 
     getInputValue() {
         const inputValue = document.querySelector(".code-input");
-        ExecutionContextManager.main(inputValue.value);
+        ExecutionContextManager.analyzeInputCode(inputValue.value);
         inputValue.value = null;
     },
-
+    
     setEventHandler() {
         const runBtn = document.querySelector(".run-btn");
-        runBtn.removeEventListener(
-            "click",
-            ExecutionContextManager.getInputValue
-        );
+        runBtn.removeEventListener("click", ExecutionContextManager.getInputValue);
         runBtn.addEventListener("click", ExecutionContextManager.getInputValue);
     },
 };
