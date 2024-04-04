@@ -1,10 +1,12 @@
+import { COMPONENT_BOX } from "./Components.js";
+
 const FULL_ROTATION_DEGREES = 360;
 const MAX_TRANSLATE_DISTANCE = 2000;
 const MAX_MOVE_DOWN_DISTANCE = 15.5;
 const PROGRESS_THRESHOLD = 0.25;
 const SECONDARY_PROGRESS_THRESHOLD = 0.75;
 const MAX_PRGORESS_THRESHOLD = 1;
-const ANIMATION_DURATION = 2000;
+const ANIMATION_DURATION = 1000;
 
 const createAnimationStep = (element, transformFunction) => {
   let start = null;
@@ -37,7 +39,7 @@ const slideInOutTransform = (element, progress) => {
   if (progress < PROGRESS_THRESHOLD) {
     element.style.transform = `translateY(${(- PROGRESS_THRESHOLD + progress) * MAX_TRANSLATE_DISTANCE}px)`;
   }
-};
+}
 
 const pushTopInTransform = (element, progress) => {
   if (progress > PROGRESS_THRESHOLD) {
@@ -75,23 +77,27 @@ const moveRightOutTransform = (element, progress) => {
   element.style.transform = `translateX(${progress / PROGRESS_THRESHOLD * MAX_TRANSLATE_DISTANCE}px)`;
 };
 
-const animateRoate = (element) => {
+export const animateRoate = (element) => {
   animateElement(element, rotateTransform);
 }
 
-const animateSlideInOut = (box) => {
+export const animateSlideInOut = (className) => {
+  const box = COMPONENT_BOX[className];
   animateElement(box.firstElementChild, slideInOutTransform);
-};
+}
 
-const animatePushTopIn = (box) => {
+export const animatePushTopIn = (className) => {
+  const box = COMPONENT_BOX[className];
   animateElement(box.lastElementChild, pushTopInTransform);
 };
 
-const animatePushLeftIn = (box) => {
+export const animatePushLeftIn = (className) => {
+  const box = COMPONENT_BOX[className];
   animateElement(box.lastElementChild, pushLeftInTransform);
 };
 
-const animatePopLeft = (box) => {
+export const animatePopLeft = (className) => {
+  const box = COMPONENT_BOX[className];
   const elementsToMoveDown = [...box.children];
   const elementToMoveLeftOut = elementsToMoveDown.shift();
 
@@ -99,7 +105,8 @@ const animatePopLeft = (box) => {
   animateElement(elementToMoveLeftOut, moveLeftOutTransform);
 };
 
-const animatePopRight = (box) => {
+export const animatePopRight = (className) => {
+  const box = COMPONENT_BOX[className];
   const elementsToMoveDown = [...box.children];
   const elementToMoveRightOut = elementsToMoveDown.shift();
 
