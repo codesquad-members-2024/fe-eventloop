@@ -20,7 +20,7 @@ describe("replaceCallbackBody 단위 테스트", () => {
     "",
     null,
     undefined
-  ])("콜백 함수를 인식하지 못할시 입력 값 그대로 반환", (input) => {
+  ])("콜백 함수를 인식하지 못할시 에러를 반환", (input) => {
     // given input
 
     // when & then

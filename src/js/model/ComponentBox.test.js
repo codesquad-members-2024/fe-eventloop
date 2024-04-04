@@ -71,7 +71,7 @@ describe('ComponentBox 단위 테스트', () => {
     const newComponents = ['component1', 'component2'];
 
     // when
-    componentBox.setComponents(newComponents);
+    newComponents.forEach((component) => componentBox.pushComponent(component));
     const componentsResult = componentBox.getComponents();
 
     // then
