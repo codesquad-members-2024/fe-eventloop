@@ -127,3 +127,13 @@ body {
     /* opacity: 1;
     transition: opacity 2s ease-in-out; */
 }
+
+.active {
+    animation: rotate_image 6s linear infinite;
+}
+
+@keyframes rotate_image {
+    100% {
+        transform: rotate(1turn);
+    }
+}

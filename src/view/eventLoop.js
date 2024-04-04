@@ -10,11 +10,15 @@ export async function eventLoop() {
     };
 
     const moveToCallbackFromQueue = async () => {
+        const image = document.querySelector(".event-loop-view img");
         if (!queueManager.isQueueEmpty()) {
             const curQueue = queueManager.getQueue();
-            const animationGenerator = new AnimationGenerator(curQueue.id, "call-stack-container");
+            const animationGenerator = new AnimationGenerator(curQueue.id,"call-stack-container");
             await animationGenerator.delay(8000);
             animationGenerator.applyQueueoutAnimation(curQueue.position);
+            image.classList.add("active");
+        } else {
+            image.classList.remove("active");
         }
     };
 
