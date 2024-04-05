@@ -60,4 +60,9 @@ export class ComponentBox extends Observable {
   notify(className, contents) {
     this._observers.forEach((observer) => observer({className, contents}));
   }
+
+  clearComponents() {
+    this.components.length = NO_ELEMENTS;
+    this.notify(this.className, []);
+  }
 }

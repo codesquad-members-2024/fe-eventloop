@@ -32,6 +32,7 @@ const transferFirstComponent = (source, target) => {
 export class EventLoop {
   submitButton = document.querySelector(".submit-btn");
   inputArea = document.getElementById("codeInput");
+  interval = null;
 
   constructor(componentBox) {
     this.componentBox = componentBox;
@@ -42,6 +43,7 @@ export class EventLoop {
   handleSubmit() {
     const code = this.inputArea.value;
 
+    Object.values(this.componentBox).forEach((box) => box.clearComponents());
     this.setComponents(code);
   };
 
@@ -57,6 +59,15 @@ export class EventLoop {
     componentBoxList.forEach((box) => box.subscribe(renderComponents));
   }
 
+  startInterval() {
+    if (this.interval !== null) {
+      clearInterval(this.interval);
+      this.interval = null;
+    }
+
+    this.interval = setInterval(() => this.updateComponents(), ANIMATION_DURATION);
+  }
+
   setComponents(code) {
     const callbackLiterals = parseLiteral(code).map((literal) => {
       if (isMicrotask(literal))
@@ -66,7 +77,7 @@ export class EventLoop {
     });
 
     callbackLiterals.forEach((literal) => this.componentBox.callbacks.pushComponent(literal));
-    setInterval(() => this.updateComponents(), ANIMATION_DURATION);
+    this.startInterval();
   }
 
   updateComponents() {
