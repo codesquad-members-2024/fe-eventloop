@@ -12,7 +12,7 @@ export class Memory {
 
     updateStatusByClassName(callBack, className, type) {
         if (type === "push") this.classNameMap.get(className).push(callBack);
-        if (type === "pop") this.classNameMap.get(className).shift(callBack);
+        if (type === "pop") this.classNameMap.get(className).shift();
     }
 
     setClassNameMap() {

@@ -9,6 +9,7 @@ export const selectorsMap = {
 
 export const FIRST_IDX = 0
 export const EMPTY_LENGTH = 0;
+export const LOOP_ANI_DELAY = 1000
 
 export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 

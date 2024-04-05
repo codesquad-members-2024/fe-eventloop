@@ -226,7 +226,8 @@ grey main {
 }
 
 .webAPI {
-  animation: web 2.5s ease-out forwards;
+  animation: web 1s ease-out forwards, rightMove 1.2s ease forwards;
+  animation-delay: 0s, 2s;
   position: relative;
 }
 
@@ -234,14 +235,17 @@ grey main {
   0% {
     transform: translateX(-170%);
   }
-  40% {
-    transform: translateX(0%);
-  }  
-  70% {
-    transform: translateX(0%);
-  }  
   100% {
-    transform: translateX(170%);
+    transform: translateX(0%);
+  }  
+}
+
+@keyframes rightMove {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(200%);
   }  
 }
 
@@ -310,10 +314,3 @@ grey main {
     transform: translateY(-300%);
   }
 }
-
-
-
-
-
-
-
