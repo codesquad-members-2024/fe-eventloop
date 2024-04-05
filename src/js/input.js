@@ -10,13 +10,13 @@ import {
   moveToCallstack,
 } from './controller.js';
 import { parseCode } from './parsing.js';
-import { code } from './test-code.js';
+// import { code } from './test-code.js';
 
 export function getCode() {
   const runBtn = document.getElementById('buttonRun');
   runBtn.addEventListener('click', async (event) => {
     event.preventDefault();
-    // const code = document.querySelector('#inputCode').value;
+    const code = document.querySelector('#inputCode').value;
 
     const tasks = parseCode(code);
     console.log(tasks);
