@@ -30,7 +30,7 @@ body {
     margin: 10px auto;
 }
 
-.stack-and-wepApi-view,
+.stack-and-webApi-view,
 .eventLoop-and-queue-view {
     width: 900px;
     height: 50%;
@@ -40,14 +40,14 @@ body {
 }
 
 .call-stack-view,
-.wep-Api-view {
+.web-Api-view {
     width: 50%;
     height: 80%;
     text-align: center;
 }
 
 .call-stack-container,
-.wep-Api-container {
+.web-Api-container {
     border-radius: 10px;
     border: 2px solid #55b730;
     width: 80%;
@@ -55,7 +55,7 @@ body {
     margin: auto;
 }
 
-.wep-Api-container {
+.web-Api-container {
     border: 2px solid rgb(207, 206, 206);
 }
 

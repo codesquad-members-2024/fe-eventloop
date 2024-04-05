@@ -3,23 +3,20 @@ import { AnimationGenerator } from "../view/animationHelper/animationGenerator.j
 import queueManager from "./queue.js";
 
 const WebAPIkManager = {
-    async pushToWepApi(asynchronousFunc) {
-        const id = await this.createWepApiHTML(asynchronousFunc);
+    async pushToWebApi(asynchronousFunc) {
+        const id = await this.createWebAPIHTML(asynchronousFunc);
         queueManager.pushToQeuue(id, asynchronousFunc);
     },
 
-    async createWepApiHTML(contex) {
+    async createWebAPIHTML(context) {
         const uniqueId = Date.now();
 
-        const box = new Box(contex.callBack, uniqueId);
+        const box = new Box(context.callBack, uniqueId);
         renderFunc(box.createBox());
 
-        const animationGenerator = new AnimationGenerator(
-            uniqueId,
-            "wep-Api-container"
-        );
+        const animationGenerator = new AnimationGenerator(uniqueId, "web-Api-container");
         await animationGenerator.delay(2000);
-        animationGenerator.applyWepApiInAnimation();
+        animationGenerator.applyWebApiInAnimation();
 
         return uniqueId;
     },

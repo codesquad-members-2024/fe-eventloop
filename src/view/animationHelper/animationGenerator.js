@@ -63,14 +63,14 @@ export class AnimationGenerator {
         );
     }
 
-    applyWepApiInAnimation() {
+    applyWebApiInAnimation() {
         const prevLocation = LocationCalculator.getLocation("call-stack-container");
         const newLocation = LocationCalculator.getLocation(this.drawPosition);
         this.animateElement(this.id, prevLocation, newLocation);
     }
 
     applyQueueInAnimation() {
-        const prevLocation = LocationCalculator.getLocation("wep-Api-container");
+        const prevLocation = LocationCalculator.getLocation("web-Api-container");
         const newLocation = LocationCalculator.getQueueLocation(this.drawPosition);
         this.animateElement(this.id, prevLocation, newLocation);
     }

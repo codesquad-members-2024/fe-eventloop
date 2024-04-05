@@ -1,7 +1,7 @@
 const LocationCalculator = {
     positionMap: {
         "call-stack-container": { x: 0, y: 0 },
-        "wep-Api-container": { x: 0, y: 0 },
+        "web-Api-container": { x: 0, y: 0 },
         "microtask-container": { x: 0, y: 0 },
         "macrotask-container": { x: 0, y: 0 },
     },
