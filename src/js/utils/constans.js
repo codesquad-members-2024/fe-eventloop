@@ -23,7 +23,7 @@ new Promise((resolve)=>resolve("Promise"))
 
 export const MICRO_TASK = ["Promise", "then"];
 export const MACRO_TASK = ["setTimeout", "setInterval"];
-export const TASK_DELAY = 5000;
+export const TASK_DELAY = 7000;
 
 export const EXPLIAN_CODE = {
 	fetch:
