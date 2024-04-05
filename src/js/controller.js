@@ -7,9 +7,9 @@ import {
   macroTaskApis,
 } from './taskModel.js';
 import {
-  CallStackObserver,
-  CallbackObserver,
-  RemoveCallback,
+  CallStackViewer,
+  CallbackAdder,
+  CallbackRemover,
   animateQueueToCallstack,
 } from './view.js';
 
@@ -18,23 +18,23 @@ const webAPI = new WebAPI();
 const microTaskQueue = new MicroTaskQueue();
 const macroTaskQueue = new MacroTaskQueue();
 
-const callStackObserver = new CallStackObserver('callStack');
-const webAPIObserver = new CallbackObserver('webAPIs', 'to-webAPI');
-const microQueueObserver = new CallbackObserver('microTaskQueue', 'to-micro');
-const macroQueueObserver = new CallbackObserver('macroTaskQueue', 'to-macro');
+const callStackObserver = new CallStackViewer('callStack');
+const webAPIObserver = new CallbackAdder('webAPIs', 'to-webAPI');
+const microQueueObserver = new CallbackAdder('microTaskQueue', 'to-micro');
+const macroQueueObserver = new CallbackAdder('macroTaskQueue', 'to-macro');
 callStack.addObserver(callStackObserver);
 webAPI.addObserver(webAPIObserver);
 microTaskQueue.addObserver(microQueueObserver);
 macroTaskQueue.addObserver(macroQueueObserver);
 
-const webAPIRemover = new RemoveCallback('webAPIs');
-const microTaskRemover = new RemoveCallback('microTaskQueue');
-const macroTaskRemover = new RemoveCallback('macroTaskQueue');
+const webAPIRemover = new CallbackRemover('webAPIs');
+const microTaskRemover = new CallbackRemover('microTaskQueue');
+const macroTaskRemover = new CallbackRemover('macroTaskQueue');
 webAPI.addRemoveObserver(webAPIRemover);
 microTaskQueue.addRemoveObserver(microTaskRemover);
 macroTaskQueue.addRemoveObserver(macroTaskRemover);
 
-const DELAY_TIME = 1000;
+const DELAY_TIME = 2000;
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -49,13 +49,13 @@ export async function registerToWebAPI(tasks) {
 }
 
 export function classifyIntoMacroAndMicro(tasks) {
-  const microTask = tasks.filter((task) =>
+  const microTasks = tasks.filter((task) =>
     promiseMethods.includes(task.functionName),
   );
-  const macroTask = tasks.filter((task) =>
+  const macroTasks = tasks.filter((task) =>
     macroTaskApis.includes(task.functionName),
   );
-  return { microTask, macroTask };
+  return { microTasks, macroTasks };
 }
 
 export async function moveToQueue(tasks) {
@@ -77,11 +77,14 @@ export async function moveToCallstack(tasks) {
       animateQueueToCallstack(tasks, i, 'microTaskQueue', 'to-callstack');
       await delay(1000);
       microTaskQueue.removeTask();
+      callStack.addTask(tasks[i].arguments);
     } else if (tasks[i].type === 'macroTask') {
       animateQueueToCallstack(tasks, i, 'macroTaskQueue', 'to-callstack');
       await delay(1000);
       macroTaskQueue.removeTask();
+      callStack.addTask(tasks[i].arguments);
     }
     await delay(1000);
   }
+  callStack.resetTask();
 }

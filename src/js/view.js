@@ -1,4 +1,4 @@
-export function CallStackObserver(elementId) {
+export function CallStackViewer(elementId) {
   this.callStackElement = document.getElementById(elementId);
 
   this.update = function (callStack) {
@@ -11,7 +11,7 @@ export function CallStackObserver(elementId) {
   };
 }
 
-export function CallbackObserver(elementId, animation) {
+export function CallbackAdder(elementId, animation) {
   this.boxEl = document.getElementById(elementId);
 
   this.update = function (tasks) {
@@ -25,7 +25,7 @@ export function CallbackObserver(elementId, animation) {
   };
 }
 
-export function RemoveCallback(elementId) {
+export function CallbackRemover(elementId) {
   this.boxEl = document.getElementById(elementId);
 
   this.update = function (tasks) {
