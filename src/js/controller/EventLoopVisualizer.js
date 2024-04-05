@@ -15,7 +15,6 @@ const MAX_LENGTH = {
   WEB_APIS: 7,
   MICRO_TASK: 3,
   MACRO_TASK: 3,
-  TUTORIAL: 0,
 };
 const TUTORIAL_DESCRIPTION = {
   then: 'then의 callback이 [Microtask Queue]에 등록됩니다.',
@@ -110,29 +109,33 @@ export default class EventLoopVisualizer {
     this.updateSchedule();
   }
 
+  updateTutorial(type, tutorial, firstComponent) {
+    let contents = '';
+    if (firstComponent && (type === 'micro' || type === 'macro')) contents = tutorial.components[firstComponent.calleeName];
+    if (type === 'callStack') contents = tutorial.components[type];
+    const tutorialObj = { className: 'tutorial', contents };
+    updateComponentsOfView(tutorialObj);
+  }
+
   updateComponents() {
     const { callStack, webApis, microTasks, macroTasks, tutorial } = this.componentBox;
     const firstComponent = webApis.getComponents()[FIRST_INDEX];
 
-    const isMicro = firstComponent && firstComponent instanceof Microtask && transferFirstComponent(webApis, microTasks);
-    if (isMicro) {
-      const tutorialObj = { className: 'tutorial', contents: tutorial.components[firstComponent.calleeName] };
-      updateComponentsOfView(tutorialObj);
+    const isMicroTrensfer = firstComponent && firstComponent instanceof Microtask && transferFirstComponent(webApis, microTasks);
+    if (isMicroTrensfer) {
+      this.updateTutorial('micro', tutorial, firstComponent);
       return;
     }
-    const isMacro = firstComponent && firstComponent instanceof Microtask && transferFirstComponent(webApis, macroTasks);
-    if (isMacro) {
-      const tutorialObj = { className: 'tutorial', contents: tutorial.components[firstComponent.calleeName] };
-      updateComponentsOfView(tutorialObj);
+    const isMacroTrensfer = firstComponent && firstComponent instanceof Macrotask && transferFirstComponent(webApis, macroTasks);
+    if (isMacroTrensfer) {
+      this.updateTutorial('macro', tutorial, firstComponent);
       return;
     }
 
     const isFromMicroToCallStack = transferFirstComponent(microTasks, callStack);
     const isFromMacroToCallStack = transferFirstComponent(macroTasks, callStack);
-    if (isFromMicroToCallStack || isFromMacroToCallStack) {
-      const tutorialObj = { className: 'tutorial', contents: tutorial.components.callStack };
-      updateComponentsOfView(tutorialObj);
-    }
+    if (isFromMicroToCallStack || isFromMacroToCallStack) this.updateTutorial('callStack', tutorial);
+    if (!isFromMicroToCallStack && !isFromMacroToCallStack) this.updateTutorial('end', tutorial);
   }
 
   updateSchedule() {
