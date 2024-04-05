@@ -1,6 +1,6 @@
 import { ComponentBox, Observable } from "./ComponentBox";
 
-describe('Observable 단위 테스트', () => {
+describe("Observable 단위 테스트", () => {
   let observable;
   let mockObserver;
 
@@ -10,7 +10,7 @@ describe('Observable 단위 테스트', () => {
     mockObserver = jest.fn();
   });
 
-  test('subscribe로 _observers에 mockObserver 추가', () => {
+  test("subscribe로 _observers에 mockObserver 추가", () => {
     // when
     observable.subscribe(mockObserver);
     const result = observable._observers.has(mockObserver);
@@ -19,7 +19,7 @@ describe('Observable 단위 테스트', () => {
     expect(result).toBe(true);
   });
 
-  test('unsubscribe로 _observers에 추가된 observer를 제거', () => {
+  test("unsubscribe로 _observers에 추가된 observer를 제거", () => {
     // when
     observable.subscribe(mockObserver);
     observable.unsubscribe(mockObserver);
@@ -29,10 +29,10 @@ describe('Observable 단위 테스트', () => {
     expect(result).toBe(false);
   });
 
-  test('notify로 테스트 데이터가 모든 옵저버에 추가되어 호출', () => {
-    // given 
+  test("notify로 테스트 데이터가 모든 옵저버에 추가되어 호출", () => {
+    // given
     const anotherMockObserver = jest.fn();
-    const testData = { data: 'test' };
+    const testData = { data: "test" };
 
     // when
     observable.subscribe(mockObserver);
@@ -45,9 +45,9 @@ describe('Observable 단위 테스트', () => {
   });
 });
 
-describe('ComponentBox 단위 테스트', () => {
+describe("ComponentBox 단위 테스트", () => {
   let componentBox;
-  const className = 'test-class';
+  const className = "test-class";
   const mockObserver = jest.fn();
 
   beforeEach(() => {
@@ -56,9 +56,9 @@ describe('ComponentBox 단위 테스트', () => {
     mockObserver.mockClear();
   });
 
-  test('초기화를 할 시에 알맞은 className를 초기화', () => {
+  test("초기화를 할 시에 알맞은 className를 초기화", () => {
     // given in beforeEach()
-    
+
     // when
     const classNameResult = componentBox.getClassName();
 
@@ -66,19 +66,37 @@ describe('ComponentBox 단위 테스트', () => {
     expect(classNameResult).toBe(className);
   });
 
-  test('setComponents가 components를 업데이트하고, 구독한 옵저버에게 notify를 전송', () => {
+  test("pushComponents가 components를 업데이트하고, 구독한 옵저버에게 notify를 전송", () => {
     // given additionally after beforeEach()
-    const newComponents = ['component1', 'component2'];
+    const newComponents = ["component1", "component2"];
 
     // when
-    componentBox.setComponents(newComponents);
+    newComponents.forEach((component) => componentBox.pushComponent(component));
     const componentsResult = componentBox.getComponents();
 
     // then
     expect(componentsResult).toEqual(newComponents);
     expect(mockObserver).toHaveBeenCalledWith({
       className: className,
-      contents: newComponents.map(component => component.toString()),
+      contents: newComponents.map((component) => component.toString()),
     });
+  });
+
+  test("unshiftComponent가 components의 첫번째 엘리먼트를 삭제하고, 1초 후 구독한 옵저버에게 notify를 전송한 후 삭제한 요소를 반환", () => {
+    // given additionally after beforeEach()
+    const newComponents = ["component1", "component2"];
+
+    // when
+    newComponents.forEach((component) => componentBox.pushComponent(component));
+    const componentResult = componentBox.unshiftComponent();
+
+    // then
+    expect(componentResult).toEqual(newComponents[0]);
+    setTimeout(() => {
+      expect(mockObserver).toHaveBeenCalledWith({
+        className: className,
+        contents: newComponents[1],
+      });
+    }, 1000);
   });
 });

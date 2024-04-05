@@ -1,5 +1,5 @@
 const SIMPLE_ARROW_REGEX = /=>\s*[^{]+/;
-const BLOCK_ARROW_REGEX = /=>\s*{[^{}]*}/;
+const BLOCK_ARROW_REGEX = /=>\s*{[\s\S]+}/;
 const GENERAL_ANONYM_REGEX = /function\(\)\s*{[^{}]*}/g;
 
 export const MICRO_TASK_PROTOTYPES = {
@@ -31,28 +31,34 @@ export const replaceCallbackBody = (codeText) => {
 };
 
 export class Callback {
-  constructor(codeBlock, calleeName) {
-    this.codeBlock = codeBlock;
+  constructor(code, calleeName) {
+    this.code = code;
     this.calleeName = calleeName;
   }
 
   getCalleeName() {
     return this.calleeName;
   }
+
+  getTaskType() {
+    throw new Error("Callback 클래스에서는 Task Type을 알 수 없습니다.");
+  }
+
+  toString() {
+    const prototypeName = this.getTaskType()[this.calleeName];
+
+    return `<pre>${prototypeName}.${this.calleeName} : ${replaceCallbackBody(this.code)}</pre>`;
+  }
 }
 
 export class Microtask extends Callback {
-  toString() {
-    const prototypeName = MICRO_TASK_PROTOTYPES[this.calleeName];
-
-    return `<pre>${prototypeName}.${this.calleeName} : ${replaceCallbackBody(this.codeBlock)}</pre>`;
+  getTaskType() {
+    return MICRO_TASK_PROTOTYPES;
   }
 }
 
 export class Macrotask extends Callback {
-  toString() {
-    const prototypeName = MACRO_TASK_PROTOTYPES[this.calleeName];
-
-    return `<pre>${prototypeName}.${this.calleeName} : ${replaceCallbackBody(this.codeBlock)}</pre>`;
+  getTaskType() {
+    return MACRO_TASK_PROTOTYPES;
   }
 }

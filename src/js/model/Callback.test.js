@@ -20,7 +20,7 @@ describe("replaceCallbackBody 단위 테스트", () => {
     "",
     null,
     undefined
-  ])("콜백 함수를 인식하지 못할시 입력 값 그대로 반환", (input) => {
+  ])("콜백 함수를 인식하지 못할시 에러를 반환", (input) => {
     // given input
 
     // when & then
@@ -44,7 +44,7 @@ describe("Callback 클래스 단위 테스트", () => {
 });
 
 describe("Microtask 클래스 단위 테스트", () => {
-  test("toString이 올바른 문자열을 반환하는지 확인", () => {
+  test("toString이 <pre> 태그 형태에 calleeName, codeBlock을 담은 문자열을 반환하는지 확인", () => {
     // given
     const codeBlock = "x => x";
     const calleeName = "then";
