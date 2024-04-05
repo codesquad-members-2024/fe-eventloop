@@ -13,13 +13,12 @@ const AST = {
 		}
 	},
 	findCallExpressions({ body }) {
-		const callExpressions = [];
-		body.forEach((exp) => {
+		const callExpressions = body.map((exp) => {
 			const calleeNames = [];
 			this.getCalleeName(exp.expression, calleeNames);
-			callExpressions.push(...calleeNames.reverse());
+			return calleeNames.reverse();
 		});
-		return callExpressions;
+		return callExpressions.flat();
 	},
 };
 
