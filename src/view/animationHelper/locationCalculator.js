@@ -1,7 +1,7 @@
 const LocationCalculator = {
     positionMap: {
         "call-stack-container": { x: 0, y: 0 },
-        "wep-Api-container": { x: 0, y: 0 },
+        "web-Api-container": { x: 0, y: 0 },
         "microtask-container": { x: 0, y: 0 },
         "macrotask-container": { x: 0, y: 0 },
     },
@@ -15,13 +15,12 @@ const LocationCalculator = {
     },
 
     getLocation(drawPosition) {
-        return this.getPosition(drawPosition, 135, 100);
+        return this.getPosition(drawPosition, 180, 100);
     },
 
     getQueueLocation(drawPosition) {
         return this.getPosition(drawPosition, 100, 50);
     },
 };
-
 
 export default LocationCalculator;

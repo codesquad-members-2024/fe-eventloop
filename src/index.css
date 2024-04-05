@@ -6,9 +6,6 @@ body {
     height: 750px;
 }
 
-* {
-    outline: 1px solid pink;
-}
 .code-input {
     display: block;
     width: 350px;
@@ -33,7 +30,7 @@ body {
     margin: 10px auto;
 }
 
-.stack-and-wepApi-view,
+.stack-and-webApi-view,
 .eventLoop-and-queue-view {
     width: 900px;
     height: 50%;
@@ -43,22 +40,22 @@ body {
 }
 
 .call-stack-view,
-.wep-Api-view {
+.web-Api-view {
     width: 50%;
     height: 80%;
     text-align: center;
 }
 
 .call-stack-container,
-.wep-Api-container {
+.web-Api-container {
     border-radius: 10px;
     border: 2px solid #55b730;
     width: 80%;
-    height: 80%;
-    margin: 7px auto 0;
+    height: 90%;
+    margin: auto;
 }
 
-.wep-Api-container {
+.web-Api-container {
     border: 2px solid rgb(207, 206, 206);
 }
 
@@ -76,6 +73,10 @@ body {
     width: 30%;
     height: 90%;
     text-align: center;
+    img {
+        height: 130px;
+        margin: 45px 0px;
+    }
 }
 
 .queue-view {
@@ -83,7 +84,7 @@ body {
     width: 50%;
     height: 100%;
     flex-direction: column;
-    justify-content: center;    
+    justify-content: center;
     align-items: center;
 }
 
@@ -98,7 +99,7 @@ body {
 .macrotask-container {
     border-radius: 10px;
     border: 2px solid #c4730c;
-    height: 60%;
+    height: 70%;
     margin: 0 auto;
 }
 
@@ -125,4 +126,14 @@ body {
     transform: translateY(0px);
     /* opacity: 1;
     transition: opacity 2s ease-in-out; */
+}
+
+.active {
+    animation: rotate_image 2s linear ;
+}
+
+@keyframes rotate_image {
+    100% {
+        transform: rotate(1turn);
+    }
 }

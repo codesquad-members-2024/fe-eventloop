@@ -23,7 +23,7 @@ const CallStackManager = {
         const isNotCallBack = !this.isCallBack(curExecutionContext);
         if (isNotCallBack) return;
         const asynchronousFunc = this.callStack.pop();
-        WebAPIkManager.pushToWepApi(asynchronousFunc);
+        WebAPIkManager.pushToWebApi(asynchronousFunc);
     },
 
     async createCallStackHTML(context) {
