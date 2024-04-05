@@ -8,6 +8,7 @@ const DELAY_TIME = 2700
 const createParseCode = () => {
     const userCode = document.getElementById(textId).value;
     const parseCode = acorn.parse(userCode, { sourceType: "module" });
+    document.getElementById(textId).value = null;
     return [parseCode, userCode];
 };
 
@@ -42,14 +43,15 @@ const processQueueNode = async (queueNode, fromQueue, toQueue, memory) => {
 };
 
 const eventLoop = async (memory) => {
+    const { microQClassName, macroQClassName, callStackClassName } = selectorsMap;  
     while (!memory.isEmpty(selectorsMap.microQClassName)) {
         const queueNode = memory.getCallBack(selectorsMap.microQClassName);
         await addQueueAnimation(selectorsMap.microQClassName)
-        await processQueueNode(queueNode, selectorsMap.microQClassName, selectorsMap.callStackClassName, memory);
+        await processQueueNode(queueNode, microQClassName, callStackClassName, memory);  
     }
     const queueNode = memory.getCallBack(selectorsMap.macroQClassName);
     await addQueueAnimation(selectorsMap.macroQClassName)
-    await processQueueNode(queueNode, selectorsMap.macroQClassName, selectorsMap.callStackClassName, memory);
+    await processQueueNode(queueNode, macroQClassName, callStackClassName, memory);  
 };
 
 

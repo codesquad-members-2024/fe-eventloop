@@ -1,5 +1,4 @@
-import { FIRST_IDX, delay } from "../util/constants.js";
-import { selectorsMap } from "../util/constants.js";
+import { FIRST_IDX, delay, LOOP_ANI_DELAY } from "../util/constants.js";
 
 const removeMatchingElement = (callBack, className, memory) => {
     const callStackTarget = document.querySelector(className);
@@ -21,7 +20,7 @@ const createAnimationDivMarkup = (callBack, className, fromQueue) => {
     return newHTML;
 };
 
-const appendTag = async(callBack, className, memory, fromQueue) => {
+const appendTag = (callBack, className, memory, fromQueue) => {
     const TargetAppend = document.querySelector(className);
     const animationDivHtml = createAnimationDivMarkup(callBack, className, fromQueue);
     TargetAppend.insertAdjacentHTML("beforeend", animationDivHtml); 
@@ -31,7 +30,7 @@ const appendTag = async(callBack, className, memory, fromQueue) => {
 const runLoop = async() => {
     const loopNode = document.querySelector(".animation__event_loop_icon")
     loopNode.classList.add("spinAnimation")
-    await delay(1000)
+    await delay(LOOP_ANI_DELAY)
     loopNode.classList.remove("spinAnimation")
 
 }

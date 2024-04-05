@@ -39,7 +39,7 @@
 4. 애니메이션 변경
  - [X] html을 만들어 박스에 넣고 빼는 방식은 동일하게 진행하되, keyframe으로 애니메이션 효과 추가
  - [X] keyframe 이름을 지정해 class를 빼고 넣는 방식으로 애니메이션
-
+ - 
 ## 코드 구성도
 ![KakaoTalk_Photo_2024-04-02-10-16-39](https://github.com/minjeongHEO/fe-eventloop/assets/126482821/a557f55c-e5e3-4705-9ff2-aa0671057279)
 ![KakaoTalk_Photo_2024-04-02-10-16-32](https://github.com/minjeongHEO/fe-eventloop/assets/126482821/17544d77-4de0-47f4-a1e1-92b5b1c027ed)

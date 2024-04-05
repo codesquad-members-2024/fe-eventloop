@@ -3,8 +3,9 @@ import {removeMatchingElement, createAnimationDivMarkup, appendTag} from "./comp
 
 test("Html을 반환하는지 확인", () => {
     const callbackTest = { callBackCode: "test" };
-    const expectedHtml = `<div class="animation__stuff">test</div>`;
-    expect(createAnimationDivMarkup(callbackTest)).toBe(expectedHtml);
+    const className = ".animation__call_stack_box";
+    const expectedHtml = `<div class="animation__stuff callStack">test</div>`;
+    expect(createAnimationDivMarkup(callbackTest, className)).toBe(expectedHtml);
 });
 
 describe("appendTag, removeMatchingElement함수 테스트", () => {
@@ -19,6 +20,7 @@ describe("appendTag, removeMatchingElement함수 테스트", () => {
     const callBack = { callBackCode: "Callback 2" };
     const className = ".animation__call_stack_box";
     const memoryMock = { updateStatusByClassName: jest.fn() };
+
     test("removeMatchingElement 함수가 요소를 제거하는지 확인", () => {
         removeMatchingElement(callBack, className, memoryMock);
 
