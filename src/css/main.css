@@ -11,19 +11,22 @@
   --neon-pink: rgb(246, 77, 105);
 }
 
+html {
+  overflow: hidden;
+}
+
 grey main {
   margin-top: 50px;
 }
 
 #wrap {
   width: 900px;
-  /* height: 1000px; */
-  margin-left: 50px;
+  margin: 0 auto;
 }
 .main__input_code__container {
   margin-top: 10px;
   width: 100%;
-  height: 300px;
+  height: 200px;
 }
 .input_code__text {
   font-size: 1.8em;
@@ -34,7 +37,7 @@ grey main {
 #code-form {
   display: flex;
   flex-direction: column;
-  height: 80%;
+  height: 90%;
 }
 
 #code-input {
@@ -55,7 +58,6 @@ grey main {
 
 .box_name {
   font-size: 1.4em;
-  /* font-weight: bold; */
   font-weight: 600;
   color: var(--default-white-color);
   text-align: center;
@@ -67,49 +69,54 @@ grey main {
 
 .animation__call_stack_name {
   width: 200px;
+  margin: 0 auto;
 }
 
 .animation__call_stack_box {
   margin-top: 10px;
   display: flex;
-  /* flex-direction: column; */
-  /* justify-content: flex-end; */
   flex-direction: column-reverse;
-  justify-content: flex-start;
   align-items: center;
   gap: 10px;
-  width: 200px;
+  width: 240px;
   height: 200px;
   border: double 8px;
   border-color: var(--neon-green);
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.5);
   border-radius: 10px;
+  overflow: hidden;
 }
 
 .animation__stuff {
-  margin-bottom: 10px;
   min-width: 100px;
-  height: 30px;
-  /* min-height: 30px; */
-  align-content: center;
-  text-align: center;
+  width: 160px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: var(--neon-pink);
   border: solid 1px;
   border-color: var(--default-white-color);
   border-radius: 10px;
+  padding: 5px;
 }
 
 .animation__web_api_box {
   margin-top: 10px;
   display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
   width: 400px;
-  height: 75%;
-  flex-wrap: wrap;
+  height: 77%;
   gap: 5px;
   padding: 5px;
   border: double 8px;
   border-color: var(--neon-sky);
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.5);
   border-radius: 10px;
+  overflow: hidden;
 }
+
 
 .animation__arrow {
   font-size: 3em;
@@ -119,15 +126,17 @@ grey main {
 
 .main__animation__element {
   display: flex;
+  justify-content: space-evenly;
   gap: 10px;
 }
 
 .animation__event_loop_box {
-  margin-top: 10px;
-  width: 80px;
-  height: 200px;
+  margin-top: 20px;
+  width: 120px;
+  height: 252px;
   border: solid 3px;
   border-color: var(--neon-blue);
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.5);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -140,25 +149,38 @@ grey main {
     font-weight: bold;
   }
   & .animation__event_loop_icon {
-    font-size: 2.5em;
-    animation: spin 2s linear infinite;
+    width: 50px;
+    height: 50px;
   }
 }
 
+.spinAnimation {
+  animation: spin 2s linear forwards;
+}
+
 .Qbox {
-  width: 400px;
-  height: 70px;
+  width: 540px;
+  height: 100px;
   border: double 8px;
   border-radius: 10px;
 }
 .animation__micro_task_box {
   border-color: var(--neon-orange);
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
 }
 .animation__macro_task_box {
   border-color: var(--neon-yellow);
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
 }
 .flex_row {
   display: flex;
+  justify-content: space-evenly;
   gap: 10px;
 }
 .animation__queue_box {
@@ -174,3 +196,124 @@ grey main {
     transform: rotate(-360deg);
   }
 }
+
+.callStack {
+  animation: call 3s ease-in-out forwards;
+  position: relative;
+}
+
+@keyframes call {
+  0% {
+    transform: translateY(-300%);
+    opacity: 0;
+  }
+  20% {
+    transform: translateY(20%);
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(-20%);
+  }
+  60% {
+    transform: translateY(0%);
+  }
+  70% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+.webAPI {
+  animation: web 2.5s ease-out forwards;
+  position: relative;
+}
+
+@keyframes web {
+  0% {
+    transform: translateX(-170%);
+  }
+  40% {
+    transform: translateX(0%);
+  }  
+  70% {
+    transform: translateX(0%);
+  }  
+  100% {
+    transform: translateX(170%);
+  }  
+}
+
+.micro {
+  animation: microTask 2.5s ease-in-out;
+}
+
+@keyframes microTask {
+  0% {
+    transform: translateX(500%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+.macro {
+  animation: macroTask 2s ease-in-out;
+}
+
+@keyframes macroTask {
+  0% {
+    transform: translateX(350%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.queue-move {
+  animation: leftMove 1s ease-in-out;
+}
+
+@keyframes leftMove {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.eventLoop {
+  animation: moveUp 3s ease-in-out forwards;
+  position: relative;
+}
+
+@keyframes moveUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  20% {
+    transform: translateY(-10%);
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(10%);
+  }
+  60% {
+    transform: translateY(0%);
+  }
+  70% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-300%);
+  }
+}
+
+
+
+
+
+
+

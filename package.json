@@ -4,7 +4,9 @@
   "description": "[ ] form 태그로 입력한 코드 데이터 보내는 작업하기  \r [ ] 받은 코드 데이터를 파싱하기",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "coverage": "jest --coverage"
+    
   },
   "repository": {
     "type": "git",
@@ -13,8 +15,18 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/codesquad-members-2024/fe-eventloop/issues"
   },
-  "homepage": "https://github.com/codesquad-members-2024/fe-eventloop#readme"
+  "homepage": "https://github.com/codesquad-members-2024/fe-eventloop#readme",
+  "devDependencies": {
+    "@babel/core": "^7.24.4",
+    "@babel/preset-env": "^7.24.4",
+    "babel-jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "jest":{
+    "testEnvironment": "jsdom"
+}
 }
