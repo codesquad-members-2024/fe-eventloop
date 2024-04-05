@@ -13,10 +13,10 @@ const createAnimationStep = (element, transformFunction) => {
   const step = (timestamp) => {
     if (!start) start = timestamp;
     const progress = (timestamp - start) / ANIMATION_DURATION;
-    
+
     transformFunction(element, progress);
     requestAnimationFrame(step);
-  }
+  };
   return step;
 };
 
@@ -37,9 +37,9 @@ const slideInOutTransform = (element, progress) => {
     element.style.transform = `translateY(0)`;
   }
   if (progress < PROGRESS_THRESHOLD) {
-    element.style.transform = `translateY(${(- PROGRESS_THRESHOLD + progress) * MAX_TRANSLATE_DISTANCE}px)`;
+    element.style.transform = `translateY(${(-PROGRESS_THRESHOLD + progress) * MAX_TRANSLATE_DISTANCE}px)`;
   }
-}
+};
 
 const pushTopInTransform = (element, progress) => {
   if (progress > PROGRESS_THRESHOLD) {
@@ -47,44 +47,44 @@ const pushTopInTransform = (element, progress) => {
     return;
   }
 
-  element.style.transform = `translateY(${(- PROGRESS_THRESHOLD + progress) * MAX_TRANSLATE_DISTANCE}px)`;
+  element.style.transform = `translateY(${(-PROGRESS_THRESHOLD + progress) * MAX_TRANSLATE_DISTANCE}px)`;
 };
 
 const pushLeftInTransform = (element, progress) => {
-  if (progress > PROGRESS_THRESHOLD) {
-    element.style.transform = `translateX(0)`;
-    return;
-  }
+  if (progress > PROGRESS_THRESHOLD) return;
 
   element.style.transform = `translateX(${(PROGRESS_THRESHOLD - progress) * MAX_TRANSLATE_DISTANCE}px)`;
 };
 
 const moveDownTransform = (element, progress) => {
-  if (progress > PROGRESS_THRESHOLD) return;
+  if (progress > PROGRESS_THRESHOLD) {
+    element.style.transform = `translateY(${MAX_MOVE_DOWN_DISTANCE}px)`;
+    return;
+  }
 
-  element.style.transform = `translateY(${progress / PROGRESS_THRESHOLD * MAX_MOVE_DOWN_DISTANCE}px)`;
+  element.style.transform = `translateY(${(progress / PROGRESS_THRESHOLD) * MAX_MOVE_DOWN_DISTANCE}px)`;
 };
 
 const moveLeftOutTransform = (element, progress) => {
   if (progress > PROGRESS_THRESHOLD) return;
 
-  element.style.transform = `translateX(${-progress / PROGRESS_THRESHOLD * MAX_TRANSLATE_DISTANCE}px)`;
+  element.style.transform = `translateX(${(-progress / PROGRESS_THRESHOLD) * MAX_TRANSLATE_DISTANCE}px)`;
 };
 
 const moveRightOutTransform = (element, progress) => {
   if (progress > PROGRESS_THRESHOLD) return;
 
-  element.style.transform = `translateX(${progress / PROGRESS_THRESHOLD * MAX_TRANSLATE_DISTANCE}px)`;
+  element.style.transform = `translateX(${(progress / PROGRESS_THRESHOLD) * MAX_TRANSLATE_DISTANCE}px)`;
 };
 
 export const animateRoate = (element) => {
   animateElement(element, rotateTransform);
-}
+};
 
 export const animateSlideInOut = (className) => {
   const box = COMPONENT_BOX[className];
   animateElement(box.firstElementChild, slideInOutTransform);
-}
+};
 
 export const animatePushTopIn = (className) => {
   const box = COMPONENT_BOX[className];
