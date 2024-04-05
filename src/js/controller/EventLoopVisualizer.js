@@ -17,12 +17,12 @@ const MAX_LENGTH = {
   MACRO_TASK: 3,
   TUTORIAL: 0,
 };
-
 const TUTORIAL_DESCRIPTION = {
   then: 'then의 callback이 [Microtask Queue]에 등록됩니다.',
   catch: 'catch의 callback이 [Microtask Queue]에 등록됩니다.',
   setTimeout: 'setTimeout의 callback이 [Macrotask Queue]에 등록됩니다.',
   callStack: '[Queue]에 있던 callback이 [CallStack]에 등록되어 실행됩니다.',
+  webAPIs: '입력한 코드의 callback이 [WebAPI]에 등록됩니다.',
 };
 
 const ANIMATION_DELAY = 500;
@@ -85,7 +85,6 @@ export default class EventLoopVisualizer {
   initializeSubscribes() {
     const componentBoxList = Object.values(this.componentBox);
 
-    //1. 생성한 객체들 돌면서 subscribe키에 updateComponents()함수 값 설정
     componentBoxList.forEach((box) => box.subscribe(updateComponentsOfView));
   }
 
@@ -102,8 +101,10 @@ export default class EventLoopVisualizer {
       if (isMacrotask(callback)) return new Macrotask(callback.node, callback.calleeName, index);
     });
 
-    this.componentBox.webApis.setComponents(this.callbacks);
+    const tutorialObj = { className: 'tutorial', contents: this.componentBox.tutorial.components.webAPIs };
+    updateComponentsOfView(tutorialObj);
 
+    this.componentBox.webApis.setComponents(this.callbacks);
     startAnimation();
     reverseGridComponents(CLASS_NAME.WEB_APIS);
     this.updateSchedule();
@@ -112,27 +113,26 @@ export default class EventLoopVisualizer {
   updateComponents() {
     const { callStack, webApis, microTasks, macroTasks, tutorial } = this.componentBox;
     const firstComponent = webApis.getComponents()[FIRST_INDEX];
-    this.updateTutorial(tutorial, firstComponent);
 
-    // 웹API -> 큐
     const isMicro = firstComponent && firstComponent instanceof Microtask && transferFirstComponent(webApis, microTasks);
-    if (isMicro) return;
-    const isMacro = firstComponent && firstComponent instanceof Microtask && transferFirstComponent(webApis, macroTasks);
-    if (isMacro) return;
-
-    // 큐 -> 콜스택
-    const isFromMicroToCallStack = transferFirstComponent(microTasks, callStack);
-    const isFromMacroToCallStack = transferFirstComponent(macroTasks, callStack);
-    if (isFromMicroToCallStack || isFromMacroToCallStack) return;
-  }
-
-  updateTutorial(tutorial, firstComponent) {
-    const tutorialTarget = document.querySelector('.tutorial__component-content');
-    if (firstComponent) {
-      tutorialTarget.innerHTML = tutorial.components[firstComponent.calleeName];
+    if (isMicro) {
+      const tutorialObj = { className: 'tutorial', contents: tutorial.components[firstComponent.calleeName] };
+      updateComponentsOfView(tutorialObj);
       return;
     }
-    tutorialTarget.innerHTML = tutorial.components.callStack;
+    const isMacro = firstComponent && firstComponent instanceof Microtask && transferFirstComponent(webApis, macroTasks);
+    if (isMacro) {
+      const tutorialObj = { className: 'tutorial', contents: tutorial.components[firstComponent.calleeName] };
+      updateComponentsOfView(tutorialObj);
+      return;
+    }
+
+    const isFromMicroToCallStack = transferFirstComponent(microTasks, callStack);
+    const isFromMacroToCallStack = transferFirstComponent(macroTasks, callStack);
+    if (isFromMicroToCallStack || isFromMacroToCallStack) {
+      const tutorialObj = { className: 'tutorial', contents: tutorial.components.callStack };
+      updateComponentsOfView(tutorialObj);
+    }
   }
 
   updateSchedule() {
