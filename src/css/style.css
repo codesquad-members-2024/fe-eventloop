@@ -20,23 +20,35 @@ pre {
   border: 3px double #9acd32;
 }
 
-.call-stack-box {
-  width: 200px;
-  height: 300px;
-  margin-bottom: 50px;
-  padding: 10px;
-
+.flex {
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.column-reverse {
+  flex-direction: column-reverse;
+}
+
+.overflow-hidden {
   overflow: hidden;
+}
+
+.position-relative {
   position: relative;
 }
 
-.call-stack-wrap {
-  display: flex;
-  flex-direction: column;
+.items-center {
   align-items: center;
+}
+
+.call-stack-box {
+  width: 280px;
+  height: 300px;
+  margin-bottom: 50px;
+  padding: 10px;
 }
 
 .event-loop {
@@ -46,24 +58,13 @@ pre {
 }
 
 .event-loop-wrap {
-  display: flex;
   justify-content: space-between;
-}
-
-.web-api-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .web-api-box {
   height: 200px;
   width: 400px;
   padding: 10px;
-  position: relative;
-  display: flex;
-  flex-direction: column-reverse;
-  overflow: hidden;
 }
 
 .microtask-box,
@@ -71,7 +72,4 @@ pre {
   width: 400px;
   height: 100px;
   padding: 10px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column-reverse;
 }
