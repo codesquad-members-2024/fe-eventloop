@@ -26,7 +26,7 @@ const animateElement = (element, transformFunction) => {
 };
 
 const rotateTransform = (element, progress) => {
-  element.style.transform = `rotate(${progress * FULL_ROTATION_DEGREES}deg)`;
+  element.style.transform = `rotate(${progress * FULL_ROTATION_DEGREES % FULL_ROTATION_DEGREES}deg)`;
 };
 
 const slideInOutTransform = (element, progress) => {
