@@ -1,15 +1,17 @@
-import { ANIMATION } from "../utils/Constants.js";
+import { ANIMATION } from '../utils/Constants.js';
 
 class Memory {
-	block;
-
-	constructor(code, className) {
-		this.block = `<span class="code-box ${className}">${code}</span>`;
+	elementHTML;
+	constructor(code, className, targetQueue) {
+		this.elementHTML = `<span class="code-box ${className}">${code}</span>`;
+		this.targetQueue = targetQueue;
 	}
-
-	push(element) {
-		element.innerHTML = this.block;
-		return new Promise((resolve) => setTimeout(() => resolve(), ANIMATION.delay));
+	stateManager() {}
+	push(parentElement) {
+		parentElement.innerHTML = this.elementHTML;
+		return new Promise((resolve) => {
+			setTimeout(() => resolve(), ANIMATION.delay);
+		});
 	}
 }
 
