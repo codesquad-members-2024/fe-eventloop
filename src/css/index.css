@@ -73,6 +73,7 @@ main {
   line-height: 1.5;
   text-align: left;
   resize: none;
+  height: 600px;
 }
 .input-code:hover,
 .input-code:focus {
@@ -117,6 +118,7 @@ main {
 .call-stack .neon .task {
   animation: fadeIn 1s;
   margin-top: 10px;
+  max-width: 140px;
 }
 .call-stack .neon .task:last-child {
   margin-top: 0;
@@ -163,6 +165,7 @@ main {
   border-color: #fe9d00;
   box-shadow: 0 0 10px #fe9d00;
   gap: 10px;
+  min-height: 100px;
 }
 .macrotask .task {
   max-width: 150px;
@@ -173,7 +176,7 @@ main {
 }
 
 .macrotask .to-callstack {
-  animation: slideToEventloop 1s ease-in-out;
+  animation: fromMacroQueue 1s ease-in-out;
 }
 
 .microtask .neon {
@@ -181,6 +184,7 @@ main {
   border-color: #ffdb4e;
   box-shadow: 0 0 10px #ffdb4e;
   gap: 10px;
+  min-height: 100px;
 }
 
 .microtask .task {
@@ -192,7 +196,7 @@ main {
 }
 
 .microtask .to-callstack {
-  animation: slideToEventloop 1s ease-in-out;
+  animation: fromMicroQueue 1s ease-in-out;
   max-width: 150px;
 }
 
@@ -267,7 +271,7 @@ main {
   }
 }
 
-@keyframes slideToEventloop {
+@keyframes fromMicroQueue {
   0% {
     position: absolute;
     left: 0px;
@@ -281,8 +285,28 @@ main {
   }
   100% {
     position: absolute;
-    left: -150px;
+    left: -120px;
     top: -200px;
+    opacity: 1;
+  }
+}
+
+@keyframes fromMacroQueue {
+  0% {
+    position: absolute;
+    left: 0px;
+    top: 30px;
+    opacity: 0;
+  }
+  50% {
+    position: absolute;
+    left: -150px;
+    top: 10px;
+  }
+  100% {
+    position: absolute;
+    left: -120px;
+    top: -400px;
     opacity: 1;
   }
 }
