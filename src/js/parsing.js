@@ -1,6 +1,5 @@
 import * as acorn from 'acorn';
 import * as acornWalk from 'acorn-walk';
-import { millisecondToSecond } from './util.js';
 import { microTaskApis, macroTaskApis, promiseMethods } from './taskModel.js';
 
 export function parseCode(code) {
@@ -50,7 +49,7 @@ export function parseCode(code) {
 
         tasks.push({
           functionName,
-          arguments: argumentsDetail,
+          callback: argumentsDetail,
           type: taskType,
         });
       }

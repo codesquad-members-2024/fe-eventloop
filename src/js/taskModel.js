@@ -21,8 +21,8 @@ export class CallStack {
     this.observers.forEach((observer) => observer.update(this.stack));
   }
 
-  notifyRemoveObservers() {
-    this.removeObservers.forEach((observer) => observer.update(this.stack));
+  notifyRemoveObservers(removedStack) {
+    this.removeObservers.forEach((observer) => observer.update(removedStack));
   }
   addTask(task) {
     this.stack.push(task);
@@ -45,9 +45,13 @@ export class WebAPI extends CallStack {
     this.notifyObservers();
   }
 
-  removeTask() {
-    this.stack.shift();
-    this.notifyRemoveObservers();
+  removeTask(task) {
+    const targetTask = task.callback[0];
+    const targetIndex = this.stack.findIndex(
+      (item) => item.callback[0] === targetTask,
+    );
+    this.stack.splice(targetIndex, 1);
+    this.notifyRemoveObservers(this.stack);
   }
 }
 
@@ -62,8 +66,8 @@ export class MicroTaskQueue extends CallStack {
   }
 
   removeTask() {
-    const task = this.stack.pop();
-    this.notifyObservers();
+    const task = this.stack.shift();
+    this.notifyRemoveObservers(this.stack);
     return task;
   }
 }
@@ -79,8 +83,8 @@ export class MacroTaskQueue extends CallStack {
   }
 
   removeTask() {
-    const task = this.stack.pop();
-    this.notifyObservers();
+    const task = this.stack.shift();
+    this.notifyRemoveObservers(this.stack);
     return task;
   }
 }

@@ -1,47 +1,48 @@
-export function CallStackObserver(elementId) {
+export function CallStackViewer(elementId) {
   this.callStackElement = document.getElementById(elementId);
-
-  this.update = function (callStack) {
-    if (callStack.length === 0) {
-      this.callStackElement.innerHTML = '';
-    } else {
-      const currentCall = callStack[callStack.length - 1];
-      this.callStackElement.innerHTML = `<div class="task">${currentCall}</div>`;
-    }
-  };
 }
 
-export function CallbackObserver(elementId, animation) {
-  this.boxEl = document.getElementById(elementId);
+CallStackViewer.prototype.update = function (callStack) {
+  if (callStack.length === 0) {
+    this.callStackElement.innerHTML = '';
+  } else {
+    const currentCall = callStack[callStack.length - 1];
+    this.callStackElement.innerHTML = `<div class="task">${currentCall}</div>`;
+  }
+};
 
-  this.update = function (tasks) {
-    // const currentCall = webAPIStack[webAPIStack.length - 1];
-    // const callbackBox = document.createElement('div');
-    // callbackBox.classList.add('task', animation);
-    // callbackBox.innerText = currentCall.arguments;
-    // this.webAPIEl.appendChild(callbackBox);
-    const html = tasks
-      .map((task, index) => {
-        const animationClass = index === tasks.length - 1 ? animation : '';
-        return `<div class="task ${animationClass}">${task.arguments}</div>`;
-      })
-      .join('');
-    this.boxEl.innerHTML = html;
-  };
+export function CallbackAdder(elementId, animation) {
+  this.boxEl = document.getElementById(elementId);
+  this.animation = animation;
 }
 
-export function RemoveCallback(elementId) {
-  this.boxEl = document.getElementById(elementId);
+CallbackAdder.prototype.update = function (tasks) {
+  const html = tasks
+    .map((task, index) => {
+      const animationClass = index === tasks.length - 1 ? this.animation : '';
+      return `<div class="task ${animationClass}">${task.callback}</div>`;
+    })
+    .join('');
+  this.boxEl.innerHTML = html;
+};
 
-  this.update = function (tasks) {
-    if (tasks.length === 0) {
-      this.boxEl.innerHTML = '';
-    } else {
-      console.log(tasks);
-      const html = tasks
-        .map((task) => `<div class="task">${task.arguments}</div>`)
-        .join('');
-      this.boxEl.innerHTML = html;
-    }
-  };
+export function CallbackRemover(elementId) {
+  this.boxEl = document.getElementById(elementId);
+}
+
+CallbackRemover.prototype.update = function (tasks) {
+  const html = tasks
+    .map((task) => `<div class="task">${task.callback}</div>`)
+    .join('');
+  this.boxEl.innerHTML = html;
+};
+
+export function animateQueueToCallstack(tasks, i, elementId, animationClass) {
+  const box = document.getElementById(elementId);
+  const movedTask = `<div class="task ${animationClass}">${tasks[i].callback}</div>`;
+  const restOfTask = tasks
+    .slice(i + 1, tasks.length)
+    .map((task) => `<div class="task">${task.callback}</div>`)
+    .join('');
+  box.innerHTML = movedTask + restOfTask;
 }
