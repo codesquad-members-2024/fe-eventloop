@@ -1,6 +1,7 @@
 import { updateGridComponents } from './GridView.js';
 import { updateQueueComponents } from './QueueView.js';
 import { updateStackComponents } from './StackView.js';
+import { updateTutorialComponents } from './TutorialView.js';
 
 const INPUT_TITLE = '코드 입력';
 const INPUT_PLACEHOLDER = '여기에 비동기 콜백이 포함된 코드를 입력하세요.';
@@ -11,6 +12,7 @@ const RENDER_TYPE = {
   'web-apis': updateGridComponents,
   'microtask-queue': updateQueueComponents,
   'macrotask-queue': updateQueueComponents,
+  'tutorial': updateTutorialComponents,
 };
 
 export const renderContainer = ({ className, content = '' }) => {
@@ -57,7 +59,7 @@ export const renderComponentBox = ({ className, title, content = '' }) => {
   </div>`;
 };
 
-export const updateComponents = ({ className, contents, maxLength }) => {
+export const updateComponentsOfView = ({ className, contents, maxLength }) => {
   const contentsTag = document.querySelector(`.${className}__component-content`);
   const components = RENDER_TYPE[className]({ className, contents, maxLength });
 

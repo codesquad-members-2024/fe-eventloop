@@ -1,13 +1,14 @@
 import { MACRO_TASK_PROTOTYPES, MICRO_TASK_PROTOTYPES, Macrotask, Microtask } from '../model/Callback.js';
 import CodeAnalyzer from '../model/CodeAnalyzer.js';
 import { ComponentBox } from '../model/ComponentBox.js';
-import { reverseGridComponents, updateComponents } from '../view/Component.js';
+import { reverseGridComponents, updateComponentsOfView } from '../view/Component.js';
 
 const CLASS_NAME = {
   CALL_STACK: 'call-stack',
   WEB_APIS: 'web-apis',
   MICRO_TASK: 'microtask-queue',
   MACRO_TASK: 'macrotask-queue',
+  TUTORIAL: 'tutorial',
 };
 const MAX_LENGTH = {
   CALL_STACK: 1,
@@ -15,6 +16,14 @@ const MAX_LENGTH = {
   MICRO_TASK: 3,
   MACRO_TASK: 3,
 };
+const TUTORIAL_DESCRIPTION = {
+  then: 'then의 callback이 [Microtask Queue]에 등록됩니다.',
+  catch: 'catch의 callback이 [Microtask Queue]에 등록됩니다.',
+  setTimeout: 'setTimeout의 callback이 [Macrotask Queue]에 등록됩니다.',
+  callStack: '[Queue]에 있던 callback이 [CallStack]에 등록되어 실행됩니다.',
+  webAPIs: '입력한 코드의 callback이 [WebAPI]에 등록됩니다.',
+};
+
 const ANIMATION_DELAY = 500;
 const ANMIATON_DURATION = 2000;
 const NO_ELEMENTS = 0;
@@ -55,6 +64,7 @@ export default class EventLoopVisualizer {
     this.componentBox.webApis = new ComponentBox(CLASS_NAME.WEB_APIS, MAX_LENGTH.WEB_APIS);
     this.componentBox.microTasks = new ComponentBox(CLASS_NAME.MICRO_TASK, MAX_LENGTH.MICRO_TASK);
     this.componentBox.macroTasks = new ComponentBox(CLASS_NAME.MACRO_TASK, MAX_LENGTH.MACRO_TASK);
+    this.componentBox.tutorial = new ComponentBox(CLASS_NAME.TUTORIAL, MAX_LENGTH.TUTORIAL, TUTORIAL_DESCRIPTION);
     this.codeAnalyzer = new CodeAnalyzer();
     this.initializeEventListener();
     this.initializeSubscribes();
@@ -74,7 +84,7 @@ export default class EventLoopVisualizer {
   initializeSubscribes() {
     const componentBoxList = Object.values(this.componentBox);
 
-    componentBoxList.forEach((box) => box.subscribe(updateComponents));
+    componentBoxList.forEach((box) => box.subscribe(updateComponentsOfView));
   }
 
   setCallbacks(code) {
@@ -90,20 +100,42 @@ export default class EventLoopVisualizer {
       if (isMacrotask(callback)) return new Macrotask(callback.node, callback.calleeName, index);
     });
 
-    this.componentBox.webApis.setComponents(this.callbacks);
+    const tutorialObj = { className: 'tutorial', contents: this.componentBox.tutorial.components.webAPIs };
+    updateComponentsOfView(tutorialObj);
 
+    this.componentBox.webApis.setComponents(this.callbacks);
     startAnimation();
     reverseGridComponents(CLASS_NAME.WEB_APIS);
     this.updateSchedule();
   }
 
+  updateTutorial(type, tutorial, firstComponent) {
+    let contents = '';
+    if (firstComponent && (type === 'micro' || type === 'macro')) contents = tutorial.components[firstComponent.calleeName];
+    if (type === 'callStack') contents = tutorial.components[type];
+    const tutorialObj = { className: 'tutorial', contents };
+    updateComponentsOfView(tutorialObj);
+  }
+
   updateComponents() {
-    const { callStack, webApis, microTasks, macroTasks } = this.componentBox;
+    const { callStack, webApis, microTasks, macroTasks, tutorial } = this.componentBox;
     const firstComponent = webApis.getComponents()[FIRST_INDEX];
 
-    if (firstComponent && firstComponent instanceof Microtask && transferFirstComponent(webApis, microTasks)) return;
-    if (firstComponent && firstComponent instanceof Macrotask && transferFirstComponent(webApis, macroTasks)) return;
-    if (transferFirstComponent(microTasks, callStack) || transferFirstComponent(macroTasks, callStack)) return;
+    const isMicroTrensfer = firstComponent && firstComponent instanceof Microtask && transferFirstComponent(webApis, microTasks);
+    if (isMicroTrensfer) {
+      this.updateTutorial('micro', tutorial, firstComponent);
+      return;
+    }
+    const isMacroTrensfer = firstComponent && firstComponent instanceof Macrotask && transferFirstComponent(webApis, macroTasks);
+    if (isMacroTrensfer) {
+      this.updateTutorial('macro', tutorial, firstComponent);
+      return;
+    }
+
+    const isFromMicroToCallStack = transferFirstComponent(microTasks, callStack);
+    const isFromMacroToCallStack = transferFirstComponent(macroTasks, callStack);
+    if (isFromMicroToCallStack || isFromMacroToCallStack) this.updateTutorial('callStack', tutorial);
+    if (!isFromMicroToCallStack && !isFromMacroToCallStack) this.updateTutorial('end', tutorial);
   }
 
   updateSchedule() {
