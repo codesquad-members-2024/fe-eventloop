@@ -61,10 +61,10 @@ setTimeout(function() {
     // when
     const result = parser.extractCallbacks(asyncNodes);
 
+    // then
     result.forEach((callback, index) => {
-
-      expect(callback.calleeName).toEqual(expectedCalleeNames[index])
+      expect(callback.calleeName).toEqual(expectedCalleeNames[index]);
       expect(code.includes(callback.code)).toBe(true);
     });
-  })
+  });
 });
