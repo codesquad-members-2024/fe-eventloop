@@ -70,6 +70,14 @@ body {
   min-height: var(--large-box-height);
   border: var(--container-border);
   background-color: var(--tutorial-box-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tutorial__components {
+  animation: jump-shaking 0.83s ease-in-out;
+  width: 80%;
 }
 
 .call-stack__component-content {
@@ -211,5 +219,29 @@ body {
 
   100% {
     transform: translateY(-500%);
+  }
+}
+
+@keyframes jump-shaking {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateY(-9px);
+  }
+  35% {
+    transform: translateY(-9px) rotate(2deg);
+  }
+  55% {
+    transform: translateY(-9px) rotate(-2deg);
+  }
+  65% {
+    transform: translateY(-9px) rotate(2deg);
+  }
+  75% {
+    transform: translateY(-9px) rotate(-2deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
   }
 }
