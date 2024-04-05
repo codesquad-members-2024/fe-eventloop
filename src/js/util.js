@@ -9,3 +9,7 @@ export function delay(ms) {
 export function filterTasksByType(tasks, type) {
   return tasks.filter((task) => task.type === type);
 }
+
+export function getFirstElementInArr(arr) {
+  return arr[0];
+}
