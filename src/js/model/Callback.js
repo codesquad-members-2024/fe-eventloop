@@ -39,20 +39,26 @@ export class Callback {
   getCalleeName() {
     return this.calleeName;
   }
-}
 
-export class Microtask extends Callback {
+  getTaskType() {
+    throw new Error("Callback 클래스에서는 Task Type을 알 수 없습니다.");
+  }
+
   toString() {
-    const prototypeName = MICRO_TASK_PROTOTYPES[this.calleeName];
+    const prototypeName = this.getTaskType()[this.calleeName];
 
     return `<pre>${prototypeName}.${this.calleeName} : ${replaceCallbackBody(this.code)}</pre>`;
   }
 }
 
-export class Macrotask extends Callback {
-  toString() {
-    const prototypeName = MACRO_TASK_PROTOTYPES[this.calleeName];
+export class Microtask extends Callback {
+  getTaskType() {
+    return MICRO_TASK_PROTOTYPES;
+  }
+}
 
-    return `<pre>${prototypeName}.${this.calleeName} : ${replaceCallbackBody(this.code)}</pre>`;
+export class Macrotask extends Callback {
+  getTaskType() {
+    return MACRO_TASK_PROTOTYPES;
   }
 }

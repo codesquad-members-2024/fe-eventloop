@@ -11,11 +11,14 @@ const FIRST_INDEX = 0;
 const NO_ELEMENTS = 0;
 const ANIMATION_DURATION = 3000;
 
-const isMicrotask = (callback) =>
-  Object.keys(MICRO_TASK_PROTOTYPES).includes(callback.calleeName);
+const isTaskOfType = (taskPrototypes, callback) => 
+  Object.keys(taskPrototypes).includes(callback.calleeName);
 
-const isMacrotask = (callback) =>
-  Object.keys(MACRO_TASK_PROTOTYPES).includes(callback.calleeName);
+const isMicrotask = (callback) => 
+  isTaskOfType(MICRO_TASK_PROTOTYPES, callback);
+
+const isMacrotask = (callback) => 
+  isTaskOfType(MACRO_TASK_PROTOTYPES, callback);
 
 const transferFirstComponent = (source, target) => {
   const components = source.getComponents();
@@ -36,14 +39,14 @@ export class EventLoop {
     this.initializeSubscribes();
   }
 
-  handleSubmit = () => {
+  handleSubmit() {
     const code = this.inputArea.value;
 
     this.setComponents(code);
   };
 
   initializeEventListener() {
-    this.submitButton.addEventListener("click", this.handleSubmit);
+    this.submitButton.addEventListener("click", () => this.handleSubmit());
   }
 
   initializeSubscribes() {
@@ -63,9 +66,7 @@ export class EventLoop {
     });
 
     callbackLiterals.forEach((literal) => this.componentBox.callbacks.pushComponent(literal));
-    setInterval(() => {
-      this.updateComponents();
-    }, ANIMATION_DURATION);
+    setInterval(() => this.updateComponents(), ANIMATION_DURATION);
   }
 
   updateComponents() {
