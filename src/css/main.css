@@ -23,6 +23,14 @@ grey main {
   width: 900px;
   margin: 0 auto;
 }
+
+.main__section__input_code {
+  width: 770px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+
 .main__input_code__container {
   margin-top: 10px;
   width: 100%;

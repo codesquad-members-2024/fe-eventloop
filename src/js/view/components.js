@@ -20,7 +20,7 @@ const createAnimationDivMarkup = (callBack, className, fromQueue) => {
     return newHTML;
 };
 
-const appendTag = async(callBack, className, memory, fromQueue) => {
+const appendTag = (callBack, className, memory, fromQueue) => {
     const TargetAppend = document.querySelector(className);
     const animationDivHtml = createAnimationDivMarkup(callBack, className, fromQueue);
     TargetAppend.insertAdjacentHTML("beforeend", animationDivHtml); 
