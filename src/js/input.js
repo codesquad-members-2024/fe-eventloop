@@ -19,6 +19,7 @@ export function getCode() {
     // const code = document.querySelector('#inputCode').value;
 
     const tasks = parseCode(code);
+    console.log(tasks);
     await registerToWebAPI(tasks);
     const { microTasks, macroTasks } = classifyIntoMacroAndMicro(tasks);
     await moveToQueue(microTasks);

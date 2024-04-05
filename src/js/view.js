@@ -18,7 +18,7 @@ export function CallbackAdder(elementId, animation) {
     const html = tasks
       .map((task, index) => {
         const animationClass = index === tasks.length - 1 ? animation : '';
-        return `<div class="task ${animationClass}">${task.arguments}</div>`;
+        return `<div class="task ${animationClass}">${task.callback}</div>`;
       })
       .join('');
     this.boxEl.innerHTML = html;
@@ -29,23 +29,19 @@ export function CallbackRemover(elementId) {
   this.boxEl = document.getElementById(elementId);
 
   this.update = function (tasks) {
-    if (tasks.length === 0) {
-      this.boxEl.innerHTML = '';
-    } else {
-      const html = tasks
-        .map((task) => `<div class="task">${task.arguments}</div>`)
-        .join('');
-      this.boxEl.innerHTML = html;
-    }
+    const html = tasks
+      .map((task) => `<div class="task">${task.callback}</div>`)
+      .join('');
+    this.boxEl.innerHTML = html;
   };
 }
 
 export function animateQueueToCallstack(tasks, i, elementId, animationClass) {
   const box = document.getElementById(elementId);
-  const movedTask = `<div class="task ${animationClass}">${tasks[i].arguments}</div>`;
+  const movedTask = `<div class="task ${animationClass}">${tasks[i].callback}</div>`;
   const restOfTask = tasks
     .slice(i + 1, tasks.length)
-    .map((task) => `<div class="task">${task.arguments}</div>`)
+    .map((task) => `<div class="task">${task.callback}</div>`)
     .join('');
   box.innerHTML = movedTask + restOfTask;
 }

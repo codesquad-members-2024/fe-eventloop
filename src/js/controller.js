@@ -3,8 +3,6 @@ import {
   WebAPI,
   MicroTaskQueue,
   MacroTaskQueue,
-  promiseMethods,
-  macroTaskApis,
 } from './taskModel.js';
 import {
   CallStackViewer,
@@ -12,6 +10,7 @@ import {
   CallbackRemover,
   animateQueueToCallstack,
 } from './view.js';
+import { delay, filterTasksByType } from './util.js';
 
 const callStack = new CallStack();
 const webAPI = new WebAPI();
@@ -35,13 +34,10 @@ microTaskQueue.addRemoveObserver(microTaskRemover);
 macroTaskQueue.addRemoveObserver(macroTaskRemover);
 
 const DELAY_TIME = 2000;
-function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
 export async function registerToWebAPI(tasks) {
   for (const task of tasks) {
-    callStack.addTask(task.functionName || task.type);
+    callStack.addTask(task.functionName);
     webAPI.addTask(task);
     await delay(DELAY_TIME);
   }
@@ -49,22 +45,18 @@ export async function registerToWebAPI(tasks) {
 }
 
 export function classifyIntoMacroAndMicro(tasks) {
-  const microTasks = tasks.filter((task) =>
-    promiseMethods.includes(task.functionName),
-  );
-  const macroTasks = tasks.filter((task) =>
-    macroTaskApis.includes(task.functionName),
-  );
+  const microTasks = filterTasksByType(tasks, 'microTask');
+  const macroTasks = filterTasksByType(tasks, 'macroTask');
   return { microTasks, macroTasks };
 }
 
 export async function moveToQueue(tasks) {
   for (const task of tasks) {
-    if (task.type === 'microTask') {
-      webAPI.removeTask(task);
+    const { type } = task;
+    webAPI.removeTask(task);
+    if (type === 'microTask') {
       microTaskQueue.addTask(task);
-    } else if (task.type === 'macroTask') {
-      webAPI.removeTask(task);
+    } else if (type === 'macroTask') {
       macroTaskQueue.addTask(task);
     }
     await delay(DELAY_TIME);
@@ -72,19 +64,25 @@ export async function moveToQueue(tasks) {
 }
 
 export async function moveToCallstack(tasks) {
-  for (let i = 0; i < tasks.length; i++) {
-    if (tasks[i].type === 'microTask') {
-      animateQueueToCallstack(tasks, i, 'microTaskQueue', 'to-callstack');
-      await delay(1000);
-      microTaskQueue.removeTask();
-      callStack.addTask(tasks[i].arguments);
-    } else if (tasks[i].type === 'macroTask') {
-      animateQueueToCallstack(tasks, i, 'macroTaskQueue', 'to-callstack');
-      await delay(1000);
-      macroTaskQueue.removeTask();
-      callStack.addTask(tasks[i].arguments);
-    }
-    await delay(1000);
+  for (const task of tasks) {
+    const { type, callback } = task;
+    const queueName = `${type}Queue`;
+    animateAndMoveToCallstack(tasks, task, queueName);
+    await delay(DELAY_TIME / 2);
+    removeFromQueue(queueName);
+    callStack.addTask(callback);
+    await delay(DELAY_TIME / 2);
   }
   callStack.resetTask();
+}
+
+function animateAndMoveToCallstack(tasks, task, queueName) {
+  const currentIndex = tasks.indexOf(task);
+  animateQueueToCallstack(tasks, currentIndex, queueName, 'to-callstack');
+}
+
+function removeFromQueue(queueName) {
+  queueName === 'microTaskQueue'
+    ? microTaskQueue.removeTask()
+    : macroTaskQueue.removeTask();
 }

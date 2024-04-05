@@ -46,9 +46,9 @@ export class WebAPI extends CallStack {
   }
 
   removeTask(task) {
-    const targetTask = task.arguments[0];
+    const targetTask = task.callback[0];
     const targetIndex = this.stack.findIndex(
-      (item) => item.arguments[0] === targetTask,
+      (item) => item.callback[0] === targetTask,
     );
     this.stack.splice(targetIndex, 1);
     this.notifyRemoveObservers(this.stack);
